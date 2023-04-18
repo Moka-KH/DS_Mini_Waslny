@@ -13,7 +13,11 @@ int main()
 
     graphDS mygraph;
 
-    mygraph.addCity("cairo", "alexandria", 200);
+    mygraph.addCity("Cairo");
+    mygraph.addCity("Alex", "Cairo", 200);
+    mygraph.addCity("X", "Y", 3);
+    
+    /*
     mygraph.addCity("cairo", "Monfia", 150);
     mygraph.addCity("cairo", "Giza", 50);
 
@@ -29,6 +33,7 @@ int main()
     mygraph.addCity("Aswan", "test", 111);
 
     mygraph.addCity("empty", "xxx", 000);
+    */
 
 
 
