@@ -15,23 +15,24 @@ using namespace std;
 	* map.find() -> return an iterator pointing to the vertex if it exists
 	*				and to the last vertex if it doesn't
 	* map.erase() -> return 1 if found key and erase it otherwise return 0
-	*/
+*/
 
+/**
+* graphDS - the graph constructor
+* 
+* Description: sets the #vertices to zero
+* 
+* Return: nothing
+*/
 graphDS::graphDS()
 {
 	vertexNum = 0;
 }
 
-void graphDS::incrementVertexNum()
-{
-	vertexNum++;
-}
-
-void graphDS::decrementVertexNum()
-{
-	vertexNum--;
-}
-
+/**
+* getVertexNum - returns #vertices
+* Return: integer value -> #vertices
+*/
 int graphDS::getVertexNum()
 {
 	return vertexNum;
@@ -60,10 +61,10 @@ void graphDS::addCity(string newCity)
 		list <pair <string, int>> newList;
 
 		//make new list for the new city
-		map.insert(make_pair(newCity, newList));
+		map[newCity] = newList;
 
 		//increment number of cities
-		incrementVertexNum();
+		vertexNum++;
 
 		cout << newCity << " is Added Successfully =)\n";
 	}
@@ -86,15 +87,27 @@ void graphDS::addCity(string newCity, string adjCity, int distance)
 {
 	mapIterator = map.find(newCity);
 
-	// if it already exists
+	bool validInput = true;
+	// if the vetex to be added already exists
 	if (mapIterator != map.end())
-		cout << "City " << newCity << "already exists =| \n";
-	else //add the new city
 	{
-		//empty list
+		cout << "City " << newCity << " already exists =| \n";
+		validInput = false;
+	}
+	// if the vertex we'r connecting to doesn't exist
+	if (map.find(adjCity) == map.end())
+	{
+		cout << "City " << adjCity << " doesn't exist. You can't link to it\n";
+		validInput = false;
+	}
+	
+	// add the new city
+	if (validInput)
+	{
+		// empty list
 		list <pair <string, int>> newList;
-		//make new list for the new city
-		map.insert(make_pair(newCity, newList));
+		// make new list for the new city
+		map[newCity] = newList;
 		addRoad(newCity, adjCity, distance);
 	}
 }
@@ -112,23 +125,31 @@ void graphDS::addCity(string newCity, string adjCity, int distance)
 */
 void graphDS::addRoad(string city1, string city2, int distance)
 {
-	// if at least of the cities don't exist
-	if (map.find(city1) == map.end() ||
-		map.find(city2) == map.end())
+
+	bool validInput = true;
+	// if the first one doesn't exist
+	if (map.find(city1) == map.end())
 	{
-		cout << "At least one of the cities you entered doesn't exist :(\n"
-			<< "Make sure you wrote the names right / Add the cities first";
-		return;
+		cout << "City: " << city1 << " doesn't exist\n";
+		validInput = false;
+	}
+	// if the second one doesnt exist
+	if (map.find(city2) == map.end())
+	{
+		cout << "City: " << city2 << " doesn't exist\n";
+		validInput = false;
 	}
 
-	// ===  add the road  ===
+	// ===  both exist :) add the road  ===
+	if (validInput)
+	{
+		// keep the city to be connected to & distance in a pair holder
+		pairHolder.first = city2;
+		pairHolder.second = distance;
 
-	// keep the city to be connected to & distance in a pair holder
-	pairHolder.first = city2;
-	pairHolder.second = distance;
-
-	// then add this pair holder to the linked list
-	map.at(city1).push_back(pairHolder);
+		// then add this pair holder to the linked list
+		map.at(city1).push_back(pairHolder);
+	}
 }
 
 /**
@@ -151,7 +172,7 @@ void graphDS::deleteCity(string cityName)
 		return;
 	}
 	//decrement number of cities
-	decrementVertexNum();
+	vertexNum--;
 }
 
 /**

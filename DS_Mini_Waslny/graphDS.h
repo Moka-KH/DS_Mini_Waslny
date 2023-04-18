@@ -24,9 +24,7 @@ public:
 	list <pair <string, int>>::iterator listIterator;
 
 	graphDS();
-	int getVertexNum();
-	void incrementVertexNum();
-	void decrementVertexNum();
+	~graphDS();
 
 	void addCity(string newCity);
 	void addCity(string newCity, string adjCity, int distance);
@@ -34,9 +32,8 @@ public:
 
 	void deleteCity(string cityName);
 	void deleteRoad(string city1, string city2);
-
-	void display();
 	
-	~graphDS();
+	int getVertexNum();
+	void display();
 };
 

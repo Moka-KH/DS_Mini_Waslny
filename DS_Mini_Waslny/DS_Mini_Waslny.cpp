@@ -14,8 +14,9 @@ int main()
     graphDS mygraph;
 
     mygraph.addCity("Cairo");
+    mygraph.addCity("Alex");
     mygraph.addCity("Alex", "Cairo", 200);
-    
+    mygraph.addCity("Mahalla", "Aswan", 200);
 
     cout << "Done adding!!\n";
 
@@ -29,9 +30,9 @@ int main()
    // 
    //cout << "Done deleteing the city!!\n";
 
-    mygraph.deleteRoad("Cairo", "Alex");
+    //mygraph.deleteRoad("Cairo", "Alex");
 
-    mygraph.display();
+    //mygraph.display();
 
 
 
