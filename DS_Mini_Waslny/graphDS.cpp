@@ -7,13 +7,35 @@
 
 using namespace std;
 
+
 /*
 	* Notes:
 	* map.at() -> return a pointer to the value
 	* map.insert() -> adds a new key-value
 	* map.find() -> return an iterator pointing to the vertex if it exists
 	*				and to the last vertex if it doesn't
+	* map.erase() -> return 1 if found key and erase it otherwise return 0
 	*/
+
+graphDS::graphDS()
+{
+	vertexNum = 0;
+}
+
+void graphDS::incrementVertexNum()
+{
+	vertexNum++;
+}
+
+void graphDS::decrementVertexNum()
+{
+	vertexNum--;
+}
+
+int graphDS::getVertexNum()
+{
+	return vertexNum;
+}
 
 /**
 * addCity - Adds a new City
@@ -39,6 +61,9 @@ void graphDS::addCity(string newCity)
 
 		//make new list for the new city
 		map.insert(make_pair(newCity, newList));
+
+		//increment number of cities
+		incrementVertexNum();
 
 		cout << newCity << " is Added Successfully =)\n";
 	}
@@ -118,21 +143,16 @@ void graphDS::addRoad(string city1, string city2, int distance)
 */
 void graphDS::deleteCity(string cityName)
 {
-	// check if city does not exist
-	if (map.find(cityName) == map.end())
+	// erase city if exists otherwise, show message
+	if (map.erase(cityName) != 1)
 	{
 		cout << "The city you have entered does not exists :(\n"
 			<< "Make sure you wrote the name right\n";
-		return;
 	}
-	else 	// if city exists
-	{
-		map.erase(cityName);
-		cout << cityName << " is Deleted Successfully =)\n";
 
-	}
+	// decrement number of cities
+	decrementVertexNum();
 }
-
 
 void graphDS::display()
 {
