@@ -13,7 +13,10 @@ int main()
 
     graphDS mygraph;
 
-    mygraph.addCity("cairo", "alexandria", 200);
+    mygraph.addCity("Cairo");
+    mygraph.addCity("Alex", "Cairo", 200);
+    
+    /*
     mygraph.addCity("cairo", "Monfia", 150);
     mygraph.addCity("cairo", "Giza", 50);
 
@@ -29,17 +32,30 @@ int main()
     mygraph.addCity("Aswan", "test", 111);
 
     mygraph.addCity("empty", "xxx", 000);
-
-
-
-
-
-
+    */
     cout << "Done adding!!\n";
 
     mygraph.display();
 
-    cout << "Done displaying!!\n";
+   cout << "Done displaying!!\n";
+
+    mygraph.deleteCity("Alex");
+
+    mygraph.deleteCity("Asswan");
+
+
+    cout << "Done deleteing the city!!\n";
+
+    mygraph.display();
+
+
+
+
+
+
+
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
