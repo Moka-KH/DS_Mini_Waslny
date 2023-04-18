@@ -1,6 +1,7 @@
 #include <unordered_map>
 #include <list>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -19,8 +20,9 @@ public:
 	unordered_map< string, list<pair <string, int>>>::iterator itrMap;
 	list < pair <string, int>> ::iterator itrList;
 
-
+	
 	void addCity(string newCity);
+
 	void addCity(string newCity, string adjCity, int distance);
 	void addEdge(string newCity, string adjCity, int distance);
 	void display();
