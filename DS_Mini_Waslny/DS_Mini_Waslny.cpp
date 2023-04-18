@@ -16,35 +16,20 @@ int main()
     mygraph.addCity("Cairo");
     mygraph.addCity("Alex", "Cairo", 200);
     
-    /*
-    mygraph.addCity("cairo", "Monfia", 150);
-    mygraph.addCity("cairo", "Giza", 50);
 
-    mygraph.addCity("alexandria", "North cost", 180);
-    mygraph.addCity("alexandria", "Obour", 300);
-
-    mygraph.addCity("Obour", "Kafr ELshiekh", 250);
-
-    mygraph.addCity("Assuit", "Quena", 350);
-    mygraph.addCity("Aswan", "monofia", 380);
-
-
-    mygraph.addCity("Aswan", "test", 111);
-
-    mygraph.addCity("empty", "xxx", 000);
-    */
     cout << "Done adding!!\n";
 
     mygraph.display();
 
-   cout << "Done displaying!!\n";
+   //cout << "Done displaying!!\n";
 
-    mygraph.deleteCity("Alex");
+   // mygraph.deleteCity("Alex");
 
-    mygraph.deleteCity("Asswan");
+   // mygraph.deleteCity("Asswan");
+   // 
+   //cout << "Done deleteing the city!!\n";
 
-
-    cout << "Done deleteing the city!!\n";
+    mygraph.deleteRoad("Cairo", "Alex");
 
     mygraph.display();
 

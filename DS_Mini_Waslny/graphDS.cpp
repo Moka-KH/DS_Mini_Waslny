@@ -10,7 +10,7 @@ using namespace std;
 
 /*
 	* Notes:
-	* map.at() -> return a pointer to the value
+	* map.at() -> returns a pointer to the value
 	* map.insert() -> adds a new key-value
 	* map.find() -> return an iterator pointing to the vertex if it exists
 	*				and to the last vertex if it doesn't
@@ -135,7 +135,7 @@ void graphDS::addRoad(string city1, string city2, int distance)
 * deleteCity - Deletes a City
 * @cityName: City Name to be deleted
 *
-* Description: if the city already exists, it gives an Error Message
+* Description: if the city doesn't exist, it gives an Error Message
 *			   else it removes the city vertex and the list of
 *			   adjacent vertices
 *
@@ -146,18 +146,67 @@ void graphDS::deleteCity(string cityName)
 	// erase city if exists otherwise, show message
 	if (map.erase(cityName) != 1)
 	{
-		cout << "The city you have entered does not exists :(\n"
+		cout << "The city you have entered does not exist :(\n"
 			<< "Make sure you wrote the name right\n";
+		return;
 	}
-
-	// decrement number of cities
+	//decrement number of cities
 	decrementVertexNum();
 }
+
+/**
+* deleteRoad - deletes a road between 2 cities
+* @city1: first city
+* @city2: second city
+* 
+* Description: first makes sure that cities exist. if so,
+*			   it searches in city1 connections for city2,
+*			   if it isn't there, gives a message NO edge between them
+*			   else (it's there), it deletes it
+* 
+*			   note: it assumes the graph is undirected
+* 
+* Return: nothing
+*/
+void graphDS::deleteRoad(string city1, string city2)
+{
+	// if at least one city doesn't exist
+	if (map.find(city1) == map.end())
+	{
+		cout << city1 << " doesn't exist :|\n";
+		return;
+	}
+	else if (map.find(city2) == map.end())
+	{
+		cout << city2 << " doesn't exist :|\n";
+		return;
+	}
+	else // cities exist. Search for city2 in city1 connections
+	{
+		listIterator = map.at(city1).begin(); // search starting point
+
+		list <pair <string, int>>::iterator listEnd;
+		listEnd = map.at(city1).end(); // search breaking point
+
+		for (; *listIterator <= *listEnd; listIterator++)
+		{
+			if ((*listIterator).first == city2) // when you find it, delete it
+			{
+				map.at(city1).erase(listIterator);
+				return;
+			}
+		}
+		// reaching here means city1 & city2 are not connected
+		cout << city1 << " & " << city2 << " are not ajacent :|";
+	}
+}
+
 
 void graphDS::display()
 {
 	cout << "\nElements : \n";
-	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++) //display the key value once
+	//display the key value once
+	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++)
 	{
 		// itr works as a pointer to 
 		// itr->first stores the key part and
@@ -165,9 +214,10 @@ void graphDS::display()
 
 		cout << mapIterator->first << endl;
 
-		for (itrList = mapIterator->second.begin(); itrList != mapIterator->second.end(); ++itrList) //display the linked list compmnents "the value of the map's key"
+		//display the linked list compmnents "the value of the map's key"
+		for (listIterator = mapIterator->second.begin(); listIterator != mapIterator->second.end(); ++listIterator)
 		{
-			cout << (*itrList).first << "  " << (*itrList).second << endl;
+			cout << (*listIterator).first << "  " << (*listIterator).second << endl;
 		}
 		cout << "\t\t\t=====================================" << endl;
 	}
@@ -176,5 +226,4 @@ void graphDS::display()
 graphDS :: ~graphDS()
 {
 	map.clear();
-
 }
