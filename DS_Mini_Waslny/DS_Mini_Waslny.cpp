@@ -2,11 +2,44 @@
 //
 
 #include <iostream>
+#include <string.h>
+#include "graphDS.h"
+#include <unordered_map>
 using namespace std;
 
 int main()
 {
-	cout << "Hola mi amigos =)\n";
+    cout << "Hello World!\n";
+
+    graphDS mygraph;
+
+    mygraph.addCity("cairo", "alexandria", 200);
+    mygraph.addCity("cairo", "Monfia", 150);
+    mygraph.addCity("cairo", "Giza", 50);
+
+    mygraph.addCity("alexandria", "North cost", 180);
+    mygraph.addCity("alexandria", "Obour", 300);
+
+    mygraph.addCity("Obour", "Kafr ELshiekh", 250);
+
+    mygraph.addCity("Assuit", "Quena", 350);
+    mygraph.addCity("Aswan", "monofia", 380);
+
+
+    mygraph.addCity("Aswan", "test", 111);
+
+    mygraph.addCity("empty", "xxx", 000);
+
+
+
+
+
+
+    cout << "Done adding!!\n";
+
+    mygraph.display();
+
+    cout << "Done displaying!!\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
