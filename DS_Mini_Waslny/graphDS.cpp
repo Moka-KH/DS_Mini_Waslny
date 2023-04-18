@@ -211,7 +211,7 @@ void graphDS::deleteRoad(string city1, string city2)
 
 		if (listIterator == listEnd)
 		{
-			map.at(city1).erase(listIterator);
+			map.at(city1).erase(listIterator);  // erase gives an exception :(
 			cout << "deleted it :)\n";
 			return;
 		}
@@ -219,7 +219,7 @@ void graphDS::deleteRoad(string city1, string city2)
 		{
 			if ((*listIterator).first == city2) // when you find it, delete it
 			{
-				map.at(city1).erase(listIterator);
+				map.at(city1).erase(listIterator); // erase gives an exception :(
 				return;
 			}
 		}
@@ -227,7 +227,6 @@ void graphDS::deleteRoad(string city1, string city2)
 		cout << city1 << " & " << city2 << " are not ajacent :|";
 	}
 }
-
 
 void graphDS::display()
 {
