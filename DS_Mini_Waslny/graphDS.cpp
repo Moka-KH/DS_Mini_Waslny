@@ -188,7 +188,13 @@ void graphDS::deleteRoad(string city1, string city2)
 		list <pair <string, int>>::iterator listEnd;
 		listEnd = map.at(city1).end(); // search breaking point
 
-		for (; *listIterator <= *listEnd; listIterator++)
+		if (listIterator == listEnd)
+		{
+			map.at(city1).erase(listIterator);
+			cout << "deleted it :)\n";
+			return;
+		}
+		for (; listIterator != listEnd; listIterator++)
 		{
 			if ((*listIterator).first == city2) // when you find it, delete it
 			{
