@@ -10,10 +10,13 @@ using namespace std;
 
 /*
 	* Notes:
+	* map.begin() -> returns an iterator to the first element in the map
+	* map.end() -> returns an iterator pointing to past the last element of the map.
+	*			   Since it does not refer to a valid element, it cannot de-referenced
 	* map.at() -> returns a pointer to the value
-	* map.insert() -> adds a new key-value
-	* map.find() -> return an iterator pointing to the vertex if it exists
-	*				and to the last vertex if it doesn't
+	* map.insert() -> adds a new bucket(key & value)
+	* map.find() -> returns an iterator pointing to the vertex if it exists
+	*				and returns map.end() (not a bucket) if it doesn't exist.
 	* map.erase() -> return 1 if found key and erase it otherwise return 0
 */
 
@@ -51,7 +54,7 @@ int graphDS::getVertexNum()
 void graphDS::addCity(string newCity)
 {
 	mapIterator = map.find(newCity);
-
+		
 	// if it already exists
 	if (mapIterator != map.end())
 		cout << "City " << newCity << "already exists = | \n";
@@ -234,7 +237,7 @@ void graphDS::display()
 	//display the key value once
 	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++)
 	{
-		// itr works as a pointer to 
+		// itr works as a pointer to a bucket
 		// itr->first stores the key part and
 		// itr->second stores the value part
 
