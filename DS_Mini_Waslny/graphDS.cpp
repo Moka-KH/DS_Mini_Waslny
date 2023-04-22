@@ -252,6 +252,12 @@ void graphDS::display()
 	}
 }
 
+void graphDS::getAdj(string city , list<pair <string, int>>& adj) {
+	mapIterator = map.find(city);
+	adj = mapIterator->second;
+
+}
+
 graphDS :: ~graphDS()
 {
 	map.clear();
