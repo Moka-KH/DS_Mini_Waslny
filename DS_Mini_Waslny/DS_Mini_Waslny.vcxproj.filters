@@ -21,9 +21,15 @@
     <ClCompile Include="graphDS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Wasalny.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphDS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Wasalny.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

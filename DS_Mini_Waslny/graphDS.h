@@ -34,6 +34,7 @@ public:
 	void deleteRoad(string city1, string city2);
 	
 	int getVertexNum();
+	void getAdj(string city, list<pair <string, int>>& adj);
 	void display();
 };
 
