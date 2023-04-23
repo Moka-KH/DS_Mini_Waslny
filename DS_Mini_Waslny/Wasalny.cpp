@@ -3,8 +3,9 @@
 #include <map>
 #include <climits>
 #include <unordered_map>
-#include "graphDS.h"
 #include <queue>
+#include "graphDS.h"
+#include "graphDS.cpp"
 
 typedef pair<int, string> iPair;
 using namespace std;
@@ -25,7 +26,7 @@ vector<string> path;
  *         If the destination is unreachable, returns -1.
  *         The shortest path from the starting vertex to the destination vertex is stored in the path vector.
  */
-int Wasalny::Dijkstra(graphDS myMap,string currentLocation ,string finalDistination) {
+int Wasalny::Dijkstra(graphDS myMap, string startingNode, string finalDistination) {
 
 	//ipair determine the data types of the pair in the queue
 	//vector<ipair> container for the priority queue
@@ -40,18 +41,18 @@ int Wasalny::Dijkstra(graphDS myMap,string currentLocation ,string finalDistinat
 
 
 	//all the distances will be infinite or not determined
-	unordered_map <string, list<pair <string, int>>>::iterator mapIterator ;
-	for (mapIterator = myMap.map.begin(); mapIterator != myMap.map.end(); mapIterator++) 
+	unordered_map <string, list<pair <string, int>>>::iterator mapIterator;
+	for (mapIterator = myMap.map.begin(); mapIterator != myMap.map.end(); mapIterator++)
 		shortestPath.insert(make_pair(mapIterator->first, INF));
-	
+
 
 	//put the distance from the source to itself as 0 and push it into the queue to check the adj vertices
-	shortestPath[currentLocation] = 0;      
+	shortestPath[startingNode] = 0;
 
-	uncheckedVertices.push(make_pair(0,currentLocation));
+	uncheckedVertices.push(make_pair(0, startingNode));
 
 	//loop untill we check every node and determine the shortest path for each city 
-	while (!uncheckedVertices.empty()){
+	while (!uncheckedVertices.empty()) {
 
 		//store the index of the vertix that has the minimum distance
 		//the minimum distance it automatically allocated by the logic of priority queue
@@ -59,7 +60,7 @@ int Wasalny::Dijkstra(graphDS myMap,string currentLocation ,string finalDistinat
 
 		// we will check its adj vertices now so we will pop it
 		uncheckedVertices.pop();
-		
+
 		//create a list to store the adjacent cities of the minDistCity
 		//we get the list from a function called getAdj
 		list<pair <string, int>> adjacentVertices;
@@ -85,41 +86,51 @@ int Wasalny::Dijkstra(graphDS myMap,string currentLocation ,string finalDistinat
 
 
 	}
-	
+
 	// Check if the final destination is unreachable
 	if (shortestPath[finalDistination] == INF) {
 		return -1;
 	}
 
-	// Backtrack from the destination to the source to get the shortest path
-	string current = finalDistination;
-	path.push_back(current);
-	while (current != currentLocation) {
-		bool foundPrev = false;
-		for (auto const& vertex : myMap.getVertices()) {
-			if (myMap.getWeight(vertex, current) != INF && shortestPath[current] == shortestPath[vertex] + myMap.getWeight(vertex, current)) {
-				current = vertex;
-				path.push_back(current);
-				foundPrev = true;
-				break;
-			}
-		}
-		if (!foundPrev) {
-			// current is not a valid vertex in the graph
-			path.clear();
-			return -1;
-		}
-	}
-	reverse(path.begin(), path.end());
+	else {
+		//store the final distination index in the list
+		string current = finalDistination;
+		path.push_back(current);
 
-	// Return the shortest path from the source to the destination
-	return shortestPath[finalDistination];
+		// Backtrack from the destination to the source to get the shortest path
+		while (current != startingNode) {
+
+			list<pair <string, int>> adjacentVertices;
+			myMap.getAdj(current, adjacentVertices);
+			list <pair <string, int>>::iterator listIterator;
+			for (listIterator= adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++){
+
+				string adjVertex = listIterator->first;
+				int weight = listIterator->second;
+				if (shortestPath[current] == shortestPath[adjVertex] + weight) {
+					current = adjVertex;
+					path.push_back(current);
+					break;
+				}
+			}
+
+		}
+		reverse(path.begin(), path.end());
+
+		// Return the shortest path from the source to the destination
+		return shortestPath[finalDistination];
+	}
 }
 
-
-
-
-
-
-
-
+//void Wasalny::DFS(int startPoint)
+//{
+//	if (visited[startPoint] == true)
+//		list<int> adList = adjlist[startPoint];
+//
+//	cout << startPoint << " " << endl;
+//
+//	list<int> ::iterator i;
+//	for (i = adjlist.begin(); i != adjlist.end(); i++)
+//		if (!visited[*i])
+//			DFS(*i);
+//}
