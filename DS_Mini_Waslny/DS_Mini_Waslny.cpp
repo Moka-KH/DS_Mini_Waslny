@@ -13,9 +13,10 @@ int main()
 
     graphDS mygraph;
 
+    mygraph.addCity("Cairo");
     mygraph.addCity("Alex");
-    mygraph.addCity("Mahalla");
-    mygraph.addCity("Cairo", "Alex", 200);
+    mygraph.addCity("Alex", "Cairo", 200);
+    mygraph.addCity("Mahalla", "Aswan", 200);
 
     cout << "Done adding!!\n";
 
