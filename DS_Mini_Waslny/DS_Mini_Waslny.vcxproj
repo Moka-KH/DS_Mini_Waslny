@@ -129,11 +129,9 @@
   <ItemGroup>
     <ClCompile Include="DS_Mini_Waslny.cpp" />
     <ClCompile Include="graphDS.cpp" />
-    <ClCompile Include="Wasalny.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphDS.h" />
-    <ClInclude Include="Wasalny.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,17 +22,17 @@ int main()
 
     mygraph.display();
 
-   //cout << "Done displaying!!\n";
+    //cout << "Done displaying!!\n";
 
-   // mygraph.deleteCity("Alex");
+    // mygraph.deleteCity("Alex");
 
-   // mygraph.deleteCity("Asswan");
-   // 
-   //cout << "Done deleteing the city!!\n";
+    // mygraph.deleteCity("Asswan");
+    // 
+    //cout << "Done deleteing the city!!\n";
 
-    //mygraph.deleteRoad("Cairo", "Alex");
+     //mygraph.deleteRoad("Cairo", "Alex");
 
-    //mygraph.display();
+     //mygraph.display();
 
 
 

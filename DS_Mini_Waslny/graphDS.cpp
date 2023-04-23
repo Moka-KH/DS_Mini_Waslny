@@ -10,21 +10,18 @@ using namespace std;
 
 /*
 	* Notes:
-	* map.begin() -> returns an iterator to the first element in the map
-	* map.end() -> returns an iterator pointing to past the last element of the map.
-	*			   Since it does not refer to a valid element, it cannot de-referenced
 	* map.at() -> returns a pointer to the value
-	* map.insert() -> adds a new bucket(key & value)
-	* map.find() -> returns an iterator pointing to the vertex if it exists
-	*				and returns map.end() (not a bucket) if it doesn't exist.
+	* map.insert() -> adds a new key-value
+	* map.find() -> return an iterator pointing to the vertex if it exists
+	*				and to the last vertex if it doesn't
 	* map.erase() -> return 1 if found key and erase it otherwise return 0
 */
 
 /**
 * graphDS - the graph constructor
-* 
+*
 * Description: sets the #vertices to zero
-* 
+*
 * Return: nothing
 */
 graphDS::graphDS()
@@ -44,17 +41,17 @@ int graphDS::getVertexNum()
 /**
 * addCity - Adds a new City
 * @newCity: City Name
-* 
+*
 * Description: if the city already exists, it gives an Error Message
-*			   else it adds a new vertex for the city with an empty list of 
+*			   else it adds a new vertex for the city with an empty list of
 *			   adjacent vertices
-* 
+*
 * Return: nothing
 */
 void graphDS::addCity(string newCity)
 {
 	mapIterator = map.find(newCity);
-		
+
 	// if it already exists
 	if (mapIterator != map.end())
 		cout << "City " << newCity << "already exists = | \n";
@@ -103,7 +100,7 @@ void graphDS::addCity(string newCity, string adjCity, int distance)
 		cout << "City " << adjCity << " doesn't exist. You can't link to it\n";
 		validInput = false;
 	}
-	
+
 	// add the new city
 	if (validInput)
 	{
@@ -182,14 +179,14 @@ void graphDS::deleteCity(string cityName)
 * deleteRoad - deletes a road between 2 cities
 * @city1: first city
 * @city2: second city
-* 
+*
 * Description: first makes sure that cities exist. if so,
 *			   it searches in city1 connections for city2,
 *			   if it isn't there, gives a message NO edge between them
 *			   else (it's there), it deletes it
-* 
+*
 *			   note: it assumes the graph is undirected
-* 
+*
 * Return: nothing
 */
 void graphDS::deleteRoad(string city1, string city2)
@@ -238,7 +235,7 @@ void graphDS::display()
 	//display the key value once
 	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++)
 	{
-		// itr works as a pointer to a bucket
+		// itr works as a pointer to 
 		// itr->first stores the key part and
 		// itr->second stores the value part
 
@@ -251,18 +248,6 @@ void graphDS::display()
 		}
 		cout << "\t\t\t=====================================" << endl;
 	}
-}
-
-/**
-* getAdj - gives the adjacency list of the given node
-* @city: the city to get its adjaceny list
-* @adj: a list that to point to the desired list
-* 
-* Return: nothing
-*/
-void graphDS::getAdj(string city , list<pair <string, int>>& adj) {
-	mapIterator = map.find(city);
-	adj = mapIterator->second;
 }
 
 graphDS :: ~graphDS()
