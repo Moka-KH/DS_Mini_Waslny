@@ -252,10 +252,16 @@ void graphDS::display()
 	}
 }
 
+/**
+* getAdj - gives the adjacency list of the given node
+* @city: the city to get its adjaceny list
+* @adj: a list that to point to the desired list
+* 
+* Return: nothing
+*/
 void graphDS::getAdj(string city , list<pair <string, int>>& adj) {
 	mapIterator = map.find(city);
 	adj = mapIterator->second;
-
 }
 
 graphDS :: ~graphDS()
