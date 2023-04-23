@@ -1,15 +1,17 @@
+#include <iostream>
 #include "Wasalny.h"
 #include <string>
 #include <map>
 #include <climits>
 #include <unordered_map>
 #include <queue>
-#include "graphDS.h"
-#include "graphDS.cpp"
+#include <utility> 
+#include <vector>
 
-typedef pair<int, string> iPair;
 using namespace std;
 
+
+typedef pair<int, string> iPair;
 const int INF = INT_MAX;
 // create a vector to store the cities from the currentLocation to finalDistination
 vector<string> path;
@@ -103,7 +105,7 @@ int Wasalny::Dijkstra(graphDS myMap, string startingNode, string finalDistinatio
 			list<pair <string, int>> adjacentVertices;
 			myMap.getAdj(current, adjacentVertices);
 			list <pair <string, int>>::iterator listIterator;
-			for (listIterator= adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++){
+			for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
 
 				string adjVertex = listIterator->first;
 				int weight = listIterator->second;
@@ -121,16 +123,3 @@ int Wasalny::Dijkstra(graphDS myMap, string startingNode, string finalDistinatio
 		return shortestPath[finalDistination];
 	}
 }
-
-//void Wasalny::DFS(int startPoint)
-//{
-//	if (visited[startPoint] == true)
-//		list<int> adList = adjlist[startPoint];
-//
-//	cout << startPoint << " " << endl;
-//
-//	list<int> ::iterator i;
-//	for (i = adjlist.begin(); i != adjlist.end(); i++)
-//		if (!visited[*i])
-//			DFS(*i);
-//}

@@ -1,10 +1,12 @@
-#pragma once
+#include <iostream>
 #include "graphDS.h"
-#include "graphDS.cpp"
 using namespace std;
 
-class Wasalny {
+
+class Wasalny 
+{
 public:
-	int Dijkstra(graphDS,string,string);
-	/*void DFS(int vertex1)*/
+	int Dijkstra(graphDS, string, string);
+	/*void DFS(int vertex1) */ 
+
 };
