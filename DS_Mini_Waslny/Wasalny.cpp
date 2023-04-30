@@ -1,7 +1,8 @@
 #include <iostream>
-#include "Wasalny.h"
+// #include "Wasalny.h"
 #include <string>
 #include <map>
+#include <stack>
 #include <climits>
 #include <unordered_map>
 #include <queue>
@@ -28,7 +29,7 @@ vector<string> path;
  *         If the destination is unreachable, returns -1.
  *         The shortest path from the starting vertex to the destination vertex is stored in the path vector.
  */
-int Wasalny::Dijkstra(graphDS myMap, string startingNode, string finalDistination) {
+int Dijkstra(graphDS myMap, string startingNode, string finalDistination) {
 
 	//ipair determine the data types of the pair in the queue
 	//vector<ipair> container for the priority queue

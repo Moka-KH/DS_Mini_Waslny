@@ -149,6 +149,9 @@ void graphDS::addRoad(string city1, string city2, int distance)
 
 		// then add this pair holder to the linked list
 		map.at(city1).push_back(pairHolder);
+
+		pairHolder.first = city1;
+		map.at(city2).push_back(pairHolder);
 	}
 }
 
@@ -261,6 +264,7 @@ void graphDS::getAdj(string city, list<pair <string, int>>& adj) {
 	mapIterator = map.find(city);
 	adj = mapIterator->second;
 }
+
 graphDS :: ~graphDS()
 {
 	map.clear();
