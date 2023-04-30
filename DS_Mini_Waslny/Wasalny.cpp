@@ -65,9 +65,9 @@ int Dijkstra(graphDS myMap, string startingNode, string finalDistination) {
 		uncheckedVertices.pop();
 
 		//create a list to store the adjacent cities of the minDistCity
-		//we get the list from a function called getAdj
+		//we get the list from a function called getAdjacentList
 		list<pair <string, int>> adjacentVertices;
-		myMap.getAdj(minDistCity, adjacentVertices);
+		myMap.getAdjacentList(minDistCity, adjacentVertices);
 
 		//create an iterator to iterate on the adjacent cities of the minDistCity
 		list <pair <string, int>>::iterator listIterator;
@@ -104,7 +104,7 @@ int Dijkstra(graphDS myMap, string startingNode, string finalDistination) {
 		while (current != startingNode) {
 
 			list<pair <string, int>> adjacentVertices;
-			myMap.getAdj(current, adjacentVertices);
+			myMap.getAdjacentList(current, adjacentVertices);
 			list <pair <string, int>>::iterator listIterator;
 			for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
 

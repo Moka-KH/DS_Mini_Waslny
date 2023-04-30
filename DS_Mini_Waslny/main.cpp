@@ -2,16 +2,15 @@
 //
 
 #include <iostream>
-#include "graphDS.h"
-#include "Wasalny.h"
-#include "DFS.h"
+#include "graph.h"
+#include "algorithms.h"
 using namespace std;
 
 int main()
 {
     cout << "Hello World!\n";
 
-    graphDS mygraph;
+    graph mygraph;
 
     mygraph.addCity("Cairo");
     mygraph.addCity("Alex");
@@ -19,6 +18,5 @@ int main()
     mygraph.addCity("Mahalla", "Aswan", 200);
     cout << "Done adding!!\n";
 
-    // Wasalny uber;
     DFS(mygraph, "Aswan");
 }

@@ -1,9 +1,9 @@
 #include <iostream>
-#include "graphDS.h"
 #include <string.h>
-#include <utility>  // for pairs
+#include <utility>
 #include <unordered_map>
 #include <list>
+#include "graph.h"
 
 using namespace std;
 
@@ -18,13 +18,13 @@ using namespace std;
 */
 
 /**
-* graphDS - the graph constructor
+* graph - the graph constructor
 *
 * Description: sets the #vertices to zero
 *
 * Return: nothing
 */
-graphDS::graphDS()
+graph::graph()
 {
 	vertexNum = 0;
 }
@@ -33,7 +33,7 @@ graphDS::graphDS()
 * getVertexNum - returns #vertices
 * Return: integer value -> #vertices
 */
-int graphDS::getVertexNum()
+int graph::getVertexNum()
 {
 	return vertexNum;
 }
@@ -48,7 +48,7 @@ int graphDS::getVertexNum()
 *
 * Return: nothing
 */
-void graphDS::addCity(string newCity)
+void graph::addCity(string newCity)
 {
 	mapIterator = map.find(newCity);
 
@@ -83,7 +83,7 @@ void graphDS::addCity(string newCity)
 *
 * Return: nothing
 */
-void graphDS::addCity(string newCity, string adjCity, int distance)
+void graph::addCity(string newCity, string adjCity, int distance)
 {
 	mapIterator = map.find(newCity);
 
@@ -123,7 +123,7 @@ void graphDS::addCity(string newCity, string adjCity, int distance)
 *
 * Return: nothing
 */
-void graphDS::addRoad(string city1, string city2, int distance)
+void graph::addRoad(string city1, string city2, int distance)
 {
 
 	bool validInput = true;
@@ -165,7 +165,7 @@ void graphDS::addRoad(string city1, string city2, int distance)
 *
 * Return: nothing
 */
-void graphDS::deleteCity(string cityName)
+void graph::deleteCity(string cityName)
 {
 	// erase city if exists otherwise, show message
 	if (map.erase(cityName) != 1)
@@ -192,7 +192,7 @@ void graphDS::deleteCity(string cityName)
 *
 * Return: nothing
 */
-void graphDS::deleteRoad(string city1, string city2)
+void graph::deleteRoad(string city1, string city2)
 {
 	// if at least one city doesn't exist
 	if (map.find(city1) == map.end())
@@ -232,7 +232,7 @@ void graphDS::deleteRoad(string city1, string city2)
 }
 
 
-void graphDS::display()
+void graph::display()
 {
 	cout << "\nElements : \n";
 	//display the key value once
@@ -260,12 +260,12 @@ void graphDS::display()
 *
 * Return: nothing
 */
-void graphDS::getAdj(string city, list<pair <string, int>>& adj) {
+void graph::getAdjacentList(string city, list<pair <string, int>>& adj) {
 	mapIterator = map.find(city);
 	adj = mapIterator->second;
 }
 
-graphDS :: ~graphDS()
+graph :: ~graph()
 {
 	map.clear();
 }

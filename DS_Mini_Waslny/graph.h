@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string.h>
 #include <unordered_map>
@@ -6,10 +7,11 @@
 
 using namespace std;
 
-class graphDS
+class graph
 {
 private:
 	int vertexNum;
+
 public:
 
 	// unordered_map (hash table) storing all data we have
@@ -24,8 +26,8 @@ public:
 	unordered_map <string, list<pair <string, int>>>::iterator mapIterator;
 	list <pair <string, int>>::iterator listIterator;
 
-	graphDS();
-	~graphDS();
+	graph();
+	~graph();
 
 	void addCity(string newCity);
 	void addCity(string newCity, string adjCity, int distance);
@@ -35,6 +37,6 @@ public:
 	void deleteRoad(string city1, string city2);
 
 	int getVertexNum();
-	void getAdj(string city, list<pair <string, int>>& adj);
+	void getAdjacentList(string city, list<pair <string, int>>& adj);
 	void display();
 };

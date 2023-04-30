@@ -2,8 +2,4 @@
 using namespace std;
 
 
-class Wasalny 
-{
-public:
-	int Dijkstra(graphDS, string, string);	
-};
+int Dijkstra(graph, string, string);	

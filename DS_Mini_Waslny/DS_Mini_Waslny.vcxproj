@@ -127,13 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DFS.cpp" />
-    <ClCompile Include="DS_Mini_Waslny.cpp" />
-    <ClCompile Include="graphDS.cpp" />
+    <ClCompile Include="algorithms.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="graph.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DFS.h" />
-    <ClInclude Include="graphDS.h" />
+    <ClInclude Include="algorithms.h" />
+    <ClInclude Include="graph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
