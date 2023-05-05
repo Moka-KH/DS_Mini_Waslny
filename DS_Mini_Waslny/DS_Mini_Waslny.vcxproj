@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="algorithms.cpp" />
     <ClCompile Include="consolUI.cpp" />
+    <ClCompile Include="GraphFileHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="graph.cpp" />
   </ItemGroup>
@@ -136,6 +137,7 @@
     <ClInclude Include="algorithms.h" />
     <ClInclude Include="consolUI.h" />
     <ClInclude Include="graph.h" />
+    <ClInclude Include="GraphFileHandler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

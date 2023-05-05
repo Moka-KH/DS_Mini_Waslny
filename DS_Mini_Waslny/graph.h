@@ -42,5 +42,7 @@ public:
 	void getAdjacentList(string city, list<pair <string, float>>& adj);
 	bool checkCity(string cityName);
 	bool checkEdge(string city1,string city2);
+	void writeGraphToFile(graph& g, const string& filename);
+	void readGraphFromFile(graph& g, const string& filename);
 
 };
