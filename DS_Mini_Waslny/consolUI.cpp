@@ -116,11 +116,35 @@ void update(graph& myGraph)
         * 
         * 2 roads with different weights
         * 1-ask user delete road between city1 and city2 or other wise or both
-        * 
-        * 
         */
-        if (myGraph.deleteRoad(city1, city2))
-            update(myGraph);
+
+        // 1 road 
+        if (myGraph.checkEdge(city1, city2))
+        {
+            if (myGraph.deleteRoad(city1, city2))
+                update(myGraph);
+        }
+        else if (myGraph.checkEdge(city2, city1))
+        {
+            if (myGraph.deleteRoad(city2, city1))
+                update(myGraph);
+        }
+        else
+        {
+            cout << "There is no road between " << city1 << " and " << city2 << ":(\n";
+        }
+
+        // 2 roads with the same weight
+        if (myGraph.checkEdge(city1, city2))
+        {
+            if (myGraph.checkEdge(city2, city1))
+            {
+
+            }
+        }
+
+
+       
 
         break;
     }
