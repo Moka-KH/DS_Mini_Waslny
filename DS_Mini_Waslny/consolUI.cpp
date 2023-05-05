@@ -37,6 +37,7 @@ void update(graph& myGraph)
     }
     case 2:
     {
+        int choice;
         string city1, city2;
         float distance;
         cout << "Enter the name of the two cities\n name of city number 1 is:\n";
@@ -46,8 +47,37 @@ void update(graph& myGraph)
         cout << "Enter the distance between them \n";
         cin >> distance;
 
-        if (myGraph.addRoad(city1, city2, distance))
-            update(myGraph);
+
+        /*
+      1- the user will add a directed road or an undirected road
+      2- if dircted call addRoad once
+      3-if undirected call addRoad twice and switch the cities names
+      */
+        cout << "Is the road will be one way or roundway ?\n"
+            << "Press: 1 if it is one way \t press: 2 if it is roundway \n";
+        cin >> choice;
+        if (choice == 1)
+        {
+            cout << "If the road goes from " << city1 << " to " << city2 << " press 1\n"
+                << "If the road goes from " << city2 << " to " << city1 << " press 2\n";
+            cin >> choice;
+            if (choice == 1) {
+                if (myGraph.addRoad(city1, city2, distance))
+                    update(myGraph);
+            }
+            else {
+                if (myGraph.addRoad(city2, city1, distance))
+                    update(myGraph);
+            }
+        }
+        if (choice == 2)
+        {
+            if (myGraph.addRoad(city1, city2, distance))
+                update(myGraph);
+            if (myGraph.addRoad(city2, city1, distance))
+                update(myGraph);
+
+        }
 
         break;
     }
@@ -70,6 +100,25 @@ void update(graph& myGraph)
         cout << "name of city number 2 is:\n";
         cin >> city2;
 
+        /*
+        * road cases :
+        * 1 road 
+        * 2 roads with different weights ->directed
+        * 2 roads with the same weight ->unddirected
+        * 
+        * 1 road:
+        * 1-check it is from city1 to city2 or other wise 
+        * 2-delet road
+        * 
+        * 2 roads with the same weight:
+        * 1-check if they have the same weight
+        * 2-delete on both cities (call it twice)
+        * 
+        * 2 roads with different weights
+        * 1-ask user delete road between city1 and city2 or other wise or both
+        * 
+        * 
+        */
         if (myGraph.deleteRoad(city1, city2))
             update(myGraph);
 
