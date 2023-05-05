@@ -15,6 +15,8 @@
 #include<queue>
 
 using namespace std;
+typedef pair<float, string> iPair;
+const float INFINITE = INT_MAX;
 
 /**
 * DFS - Traverses the graph and prints the vertices values
@@ -104,11 +106,10 @@ void BFS(string startCity, graph graph)
 	}
 	cout << endl;
 }
-typedef pair<float, string> iPair;
-const float INFINITE = INT_MAX;
+
+
 // create a vector to store the cities from the currentLocation to finalDistination
 vector<string> path;
-
 /**
  * Dijkstra's algorithm for finding the shortest path between two vertices in a graph.
  *

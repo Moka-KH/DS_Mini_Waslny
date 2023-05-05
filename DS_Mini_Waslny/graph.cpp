@@ -57,7 +57,7 @@ int graph::addCity(string newCity)
 		cout << "City " << newCity << "already exists =| \n";
 		return 1;
 	}
-		
+
 	//add the new city and give it a list as a value in the map
 	list <pair <string, float>> newList;
 	map[newCity] = newList;
@@ -101,7 +101,7 @@ int graph::addCity(string newCity, string adjCity, float distance)
 	// add the new city and give it a list as a value in the map
 	list <pair <string, float>> newList;
 	map[newCity] = newList;
-	
+
 	// link it with city2
 	addRoad(newCity, adjCity, distance);
 	return 0;
@@ -133,6 +133,21 @@ int graph::addRoad(string city1, string city2, float distance)
 		return 1;
 	}
 
+	// if the road already exit , just update the distance
+	if (checkEdge(city1, city2))
+	{
+		list<pair <string, float>> adjacent;
+		getAdjacentList(city1, adjacent);
+		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
+			if (city2 == listIterator->first)
+				listIterator->second = distance;
+
+		getAdjacentList(city2, adjacent);
+		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
+			if (city1 == listIterator->first)
+				listIterator->second = distance;
+
+	}
 	// ===  both exist :) add the road  ===
 	// put city2 in city1 conncections
 	pairHolder.first = city2;
@@ -170,7 +185,7 @@ int graph::deleteCity(string cityName)
 	list<pair <string, float>> adjacent;
 	getAdjacentList(cityName, adjacent);
 	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
-		deleteRoad(cityName, listIterator->first );
+		deleteRoad(cityName, listIterator->first);
 
 	// remove city 
 	map.erase(cityName);
@@ -203,7 +218,7 @@ int graph::deleteRoad(string city1, string city2)
 		cout << city2 << " doesn't exist :|\n";
 		return 1;
 	}
-	
+
 	// cities exist :) Make sure they're connceted
 	// if there is no road give an error message
 	if (!checkEdge(city1, city2))
@@ -213,16 +228,16 @@ int graph::deleteRoad(string city1, string city2)
 	}
 
 	// search for city 2 in city 1 connections and delete it
-	for ( listIterator =map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+	for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
 		if (listIterator->first == city2)
 		{
 			map[city1].erase(listIterator);
 			break;
 		}
-		
+
 	// search for city 1 in city 2 connections and delete it
-	for ( listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
-		if (listIterator->first == city1) 
+	for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
+		if (listIterator->first == city1)
 		{
 			map[city2].erase(listIterator);
 			break;
@@ -291,13 +306,13 @@ bool graph::checkCity(string cityName) {
  * @return True if an edge between the two cities exists in the graph, false otherwise.
  */
 bool graph::checkEdge(string city1, string city2) {
-   list<pair <string, float>> adjacent;
-   getAdjacentList(city1, adjacent);
-   for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
-	   if (city2 == listIterator->first)
-		   return true;
-   }
-   return false;
+	list<pair <string, float>> adjacent;
+	getAdjacentList(city1, adjacent);
+	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
+		if (city2 == listIterator->first)
+			return true;
+	}
+	return false;
 }
 
 graph :: ~graph()
