@@ -143,21 +143,13 @@ int graph::addRoad(string city1, string city2, float distance)
 			if (city2 == listIterator->first)
 				listIterator->second = distance;
 
-		getAdjacentList(city2, adjacent);
-		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
-			if (city1 == listIterator->first)
-				listIterator->second = distance;
-
 	}
+
 	// ===  both exist :) add the road  ===
 	// put city2 in city1 conncections
 	pairHolder.first = city2;
 	pairHolder.second = distance;
 	map.at(city1).push_back(pairHolder);
-
-	// put city1 in city2 conncections
-	pairHolder.first = city1;
-	map.at(city2).push_back(pairHolder);
 
 	return 0;
 }
@@ -222,25 +214,24 @@ int graph::deleteRoad(string city1, string city2)
 
 	// cities exist :) Make sure they're connceted
 	// if there is no road give an error message
+	//----------------move to consol-------------------------
 	if (!checkEdge(city1, city2))
 	{
-		cout << "Ther is no road between " << city1 << " and " << city2 << endl;
+		cout << "Ther is no road from " << city1 << " to " << city2 << endl;
 		return 1;
 	}
+	if (!checkEdge(city2, city1))
+	{
+		cout << "Ther is no road from " << city2 << " to " << city1 << endl;
+		return 1;
+	}
+	////////////////////////////////////////
 
 	// search for city 2 in city 1 connections and delete it
 	for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
 		if (listIterator->first == city2)
 		{
 			map[city1].erase(listIterator);
-			break;
-		}
-
-	// search for city 1 in city 2 connections and delete it
-	for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
-		if (listIterator->first == city1)
-		{
-			map[city2].erase(listIterator);
 			break;
 		}
 
