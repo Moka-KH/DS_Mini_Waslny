@@ -137,7 +137,6 @@ void update(graph& myGraph)
     case 5: 
         return;
     }
-      
 }
 
 
