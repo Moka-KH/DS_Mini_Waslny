@@ -81,7 +81,7 @@ vector<string> path;
  * @return The shortest path vector from the starting vertex to the destination vertex.
  *     
  */
-vector<string> Dijkstra(graph& myMap, string startingNode, string finalDistination, float& totalDistance) {
+float Dijkstra(graph& myMap, string startingNode, string finalDistination, vector<string>& path) {
 
 	/*
 	greater<ipair> makes the queue uses the minimum heap data structure(binary tree)
@@ -89,6 +89,7 @@ vector<string> Dijkstra(graph& myMap, string startingNode, string finalDistinati
 	*/
 	priority_queue<iPair, vector<iPair>, greater<iPair> > uncheckedVertices;
 
+	float totalDistance;
 	int citiesNum = myMap.getVertexNum();
 
 	// shortestPaths is a map that stores the distance from the starting city to any city
@@ -177,6 +178,6 @@ vector<string> Dijkstra(graph& myMap, string startingNode, string finalDistinati
 		// Return the shortest path from the source to the destination
 		totalDistance = shortestPaths[finalDistination];
 	}
-	return path;
+	return totalDistance;
 }
 

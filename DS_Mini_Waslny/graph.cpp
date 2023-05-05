@@ -166,7 +166,7 @@ void graph::addRoad(string city1, string city2, float distance)
 *
 * Return: nothing
 */
-void graph::deleteCity(string cityName, graph& myGraph)
+void graph::deleteCity(string cityName)
 {
 	// erase city if exists otherwise, show message
 	/*if (map.erase(cityName) != 1)
@@ -176,7 +176,7 @@ void graph::deleteCity(string cityName, graph& myGraph)
 		return;
 	}*/
 	//
-	if (!checkCity(cityName, myGraph))
+	if (!checkCity(cityName))
 	{
 		cout << "The city you have entered does not exist :(\n"
 			<< "Make sure you wrote the name right\n";
@@ -189,7 +189,7 @@ void graph::deleteCity(string cityName, graph& myGraph)
 		getAdjacentList(cityName, adjacent);
 		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
 		{
-			deleteRoad(cityName, listIterator->first , myGraph);
+			deleteRoad(cityName, listIterator->first );
 		}
 
 	}
@@ -215,7 +215,7 @@ void graph::deleteCity(string cityName, graph& myGraph)
 *
 * Return: nothing
 */
-void graph::deleteRoad(string city1, string city2, graph & myGraph)
+void graph::deleteRoad(string city1, string city2)
 {
 	// if at least one city doesn't exist
 	if (map.find(city1) == map.end())
@@ -233,7 +233,7 @@ void graph::deleteRoad(string city1, string city2, graph & myGraph)
 		
 		
 		// if there is no road give an error message
-		if (!checkEdge(city1, city2, myGraph))
+		if (!checkEdge(city1, city2))
 		{
 			cout << "Ther is no road between " << city1 << " and " << city2 << endl;
 			return;
@@ -304,7 +304,7 @@ void graph::getAdjacentList(string city, list<pair <string, float>>& adj) {
  * @param cityName The name of the city to check.
  * @return True if a city with the given name exists in the graph, false otherwise.
  */
-bool graph::checkCity(string cityName, graph& myGraph) {
+bool graph::checkCity(string cityName) {
 	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++) {
 		if (cityName == mapIterator->first) {
 			return true;
@@ -320,7 +320,7 @@ bool graph::checkCity(string cityName, graph& myGraph) {
  * @param city2 The name of the second city.
  * @return True if an edge between the two cities exists in the graph, false otherwise.
  */
-bool graph::checkEdge(string city1, string city2, graph & myGraph){
+bool graph::checkEdge(string city1, string city2) {
    list<pair <string, float>> adjacent;
    getAdjacentList(city1, adjacent);
    for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {

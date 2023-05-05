@@ -32,10 +32,10 @@ void update(graph& myGraph)
         bool cityExist;
         cout << "Enter the name of the new city that you want to add it: \n";
         cin >> AddedCity;
-        cityExist = myGraph.checkCity(AddedCity, myGraph);
+        cityExist = myGraph.checkCity(AddedCity);
         if (cityExist) {
             int rechoice;
-            cout << "This city is already exist \n Enter 1 to update again OR Enter 2 to return to the main menu\n";
+            cout << "This city is already exist \nEnter 1 to update again OR Enter 2 to return to the main menu\n";
             cin >> rechoice;
             if (rechoice == 1) {
                 update(myGraph);
@@ -60,10 +60,10 @@ void update(graph& myGraph)
         cout << "Enter the distance between them \n";
         cin >> addedEdgeDistance;
 
-        bool city1Exist = myGraph.checkCity(city1, myGraph);
-        bool city2Exist= myGraph.checkCity(city2, myGraph);
+        bool city1Exist = myGraph.checkCity(city1);
+        bool city2Exist= myGraph.checkCity(city2);
         if (city1Exist == true && city2Exist == true) {
-            bool edgeExist = myGraph.checkEdge(city1, city2, myGraph);
+            bool edgeExist = myGraph.checkEdge(city1, city2);
             if (edgeExist) {
                 int rechoice;
                 cout << "This city is already exist \n Enter 1 to update again OR Enter 2 to return to the main menu\n";
@@ -88,9 +88,9 @@ void update(graph& myGraph)
         bool cityExist;
         cout << "Enter the name of the new city that you want to delete it: \n";
         cin >> DeletedCity;
-        cityExist = myGraph.checkCity(DeletedCity, myGraph);
+        cityExist = myGraph.checkCity(DeletedCity);
         if (cityExist) 
-            myGraph.deleteCity(DeletedCity, myGraph);
+            myGraph.deleteCity(DeletedCity);
         else {
             int rechoice;
             cout << "This city is not exist exist \n Enter 1 to update again OR Enter 2 to return to the main menu\n";
@@ -112,12 +112,12 @@ void update(graph& myGraph)
         cout << "name of city number 2 is:\n";
         cin >> city2;
 
-        bool city1Exist = myGraph.checkCity(city1, myGraph);
-        bool city2Exist = myGraph.checkCity(city2, myGraph);
+        bool city1Exist = myGraph.checkCity(city1);
+        bool city2Exist = myGraph.checkCity(city2);
         if (city1Exist == true && city2Exist == true) {
-            bool edgeExist = myGraph.checkEdge(city1, city2, myGraph);
+            bool edgeExist = myGraph.checkEdge(city1, city2);
             if (edgeExist)
-                myGraph.deleteRoad(city1, city2, myGraph);
+                myGraph.deleteRoad(city1, city2);
             else {
                 int rechoice;
                 cout << "This city is already exist \n Enter 1 to update again OR Enter 2 to return to the main menu\n";
@@ -162,7 +162,7 @@ graph addGraph()
 {
     graph newGraph;
     char choice;
-    cout << " Your Graph is created sucsessfully," << endl
+    cout << "Your Graph is created sucsessfully," << endl
         << "if you want to update it by adding cities and roads to it entre 'y', " << endl
         << "Else if you want to return to the main menu entre 'n' " << endl;
     cin >> choice; 
@@ -196,18 +196,25 @@ void Find(graph& myMap)
          << "Your destination city is:";
     cin >> city2;
     vector<string> shortestPathVector;
-    shortestPathVector = Dijkstra(myMap, city1, city2, theShortestDistance);
-    
-    cout << "=============================================================" << endl
-         << "The total distance of the shortest path between " << city1 << " and " << city2 << "is = " << theShortestDistance;
-    
-
-    vector<string>::iterator vectorIt = shortestPathVector.begin();
-
-    while (vectorIt != shortestPathVector.end())
+    theShortestDistance = Dijkstra(myMap, city1, city2, shortestPathVector);
+    if (theShortestDistance == -1) 
     {
-        cout << *vectorIt << " -> ";
-        vectorIt++;
+        cout << "=============================================================" << endl
+            << "There is no path between  " << city1 << " and " << city2 << endl;
     }
-    cout << endl;
+    else 
+    {
+        cout << "=============================================================" << endl
+            << "The total distance of the shortest path between " << city1 << " and " << city2 << "is = " << theShortestDistance;
+
+
+        vector<string>::iterator vectorIt = shortestPathVector.begin();
+
+        while (vectorIt != shortestPathVector.end())
+        {
+            cout << *vectorIt << " -> ";
+            vectorIt++;
+        }
+        cout << endl;
+    }
 }

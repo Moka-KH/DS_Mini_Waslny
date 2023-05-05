@@ -33,13 +33,14 @@ public:
 	void addCity(string newCity, string adjCity, float distance);
 	void addRoad(string city1, string city2, float distance);
 
-	void deleteCity(string cityName, graph& myGraph);
-	void deleteRoad(string city1, string city2, graph& myGraph);
+	void deleteCity(string cityName);
+	void deleteRoad(string city1, string city2);
 
 	int getVertexNum();
 	void display();
 	//Dina and Mayar
 	void getAdjacentList(string city, list<pair <string, float>>& adj);
-	bool checkCity(string cityName, graph& myGraph);
-	bool checkEdge(string city1,string city2, graph& myGraph);
+	bool checkCity(string cityName);
+	bool checkEdge(string city1,string city2);
+
 };
