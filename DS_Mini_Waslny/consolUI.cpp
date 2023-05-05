@@ -2,6 +2,7 @@
 #include<iostream>
 #include "graph.h"
 #include "algorithms.h"
+#include "consolUI.h"
 
 using namespace std;
 
@@ -17,9 +18,9 @@ void update(graph& myGraph)
     int choice;
     cout << "Enter An Option (1-5):\n";
     cout << "1. Add New City\n";
-    cout << "2. Add New Edge\n";
+    cout << "2. Add New Road\n";
     cout << "3. Delete City\n";
-    cout << "4. Delete Edge\n";
+    cout << "4. Delete Road\n";
     cout << "5. Return to the Main menu\n";
     cin >> choice;
 
@@ -100,52 +101,10 @@ void update(graph& myGraph)
         cout << "name of city number 2 is:\n";
         cin >> city2;
 
-        /*
-        * road cases :
-        * 1 road 
-        * 2 roads with different weights ->directed
-        * 2 roads with the same weight ->unddirected
-        * 
-        * 1 road:
-        * 1-check it is from city1 to city2 or other wise 
-        * 2-delet road
-        * 
-        * 2 roads with the same weight:
-        * 1-check if they have the same weight
-        * 2-delete on both cities (call it twice)
-        * 
-        * 2 roads with different weights
-        * 1-ask user delete road between city1 and city2 or other wise or both
-        */
-
-        // 1 road 
-        if (myGraph.checkEdge(city1, city2))
+        if (myGraph.deleteRoad(city1,city2))
         {
-            if (myGraph.deleteRoad(city1, city2))
-                update(myGraph);
-        }
-        else if (myGraph.checkEdge(city2, city1))
-        {
-            if (myGraph.deleteRoad(city2, city1))
-                update(myGraph);
-        }
-        else
-        {
-            cout << "There is no road between " << city1 << " and " << city2 << ":(\n";
-        }
-
-        // 2 roads with the same weight
-        if (myGraph.checkEdge(city1, city2))
-        {
-            if (myGraph.checkEdge(city2, city1))
-            {
-
-            }
-        }
-
-
-       
-
+            update(myGraph);
+        }       
         break;
     }
     case 5:
@@ -291,7 +250,21 @@ void intro()
                 }
                 else if (choice == 4)
                 {
-                    // traverse goes here 
+                    string startCity;
+                    cout << "Enter the start city name:\n";
+                    cin >> startCity;
+                    int traverseChoice;
+                    cout << "press 0 if you want to traverse using DFS\n"
+                         << "press 1 if you want to traverse using BFS\n";
+                    cin >> traverseChoice;
+                    
+                    if (BreadthFS == traverseChoice)
+                        Traverse(BreadthFS, myGraph, startCity);
+                    else if (DepthFS == traverseChoice)
+                        Traverse(DepthFS, myGraph, startCity);
+                    else
+                        cout << "Invalid Choice please try again :(\n";
+
                 }
                 else if (choice == 5)
                 {
@@ -319,3 +292,17 @@ void intro()
 
     } while (true);
 }
+
+
+void Traverse(traverse parameter, graph& mygraph, string startCity)
+{
+    if (parameter == DepthFS)
+    {
+        DFS(mygraph,startCity);
+    }
+    else
+    {
+        BFS(startCity, mygraph);
+    }
+}
+

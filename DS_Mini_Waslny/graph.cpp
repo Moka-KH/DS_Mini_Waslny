@@ -39,6 +39,14 @@ int graph::getVertexNum()
 {
 	return vertexNum;
 }
+/**
+* setVertexNum - set #vertices
+* Return: nothing
+*/
+void graph::setVertexNum(int noVertx)
+{
+	vertexNum= noVertx;
+}
 
 /**
 * addCity - Adds a new City
@@ -212,28 +220,94 @@ int graph::deleteRoad(string city1, string city2)
 		return 1;
 	}
 
-	// cities exist :) Make sure they're connceted
-	// if there is no road give an error message
-	//----------------move to consol-------------------------
-	if (!checkEdge(city1, city2))
+	// 1 road 
+	if (checkEdge(city1, city2) && !checkEdge(city2, city1))
 	{
-		cout << "Ther is no road from " << city1 << " to " << city2 << endl;
-		return 1;
+		for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+			if (listIterator->first == city2)
+			{
+				map[city1].erase(listIterator);
+				break;
+			}
 	}
-	if (!checkEdge(city2, city1))
+	else if (checkEdge(city2, city1) && !checkEdge(city1, city2))
 	{
-		cout << "Ther is no road from " << city2 << " to " << city1 << endl;
-		return 1;
+		for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
+			if (listIterator->first == city1)
+			{
+				map[city2].erase(listIterator);
+				break;
+			}
 	}
-	////////////////////////////////////////
-
-	// search for city 2 in city 1 connections and delete it
-	for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
-		if (listIterator->first == city2)
+	// 2 roads with the same weight
+	else if (checkEdge(city1, city2) && checkEdge(city2, city1))
+	{
+		if (getEdgeWieght(city1, city2) == getEdgeWieght(city2, city1))
 		{
-			map[city1].erase(listIterator);
-			break;
+			for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+				if (listIterator->first == city2)
+				{
+					map[city1].erase(listIterator);
+					break;
+				}
+
+			for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
+				if (listIterator->first == city1)
+				{
+					map[city2].erase(listIterator);
+					break;
+				}
 		}
+		// 2 roads with different weights
+		else
+		{
+			int choice;
+			cout << "Press 1 if you want to delete road from " << city1 << " to " << city2 << "\n"
+				<< "Press 2 if you want to delete road from " << city2 << " to " << city1 << "\n"
+				<< "Press 3 if you want to delete  both roads \n";
+			cin >> choice;
+
+			if (choice == 1)
+			{
+				for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+					if (listIterator->first == city2)
+					{
+						map[city1].erase(listIterator);
+						break;
+					}
+			}
+			else if (choice == 2)
+			{
+				for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
+					if (listIterator->first == city1)
+					{
+						map[city2].erase(listIterator);
+						break;
+					}
+			}
+			else
+			{
+				for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+					if (listIterator->first == city2)
+					{
+						map[city1].erase(listIterator);
+						break;
+					}
+
+				for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
+					if (listIterator->first == city1)
+					{
+						map[city2].erase(listIterator);
+						break;
+					}
+			}
+		}
+	}
+	else
+	{
+		cout << "There is no road between " << city1 << " and " << city2 << ":(\n";
+		return 1;
+	}
 
 	return 0;
 }
@@ -298,13 +372,51 @@ bool graph::checkCity(string cityName) {
  * @return True if an edge between the two cities exists in the graph, false otherwise.
  */
 bool graph::checkEdge(string city1, string city2) {
+
+	if (checkCity(city1))
+	{
+		if (checkCity(city2))
+		{
+			list<pair <string, float>> adjacent;
+			getAdjacentList(city1, adjacent);
+			for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
+				if (city2 == listIterator->first)
+					return true;
+				else
+				{
+					cout << "There is no road from " << city1 << " to " << city2 << " :(\n";
+					return false;
+				}
+			}
+		}
+		else
+		{
+			cout << city2 << " does not exists :(\n";
+			return false;
+		}	
+	}
+	else
+	{
+		cout << city1 << " does not exists :(\n";
+		return false;
+	}
+}
+
+/**
+ * Gets distance between two cities with the given names.
+ *
+ * @param city1 The name of the first city.
+ * @param city2 The name of the second city.
+ * @return distance if an edge between the two cities exists in the graph, -1 otherwise.
+ */
+float graph::getEdgeWieght(string city1, string city2) {
 	list<pair <string, float>> adjacent;
 	getAdjacentList(city1, adjacent);
 	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
 		if (city2 == listIterator->first)
-			return true;
+			return listIterator->second;
 	}
-	return false;
+	return -1;
 }
 
 graph :: ~graph()
@@ -312,48 +424,5 @@ graph :: ~graph()
 	map.clear();
 }
 
-void graph::writeGraphToFile(graph& g, const string& filename) {
-	ofstream outFile(filename);
-	if (!outFile.is_open()) {
-		cout << "Unable to open file for writing." << endl;
-		return;
-	}
-	// write the number of vertices in the graph
-	outFile << g.vertexNum << endl;
-	// iterate over each city and its adjacent list
-	for (const auto& cityPair : g.map) {
-		// write the city name
-		outFile << cityPair.first << endl;
-		// write the number of adjacent vertices
-		outFile << cityPair.second.size() << endl;
-		// iterate over each adjacent vertex and its distance
-		for (const auto& adjPair : cityPair.second) {
-			// write the adjacent city name and its distance
-			outFile << adjPair.first << " " << adjPair.second << endl;
-		}
-	}
-	outFile.close();
-}
-void graph::readGraphFromFile(graph& g, const string& filename) {
-	ifstream inFile(filename);
-	if (!inFile.is_open()) {
-		cout << "Unable to open file for reading." << endl;
-		return;
-	}
-	// read the number of vertices in the graph
-	inFile >> g.vertexNum;
-	string cityName, adjCityName;
-	float distance;
-	// read each city and its adjacent list
-	while (inFile >> cityName) {
-		int adjNum;
-		inFile >> adjNum;
-		// iterate over each adjacent vertex and its distance
-		for (int i = 0; i < adjNum; i++) {
-			inFile >> adjCityName >> distance;
-			// add the adjacent city and its distance to the map
-			g.addCity(cityName, adjCityName, distance);
-		}
-	}
-	inFile.close();
-}
+
+

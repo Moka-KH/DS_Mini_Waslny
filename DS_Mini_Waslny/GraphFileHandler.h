@@ -1,11 +1,8 @@
 #pragma once
 #include<fstream>
 #include"graph.h"
-class GraphFileHandler
-{
-#include <fstream>
 
+	void writeGraphToFile(graph& g, const string& filename);
+	void readGraphFromFile(graph& g, const string& filename);
 
-
-};
 

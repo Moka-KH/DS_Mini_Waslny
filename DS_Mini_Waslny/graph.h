@@ -37,12 +37,14 @@ public:
 	int deleteRoad(string city1, string city2);
 
 	int getVertexNum();
+	void setVertexNum(int);
 	void display();
 	//Dina and Mayar
 	void getAdjacentList(string city, list<pair <string, float>>& adj);
 	bool checkCity(string cityName);
 	bool checkEdge(string city1,string city2);
-	void writeGraphToFile(graph& g, const string& filename);
-	void readGraphFromFile(graph& g, const string& filename);
+	float getEdgeWieght(string city1, string city2);
+	/*void writeGraphToFile(graph& g, const string& filename);
+	void readGraphFromFile(graph& g, const string& filename);*/
 
 };
