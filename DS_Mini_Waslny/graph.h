@@ -29,12 +29,12 @@ public:
 	graph();
 	~graph();
 
-	void addCity(string newCity);
-	void addCity(string newCity, string adjCity, float distance);
-	void addRoad(string city1, string city2, float distance);
+	int addCity(string newCity);
+	int addCity(string newCity, string adjCity, float distance);
+	int addRoad(string city1, string city2, float distance);
 
-	void deleteCity(string cityName);
-	void deleteRoad(string city1, string city2);
+	int deleteCity(string cityName);
+	int deleteRoad(string city1, string city2);
 
 	int getVertexNum();
 	void display();

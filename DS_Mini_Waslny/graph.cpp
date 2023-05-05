@@ -47,28 +47,24 @@ int graph::getVertexNum()
 *			   else it adds a new vertex for the city with an empty list of
 *			   adjacent vertices
 *
-* Return: nothing
+* Return: 0 when it ends successfully, 1 otherwise
 */
-void graph::addCity(string newCity)
+int graph::addCity(string newCity)
 {
-	mapIterator = map.find(newCity);
-
 	// if it already exists
-	if (mapIterator != map.end())
-		cout << "City " << newCity << "already exists = | \n";
-	else //add the new city
+	if (checkCity(newCity))
 	{
-		//empty list
-		list <pair <string, float>> newList;
-
-		//make new list for the new city
-		map[newCity] = newList;
-
-		//increment number of cities
-		vertexNum++;
-
-		cout << newCity << " is Added Successfully =)\n";
+		cout << "City " << newCity << "already exists = | \n";
+		return 1;
 	}
+		
+	//add the new city and give it a list as a value in the map
+	list <pair <string, float>> newList;
+	map[newCity] = newList;
+	vertexNum++;
+
+	cout << newCity << " is Added Successfully =)\n";
+	return 0;
 }
 
 /**
@@ -82,35 +78,33 @@ void graph::addCity(string newCity)
 *			   else it adds a new vertex for the city and calls addRoad()
 *			   to connect them
 *
-* Return: nothing
+* Return: 0 when it ends successfully, 1 otherwise
 */
-void graph::addCity(string newCity, string adjCity, float distance)
+int graph::addCity(string newCity, string adjCity, float distance)
 {
-	mapIterator = map.find(newCity);
-
-	bool validInput = true;
 	// if the vetex to be added already exists
-	if (mapIterator != map.end())
+	if (checkCity(newCity))
 	{
 		cout << "City " << newCity << " already exists =| \n";
-		validInput = false;
-	}
-	// if the vertex we'r connecting to doesn't exist
-	if (map.find(adjCity) == map.end())
-	{
-		cout << "City " << adjCity << " doesn't exist. You can't link to it\n";
-		validInput = false;
+		return 1;
 	}
 
-	// add the new city
-	if (validInput)
+	// if the vertex we'are connecting to doesn't exist
+	if (!checkCity(adjCity))
 	{
-		// empty list
-		list <pair <string, float>> newList;
-		// make new list for the new city
-		map[newCity] = newList;
-		addRoad(newCity, adjCity, distance);
+		cout << "City " << adjCity << " doesn't exist. You can't link to it\n";
+		return 1;
 	}
+
+	// reaching here means the input is valid
+
+	// add the new city and give it a list as a value in the map
+	list <pair <string, float>> newList;
+	map[newCity] = newList;
+	
+	// link it with city2
+	addRoad(newCity, adjCity, distance);
+	return 0;
 }
 
 /**
@@ -122,38 +116,34 @@ void graph::addCity(string newCity, string adjCity, float distance)
 * Description: makes sure both of them exist.
 *			   if so, adds the road
 *
-* Return: nothing
+* Return: 0 when it ends successfully, 1 otherwise
 */
-void graph::addRoad(string city1, string city2, float distance)
+int graph::addRoad(string city1, string city2, float distance)
 {
-
-	bool validInput = true;
 	// if the first one doesn't exist
-	if (map.find(city1) == map.end())
+	if (!checkCity(city1))
 	{
 		cout << "City: " << city1 << " doesn't exist\n";
-		validInput = false;
+		return 1;
 	}
 	// if the second one doesnt exist
-	if (map.find(city2) == map.end())
+	if (!checkCity(city2))
 	{
 		cout << "City: " << city2 << " doesn't exist\n";
-		validInput = false;
+		return 1;
 	}
 
 	// ===  both exist :) add the road  ===
-	if (validInput)
-	{
-		// keep the city to be connected to & distance in a pair holder
-		pairHolder.first = city2;
-		pairHolder.second = distance;
+	// put city2 in city1 conncections
+	pairHolder.first = city2;
+	pairHolder.second = distance;
+	map.at(city1).push_back(pairHolder);
 
-		// then add this pair holder to the linked list
-		map.at(city1).push_back(pairHolder);
+	// put city1 in city2 conncections
+	pairHolder.first = city1;
+	map.at(city2).push_back(pairHolder);
 
-		pairHolder.first = city1;
-		map.at(city2).push_back(pairHolder);
-	}
+	return 0;
 }
 
 /**
@@ -161,44 +151,32 @@ void graph::addRoad(string city1, string city2, float distance)
 * @cityName: City Name to be deleted
 *
 * Description: if the city doesn't exist, it gives an Error Message
-*			   else it removes the city vertex and the list of
-*			   adjacent vertices
+*			   else it removes the list of adjacent vertices
+*			   and finally removes the node itself
 *
-* Return: nothing
+* Return: 0 when it ends successfully, 1 otherwise
 */
-void graph::deleteCity(string cityName)
+int graph::deleteCity(string cityName)
 {
-	// erase city if exists otherwise, show message
-	/*if (map.erase(cityName) != 1)
-	{
-		cout << "The city you have entered does not exist :(\n"
-			<< "Make sure you wrote the name right\n";
-		return;
-	}*/
-	//
 	if (!checkCity(cityName))
 	{
-		cout << "The city you have entered does not exist :(\n"
+		cout << "city " << cityName << " does not exist.. I can't delete it :(\n"
 			<< "Make sure you wrote the name right\n";
-		return;
+		return 1;
 	}
-	else
-	{
-		// delete adjacent cities
-		list<pair <string, float>> adjacent;
-		getAdjacentList(cityName, adjacent);
-		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
-		{
-			deleteRoad(cityName, listIterator->first );
-		}
 
-	}
+	// reaching here means it exists
+	// delete its adjacent cities
+	list<pair <string, float>> adjacent;
+	getAdjacentList(cityName, adjacent);
+	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
+		deleteRoad(cityName, listIterator->first );
 
 	// remove city 
 	map.erase(cityName);
-
-	// decrement number of cities
 	vertexNum--;
+
+	return 0;
 }
 
 /**
@@ -207,59 +185,51 @@ void graph::deleteCity(string cityName)
 * @city2: second city
 *
 * Description: first makes sure that cities exist. if so,
-*			   it searches in city1 connections for city2,
-*			   if it isn't there, gives a message NO edge between them
-*			   else (it's there), it deletes it
+*			   it makes sure they're conncected. if so,
+*			   it deletes the connection
 *
-*			   note: it assumes the graph is undirected
-*
-* Return: nothing
+* Return: 0 when it ends successfully, 1 otherwise
 */
-void graph::deleteRoad(string city1, string city2)
+int graph::deleteRoad(string city1, string city2)
 {
 	// if at least one city doesn't exist
-	if (map.find(city1) == map.end())
+	if (!checkCity(city1))
 	{
 		cout << city1 << " doesn't exist :|\n";
-		return;
+		return 1;
 	}
-	else if (map.find(city2) == map.end())
+	if (!checkCity(city2))
 	{
 		cout << city2 << " doesn't exist :|\n";
-		return;
+		return 1;
 	}
-	else // cities exist. Search for city2 in city1 connections
+	
+	// cities exist :) Make sure they're connceted
+	// if there is no road give an error message
+	if (!checkEdge(city1, city2))
 	{
-		
-		
-		// if there is no road give an error message
-		if (!checkEdge(city1, city2))
+		cout << "Ther is no road between " << city1 << " and " << city2 << endl;
+		return 1;
+	}
+
+	// search for city 2 in city 1 connections and delete it
+	for ( listIterator =map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+		if (listIterator->first == city2)
 		{
-			cout << "Ther is no road between " << city1 << " and " << city2 << endl;
-			return;
+			map[city1].erase(listIterator);
+			break;
+		}
+		
+	// search for city 1 in city 2 connections and delete it
+	for ( listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
+		if (listIterator->first == city1) 
+		{
+			map[city2].erase(listIterator);
+			break;
 		}
 
-
-		// search for city 2 in city 1 connections and delete it
-		for ( listIterator =map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
-			if (listIterator->first == city2)
-			{
-				map[city1].erase(listIterator);
-				break;
-			}
-		
-		// search for city 1 in city 2 connections and delete it
-		for ( listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
-			if (listIterator->first == city1) 
-			{
-				map[city2].erase(listIterator);
-				break;
-			}
-				
-		
-	}
+	return 0;
 }
-
 
 void graph::display()
 {
