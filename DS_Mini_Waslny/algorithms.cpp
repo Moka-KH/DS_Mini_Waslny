@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <map>
 #include <unordered_map>
@@ -19,7 +20,7 @@ using namespace std;
 * 
 * Return: nothing
 */
-void DFS(graph graph, string startVertex)
+void DFS(graph& graph, string startVertex)
 {
 	unordered_map<string, bool> visited;
 
@@ -42,7 +43,7 @@ void DFS(graph graph, string startVertex)
 		NodesToCheckNeighbors.pop();
 
 		// get the adjacency list of the current vertex
-		list<pair<string, int>> adjacencyList;
+		list<pair<string, float>> adjacencyList;
 		graph.getAdjacentList(currentNode, adjacencyList);
 
 		// iterate over the adjacent vertices of temp
@@ -64,8 +65,8 @@ void DFS(graph graph, string startVertex)
 
 // ================================================================================
 
-typedef pair<int, string> iPair;
-const int INFINITE = INT_MAX;
+typedef pair<float, string> iPair;
+const float INFINITE = INT_MAX;
 // create a vector to store the cities from the currentLocation to finalDistination
 vector<string> path;
 
@@ -75,12 +76,12 @@ vector<string> path;
  * @param myMap A graphDS object representing the graph to search for the shortest path.
  * @param currentLocation The starting vertex for the shortest path search.
  * @param finalDistination The destination vertex for the shortest path search.
+ * @param totalDistance The shortest distance between the two cities 
  *
- * @return The shortest distance from the starting vertex to the destination vertex.
- *         If the destination is unreachable, returns -1.
- *         The shortest path from the starting vertex to the destination vertex is stored in the path vector.
+ * @return The shortest path vector from the starting vertex to the destination vertex.
+ *     
  */
-vector<string> Dijkstra(graph myMap, string startingNode, string finalDistination, int& totalDistance) {
+vector<string> Dijkstra(graph& myMap, string startingNode, string finalDistination, float& totalDistance) {
 
 	/*
 	greater<ipair> makes the queue uses the minimum heap data structure(binary tree)
@@ -92,11 +93,11 @@ vector<string> Dijkstra(graph myMap, string startingNode, string finalDistinatio
 
 	// shortestPaths is a map that stores the distance from the starting city to any city
 	// (the table row in video)
-	map<string, int> shortestPaths;
+	map<string, float> shortestPaths;
 
 
 	// set all shortest paths to infinity
-	unordered_map <string, list<pair <string, int>>>::iterator mapIterator;
+	unordered_map <string, list<pair <string, float>>>::iterator mapIterator;
 	for (mapIterator = myMap.map.begin(); mapIterator != myMap.map.end(); mapIterator++)
 		shortestPaths.insert(make_pair(mapIterator->first, INFINITE));
 
@@ -116,17 +117,17 @@ vector<string> Dijkstra(graph myMap, string startingNode, string finalDistinatio
 		uncheckedVertices.pop();
 
 		// store the its adjacent cities in a list
-		list<pair <string, int>> adjacentVertices;
+		list<pair <string, float>> adjacentVertices;
 		myMap.getAdjacentList(minDistCity, adjacentVertices);
 
 		// an iterator for this list
-		list <pair <string, int>>::iterator listIterator;
+		list <pair <string, float>>::iterator listIterator;
 
 		// iterate over this list to find a better path
 		for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
 
 			string cityName = listIterator->first;
-			int weight = listIterator->second;
+			float weight = listIterator->second;
 
 			//check if the path that I have in my array was greater than the new one ->update ,else don't change
 			// if the node at which I'm pointing at this iteration is a better path
@@ -156,13 +157,13 @@ vector<string> Dijkstra(graph myMap, string startingNode, string finalDistinatio
 		// Backtrack from the destination to the source to get the shortest path
 		while (current != startingNode) {
 
-			list<pair <string, int>> adjacentVertices;
+			list<pair <string, float>> adjacentVertices;
 			myMap.getAdjacentList(current, adjacentVertices);
-			list <pair <string, int>>::iterator listIterator;
+			list <pair <string, float>>::iterator listIterator;
 			for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
 
 				string adjVertex = listIterator->first;
-				int weight = listIterator->second;
+				float weight = listIterator->second;
 				if (shortestPaths[current] == shortestPaths[adjVertex] + weight) {
 					current = adjVertex;
 					path.push_back(current);

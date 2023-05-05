@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <string.h>
 #include <utility>
@@ -58,7 +59,7 @@ void graph::addCity(string newCity)
 	else //add the new city
 	{
 		//empty list
-		list <pair <string, int>> newList;
+		list <pair <string, float>> newList;
 
 		//make new list for the new city
 		map[newCity] = newList;
@@ -83,7 +84,7 @@ void graph::addCity(string newCity)
 *
 * Return: nothing
 */
-void graph::addCity(string newCity, string adjCity, int distance)
+void graph::addCity(string newCity, string adjCity, float distance)
 {
 	mapIterator = map.find(newCity);
 
@@ -105,7 +106,7 @@ void graph::addCity(string newCity, string adjCity, int distance)
 	if (validInput)
 	{
 		// empty list
-		list <pair <string, int>> newList;
+		list <pair <string, float>> newList;
 		// make new list for the new city
 		map[newCity] = newList;
 		addRoad(newCity, adjCity, distance);
@@ -123,7 +124,7 @@ void graph::addCity(string newCity, string adjCity, int distance)
 *
 * Return: nothing
 */
-void graph::addRoad(string city1, string city2, int distance)
+void graph::addRoad(string city1, string city2, float distance)
 {
 
 	bool validInput = true;
@@ -165,7 +166,7 @@ void graph::addRoad(string city1, string city2, int distance)
 *
 * Return: nothing
 */
-void graph::deleteCity(string cityName)
+void graph::deleteCity(string cityName, graph& myGraph)
 {
 	// erase city if exists otherwise, show message
 	/*if (map.erase(cityName) != 1)
@@ -175,7 +176,7 @@ void graph::deleteCity(string cityName)
 		return;
 	}*/
 	//
-	if (!checkCity(cityName)) 
+	if (!checkCity(cityName, myGraph))
 	{
 		cout << "The city you have entered does not exist :(\n"
 			<< "Make sure you wrote the name right\n";
@@ -184,11 +185,11 @@ void graph::deleteCity(string cityName)
 	else
 	{
 		// delete adjacent cities
-		list<pair <string, int>> adjacent;
+		list<pair <string, float>> adjacent;
 		getAdjacentList(cityName, adjacent);
 		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
 		{
-			deleteRoad(cityName, listIterator->first);
+			deleteRoad(cityName, listIterator->first , myGraph);
 		}
 
 	}
@@ -214,7 +215,7 @@ void graph::deleteCity(string cityName)
 *
 * Return: nothing
 */
-void graph::deleteRoad(string city1, string city2)
+void graph::deleteRoad(string city1, string city2, graph & myGraph)
 {
 	// if at least one city doesn't exist
 	if (map.find(city1) == map.end())
@@ -232,7 +233,7 @@ void graph::deleteRoad(string city1, string city2)
 		
 		
 		// if there is no road give an error message
-		if (!checkEdge(city1, city2)) 
+		if (!checkEdge(city1, city2, myGraph))
 		{
 			cout << "Ther is no road between " << city1 << " and " << city2 << endl;
 			return;
@@ -262,7 +263,7 @@ void graph::deleteRoad(string city1, string city2)
 
 void graph::display()
 {
-	cout << "\nElements : \n";
+	cout << "\n The elements in this Graph are: \n";
 	//display the key value once
 	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++)
 	{
@@ -270,14 +271,16 @@ void graph::display()
 		// itr->first stores the key part and
 		// itr->second stores the value part
 
-		cout << mapIterator->first << endl;
+		cout << "City: " << mapIterator->first << endl;
+		cout << "Adjacent cities are: " << endl;
+
 
 		//display the linked list compmnents "the value of the map's key"
 		for (listIterator = mapIterator->second.begin(); listIterator != mapIterator->second.end(); ++listIterator)
 		{
-			cout << (*listIterator).first << "  " << (*listIterator).second << endl;
+			cout << (*listIterator).first << " ( Distance =  " << (*listIterator).second << " )" << endl;
 		}
-		cout << "\t\t\t=====================================" << endl;
+		cout << "\t\t\t=======================================================================" << endl;
 	}
 }
 
@@ -290,7 +293,7 @@ void graph::display()
 *
 * Return: nothing
 */
-void graph::getAdjacentList(string city, list<pair <string, int>>& adj) {
+void graph::getAdjacentList(string city, list<pair <string, float>>& adj) {
 	mapIterator = map.find(city);
 	adj = mapIterator->second;
 }
@@ -301,7 +304,7 @@ void graph::getAdjacentList(string city, list<pair <string, int>>& adj) {
  * @param cityName The name of the city to check.
  * @return True if a city with the given name exists in the graph, false otherwise.
  */
-bool graph::checkCity(string cityName) {
+bool graph::checkCity(string cityName, graph& myGraph) {
 	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++) {
 		if (cityName == mapIterator->first) {
 			return true;
@@ -317,8 +320,8 @@ bool graph::checkCity(string cityName) {
  * @param city2 The name of the second city.
  * @return True if an edge between the two cities exists in the graph, false otherwise.
  */
-bool graph::checkEdge(string city1, string city2){
-   list<pair <string, int>> adjacent;
+bool graph::checkEdge(string city1, string city2, graph & myGraph){
+   list<pair <string, float>> adjacent;
    getAdjacentList(city1, adjacent);
    for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
 	   if (city2 == listIterator->first)
