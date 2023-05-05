@@ -10,6 +10,9 @@
 #include <climits>
 #include "graph.h"
 #include "algorithms.h"
+#include <string.h>
+#include <list>
+#include<queue>
 
 using namespace std;
 
@@ -64,7 +67,43 @@ void DFS(graph& graph, string startVertex)
 }
 
 // ================================================================================
+void BFS(string startCity, graph graph)
+{
+	// mark all vertices as not visited
+	unordered_map<string, bool> visited;
+	for (auto& x : graph.map)
+		visited[x.first] = false;
 
+	// create a queue for BFS
+	queue<string> queue;
+
+	// mark the current node as visited and enqueue it
+	visited[startCity] = true;
+	queue.push(startCity);
+
+	cout << "BFS Traversal Starting From " << startCity << ":\n";
+
+	while (!queue.empty())
+	{
+		// dequeue a vertex from queue and print it
+		startCity = queue.front();
+		cout << startCity << " ";
+
+		// get all adjacent vertices of the dequeued vertex startCity
+		// if an adjacent vertex has not been visited, mark it visited and enqueue it
+		for (auto& adj : graph.map[startCity])
+		{
+			if (!visited[adj.first])
+			{
+				visited[adj.first] = true;
+				queue.push(adj.first);
+			}
+		}
+		// dequeue the visited vertex from the queue
+		queue.pop();
+	}
+	cout << endl;
+}
 typedef pair<float, string> iPair;
 const float INFINITE = INT_MAX;
 // create a vector to store the cities from the currentLocation to finalDistination
