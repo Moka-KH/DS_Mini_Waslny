@@ -174,7 +174,17 @@ void graph::deleteCity(string cityName)
 			<< "Make sure you wrote the name right\n";
 		return;
 	}
-	//decrement number of cities
+	// delete adjacent cities
+	list<pair <string, int>> adjacent;
+	getAdjacentList(cityName, adjacent);
+	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) 
+	{
+		deleteRoad(cityName, listIterator->first);
+	}
+	// remove city 
+
+
+	// decrement number of cities
 	vertexNum--;
 }
 
@@ -207,17 +217,28 @@ void graph::deleteRoad(string city1, string city2)
 	}
 	else // cities exist. Search for city2 in city1 connections
 	{
-		listIterator = map.at(city1).begin(); // search starting point
+		//listIterator = map.at(city1).begin(); // search starting point
 
-		list <pair <string, int>>::iterator listEnd;
-		listEnd = map.at(city1).end(); // search breaking point
-
-		if (listIterator == listEnd)
+		//list <pair <string, int>>::iterator listEnd;
+		//listEnd = map.at(city1).end(); // search breaking point
+		
+		/*if (listIterator == listEnd)
 		{
 			map.at(city1).erase(listIterator);
 			cout << "deleted it :)\n";
 			return;
+		}*/
+		
+		for (listIterator = map[city1].begin(); listIterator != map[city1].end(); listIterator++)
+		{
+			if (listIterator->first == city2) {
+				map[city1].erase(listIterator);
+			}
+
 		}
+
+
+
 		for (; listIterator != listEnd; listIterator++)
 		{
 			if ((*listIterator).first == city2) // when you find it, delete it
@@ -253,6 +274,8 @@ void graph::display()
 	}
 }
 
+
+//DINA AND MAYAR
 /**
 * getAdj - gives the adjacency list of the given node
 * @city: the city to get its adjaceny list
@@ -263,6 +286,38 @@ void graph::display()
 void graph::getAdjacentList(string city, list<pair <string, int>>& adj) {
 	mapIterator = map.find(city);
 	adj = mapIterator->second;
+}
+
+/**
+ * Checks if a city with the given name exists in the graph.
+ *
+ * @param cityName The name of the city to check.
+ * @return True if a city with the given name exists in the graph, false otherwise.
+ */
+bool graph::checkCity(string cityName) {
+	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++) {
+		if (cityName == mapIterator->first) {
+			return true;
+		}
+		return false;
+	}
+}
+
+/**
+ * Checks if an edge between two cities with the given names exists in the graph.
+ *
+ * @param city1 The name of the first city.
+ * @param city2 The name of the second city.
+ * @return True if an edge between the two cities exists in the graph, false otherwise.
+ */
+bool graph::checkEdge(string city1, string city2){
+   list<pair <string, int>> adjacent;
+   getAdjacentList(city1, adjacent);
+   for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
+	   if (city2 == listIterator->first)
+		   return true;
+   }
+   return false;
 }
 
 graph :: ~graph()

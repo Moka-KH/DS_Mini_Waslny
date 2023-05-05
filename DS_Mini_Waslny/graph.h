@@ -37,6 +37,10 @@ public:
 	void deleteRoad(string city1, string city2);
 
 	int getVertexNum();
-	void getAdjacentList(string city, list<pair <string, int>>& adj);
 	void display();
+	//Dina and Mayar
+	void getAdjacentList(string city, list<pair <string, int>>& adj);
+	bool checkCity(string cityName);
+	bool checkEdge(string city1,string city2);
+	
 };

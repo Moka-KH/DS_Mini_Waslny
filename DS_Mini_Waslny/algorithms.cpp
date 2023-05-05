@@ -176,4 +176,6 @@ vector<string> Dijkstra(graph myMap, string startingNode, string finalDistinatio
 		// Return the shortest path from the source to the destination
 		totalDistance = shortestPaths[finalDistination];
 	}
+	return path;
 }
+
