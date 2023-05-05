@@ -168,21 +168,33 @@ void graph::addRoad(string city1, string city2, int distance)
 void graph::deleteCity(string cityName)
 {
 	// erase city if exists otherwise, show message
-	if (map.erase(cityName) != 1)
+	/*if (map.erase(cityName) != 1)
+	{
+		cout << "The city you have entered does not exist :(\n"
+			<< "Make sure you wrote the name right\n";
+		return;
+	}*/
+	//
+	if (!checkCity(cityName)) 
 	{
 		cout << "The city you have entered does not exist :(\n"
 			<< "Make sure you wrote the name right\n";
 		return;
 	}
-	// delete adjacent cities
-	list<pair <string, int>> adjacent;
-	getAdjacentList(cityName, adjacent);
-	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) 
+	else
 	{
-		deleteRoad(cityName, listIterator->first);
-	}
-	// remove city 
+		// delete adjacent cities
+		list<pair <string, int>> adjacent;
+		getAdjacentList(cityName, adjacent);
+		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
+		{
+			deleteRoad(cityName, listIterator->first);
+		}
 
+	}
+
+	// remove city 
+	map.erase(cityName);
 
 	// decrement number of cities
 	vertexNum--;
@@ -217,38 +229,33 @@ void graph::deleteRoad(string city1, string city2)
 	}
 	else // cities exist. Search for city2 in city1 connections
 	{
-		//listIterator = map.at(city1).begin(); // search starting point
-
-		//list <pair <string, int>>::iterator listEnd;
-		//listEnd = map.at(city1).end(); // search breaking point
 		
-		/*if (listIterator == listEnd)
+		
+		// if there is no road give an error message
+		if (!checkEdge(city1, city2)) 
 		{
-			map.at(city1).erase(listIterator);
-			cout << "deleted it :)\n";
+			cout << "Ther is no road between " << city1 << " and " << city2 << endl;
 			return;
-		}*/
-		
-		for (listIterator = map[city1].begin(); listIterator != map[city1].end(); listIterator++)
-		{
-			if (listIterator->first == city2) {
-				map[city1].erase(listIterator);
-			}
-
 		}
 
 
-
-		for (; listIterator != listEnd; listIterator++)
-		{
-			if ((*listIterator).first == city2) // when you find it, delete it
+		// search for city 2 in city 1 connections and delete it
+		for ( listIterator =map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+			if (listIterator->first == city2)
 			{
-				map.at(city1).erase(listIterator);
-				return;
+				map[city1].erase(listIterator);
+				break;
 			}
-		}
-		// reaching here means city1 & city2 are not connected
-		cout << city1 << " & " << city2 << " are not ajacent :|";
+		
+		// search for city 1 in city 2 connections and delete it
+		for ( listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
+			if (listIterator->first == city1) 
+			{
+				map[city2].erase(listIterator);
+				break;
+			}
+				
+		
 	}
 }
 

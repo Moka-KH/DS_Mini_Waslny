@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 #include "graph.h"
-#include"main.cpp"
+
 
 using namespace std;
 
@@ -36,7 +36,7 @@ void update(graph& myGraph) {
                 update(myGraph);
             }
             if (rechoice == 2) {
-                main();
+                return;
             }
         }
         else
@@ -47,13 +47,13 @@ void update(graph& myGraph) {
     case 2:
     {
         string city1, city2;
-        int addedDistance;
+        int addedEdgeDistance;
         cout << "Enter the name of the two cities\n name of city number 1 is:\n";
         cin >> city1;
         cout << "name of city number 2 is:\n";
         cin >> city2;
         cout << "Enter the distance between them \n";
-        cin >> addedDistance;
+        cin >> addedEdgeDistance;
 
         bool city1Exist = myGraph.checkCity(city1);
         bool city2Exist= myGraph.checkCity(city2);
@@ -67,11 +67,11 @@ void update(graph& myGraph) {
                     update(myGraph);
                 }
                 if (rechoice == 2) {
-                    main();
+                    return;
                 }
             }
             else
-                myGraph.addRoad(city1,city2, addedDistance);
+                myGraph.addRoad(city1,city2, addedEdgeDistance);
 
         }
         break;
@@ -94,7 +94,7 @@ void update(graph& myGraph) {
                 update(myGraph);
             }
             if (rechoice == 2) {
-                main();
+                return;
             }
         }
         break;
@@ -121,7 +121,7 @@ void update(graph& myGraph) {
                     update(myGraph);
                 }
                 if (rechoice == 2) {
-                    main();
+                    return;
                 }
             }
 
@@ -129,15 +129,10 @@ void update(graph& myGraph) {
         }
         break;
     }
-    case 5: {
-
-    }
-    
+    case 5: 
+        return;
     }
       
-
-	
-
 }
 
 void displayGraph() {

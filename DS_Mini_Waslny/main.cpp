@@ -16,7 +16,9 @@ int main()
     mygraph.addCity("Alex");
     mygraph.addCity("Aswan", "Cairo", 400);
     mygraph.addCity("Mahalla", "Aswan", 200);
-    cout << "Done adding!!\n";
-
-    DFS(mygraph, "Aswan");
+    mygraph.display();
+    mygraph.deleteRoad("Mahalla", "Aswan");
+    mygraph.display();
+    
+    return 0;
 }
