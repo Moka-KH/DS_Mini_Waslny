@@ -6,7 +6,13 @@
 
 using namespace std;
 
-
+/**
+ * @brief This function allows the user to update the graph data structure by adding new cities,
+ *        adding new edges between existing cities, deleting existing cities, or deleting edges between existing cities.
+ *
+ * @param myGraph a reference to the graph data structure that the user wants to update.
+ * @retun void 
+ */
 void update(graph& myGraph)
 {
 	
@@ -134,11 +140,25 @@ void update(graph& myGraph)
       
 }
 
+
+/**
+* @brief This function displays the adjacency list representation of the given graph.
+* 
+* @param myGraph A reference to the graph object.
+* @return void.
+*/
 void displayGraph(graph& myGraph) 
 {
     myGraph.display();
 }
 
+
+/**
+* @brief This function creates a new graph object and prompts the user to 
+*        update it by adding cities and roads.
+* 
+* @return graph The newly created and updated graph object.
+*/
 graph addGraph() 
 {
     graph newGraph;
@@ -157,6 +177,14 @@ graph addGraph()
     }
 }
 
+
+/**
+* @brief This function finds the shortest path between two cities in a graph 
+*        using Dijkstra's algorithm.
+* 
+* @param myMap A reference to the graph object containing cities and roads.
+* @return void.
+*/
 void Find(graph& myMap)
 {
     string city1, city2;
