@@ -83,6 +83,7 @@ void update(graph& myGraph)
             update(myGraph);
         }
     }
+    return;
 }
 
 /**
@@ -160,4 +161,56 @@ void Find(graph& myMap)
         }
         cout << endl;
     }
+}
+
+/**
+* intro - greeting the user (first thing the user sees)
+* 
+* Retrun: nothing
+*/
+void intro()
+{
+    int choice;
+    graph myGraph;
+
+    cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
+    cout << "\t\t\t===================================================================" << endl;
+    cout << "\t\t\t===================================================================" << endl;
+
+    do {
+        cout << endl << endl << endl;
+        cout << "Please choose from the following options:" << endl;
+        cout << "1. Add graph (Cities and Distances between them)" << endl;
+        cout << "2. Display graph data" << endl;
+        cout << "3. Update graph data" << endl;
+        cout << "4. Traverse the graph" << endl;
+        cout << "5. Find shortest path between two cities" << endl;
+        cout << "6. Exit program" << endl;
+        cout << "===================================================================" << endl;
+
+        cin >> choice;
+
+        if (choice == 1) {
+            myGraph = addGraph();
+        }
+        else if (choice == 2) {
+            displayGraph(myGraph);
+        }
+        else if (choice == 3) {
+            update(myGraph);
+        }
+        else if (choice == 4) {
+            // traverse goes here 
+        }
+        else if (choice == 5) {
+            Find(myGraph);
+        }
+        else if (choice == 6) {
+            cout << "Goodbye!" << endl;
+            // exit function goes here
+        }
+        else {
+            cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (true);
 }

@@ -54,7 +54,7 @@ int graph::addCity(string newCity)
 	// if it already exists
 	if (checkCity(newCity))
 	{
-		cout << "City " << newCity << "already exists = | \n";
+		cout << "City " << newCity << "already exists =| \n";
 		return 1;
 	}
 		
@@ -279,8 +279,8 @@ bool graph::checkCity(string cityName) {
 		if (cityName == mapIterator->first) {
 			return true;
 		}
-		return false;
 	}
+	return false;
 }
 
 /**
