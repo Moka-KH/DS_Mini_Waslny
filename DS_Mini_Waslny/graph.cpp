@@ -54,7 +54,7 @@ int graph::getVertexNum()
 */
 int graph::getEdges(string city1)
 {
-	int counter;
+	int counter=0;
 	list<pair<string, float>> ad;
 	getAdjacentList(city1, ad);
 		for (listIterator = ad.begin();listIterator != ad.end();listIterator++)
