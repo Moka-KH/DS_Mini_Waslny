@@ -172,15 +172,16 @@ int graph::addRoad(string city1, string city2, float distance)
 	{
 		list<pair <string, float>> adjacentList;
 		getOutAdjacent(city1, adjacentList);
-		for (auto& adjacentVertex : adjacentList)
+		for (auto& listIterator : adjacentList)
 		{
-			if (city2 == adjacentVertex.first)
+			if (city2 == listIterator.first)
 			{
-				adjacentVertex.second = distance;
+				listIterator.second = distance;
 				break;
 			}
 		}
 		//update the adjacency list of city1
+		map[city1].clear();
 		map[city1] = adjacentList;
 		cout << endl;
 		cout << "The road is updated successfully" << endl;
