@@ -236,7 +236,7 @@ void Traverse(graph& mygraph)
     cin >> traverseChoice;
 
     if (traverseChoice == "DFS")
-        DFS(mygraph,startCity);
+        DFS(mygraph);
 
     else if (traverseChoice == "BFS")
         BFS(startCity, mygraph);
