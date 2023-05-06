@@ -174,13 +174,14 @@ int graph::addRoad(string city1, string city2, float distance)
 		getAdjacentList(city1, adjacentList);
 		for (auto& adjacentVertex : adjacentList)
 		{
-			cout << adjacentVertex.first << ' ' << adjacentVertex.second << endl;
 			if (city2 == adjacentVertex.first)
 			{
 				adjacentVertex.second = distance;
+				//cout << adjacentVertex.first << ' ' << adjacentVertex.second << endl;
 				break;
 			}
 		}
+		map[city1] = adjacentList;
 		cout << endl;
 		cout << "The road is updated successfully" << endl;
 	}

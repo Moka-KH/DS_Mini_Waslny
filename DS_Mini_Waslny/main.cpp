@@ -17,7 +17,7 @@ int main() {
     myGraph.addRoad("Alex", "Cairo", 90);
 
     list<pair <string, float>> list;
-    myGraph.getAdjacentList("Cairo", list);
+    myGraph.getAdjacentList("Alex", list);
     for (auto& x : list)
         cout << x.first << ' ' << x.second << endl;
 
