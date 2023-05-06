@@ -25,7 +25,7 @@ const float INFINITE = INT_MAX;
 * 
 * Return: nothing
 */
-void DFS(graph& graph)
+void DFS(graph& graph, string stratVetrex)
 {
 	unordered_map<string, bool> visited;
 
@@ -33,42 +33,46 @@ void DFS(graph& graph)
 	for (auto& x : graph.map)
 		visited[x.first] = false;
 
+	// visited means the node was put in the stack
+	visited[stratVetrex] = true;
+
 	stack<string> NodesToCheckNeighbors;
-	
-	for (auto& vertex : graph.map)
+	NodesToCheckNeighbors.push(stratVetrex);
+
+	//traverse on connected vertices 
+	while (!NodesToCheckNeighbors.empty())
 	{
-		// visited means the node was put in the stack
-		visited[vertex.first] = true;
-		NodesToCheckNeighbors.push(vertex.first);
-		cout << vertex.first << endl;
+		string currentNode = NodesToCheckNeighbors.top();
 
-		while (!NodesToCheckNeighbors.empty())
+		// the action to do on the vertex (here we print)
+		NodesToCheckNeighbors.pop();
+		cout << currentNode << endl;
+
+		// get the adjacency list of the current vertex
+		list<pair<string, float>> adjacencyList;
+		graph.getAdjacentVertices(currentNode, adjacencyList);
+
+		// iterate over the adjacent vertices of current node
+		for (auto& it : adjacencyList)
 		{
-			string currentNode = NodesToCheckNeighbors.top();
-
-			// the action to do on the vertex (here we print)
-			
-			NodesToCheckNeighbors.pop();
-
-			// get the adjacency list of the current vertex
-			list<pair<string, float>> adjacencyList;
-			graph.getAdjacentList(currentNode, adjacencyList);
-
-			// iterate over the adjacent vertices of current node
-			for (auto& it : adjacencyList)
+			// if you find a node that is not visited
+			if (!visited[it.first])
 			{
-				// if you find a node that is not visited
-				if (!visited[it.first])
-				{
-					// push it to the stack
-					NodesToCheckNeighbors.push(it.first);
-					// and mark it as visited
-					visited[it.first] = true;
-				}
+				// push it to the stack
+				NodesToCheckNeighbors.push(it.first);
+				// and mark it as visited
+				visited[it.first] = true;
 			}
 		}
-
 	}
+
+	//traverse on isolated vertices
+	for (auto& mapIterator : graph.map)
+	{
+		if (visited[mapIterator.first] == false)
+			cout << mapIterator.first << endl;
+	}
+
 	cout << "End of Vertices" << endl;
 	// if you wish, print the isolated vertices
 }
@@ -164,7 +168,7 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 
 		// store the its adjacent cities in a list
 		list<pair <string, float>> adjacentVertices;
-		myMap.getAdjacentList(minDistCity, adjacentVertices);
+		myMap.getOutAdjacent(minDistCity, adjacentVertices);
 
 		// an iterator for this list
 		list <pair <string, float>>::iterator listIterator;
@@ -204,7 +208,7 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 		while (current != startingNode) {
 
 			list<pair <string, float>> adjacentVertices;
-			myMap.getAdjacentList(current, adjacentVertices);
+			myMap.getOutAdjacent(current, adjacentVertices);
 			list <pair <string, float>>::iterator listIterator;
 			for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
 
@@ -225,37 +229,3 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 	}
 	return totalDistance;
 }
-
-//void DFS(graph& graph, string startVertex)
-//{
-//	unordered_map<string, bool> visited;
-//
-//	// initialize the "visited" map to be all unvisited
-//	for (auto& x : graph.map)
-//		visited[x.first] = false;
-//
-//	// Mark the current node as visited and print it
-//	visited[startVertex] = true;
-//	cout << startVertex << " ";
-//
-//	// get the adjacency list of the current vertex
-//	list<pair<string, float>> adjacencyList;
-//	graph.getAdjacentList(startVertex, adjacencyList);
-//
-//
-//	// Recur for all the vertices adjacent to this vertex
-//	for (auto& it : adjacencyList)
-//		if (!visited[it.first])
-//			DFS(graph, it.first);
-//}
-
-// The function to do DFS traversal. It uses recursive
-// DFSUtil()
-//void DFS(graph& graph, string startVertex)
-//{
-//	// Call the recursive helper function to print DFS
-//	// traversal starting from all vertices one by one
-//	for (auto i : adj)
-//		if (visited[i.first] == false)
-//			DFSUtil(i.first);
-//}

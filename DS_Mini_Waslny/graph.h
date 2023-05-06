@@ -44,7 +44,8 @@ public:
 
 	void display();
 	//Dina and Mayar
-	void getAdjacentList(string city, list<pair <string, float>>& adj);
+	void getOutAdjacent(string city, list<pair <string, float>>& adj);
+	void getAdjacentVertices(string city, list<pair <string, float>>& adjList);
 	bool checkCity(string cityName);
 	bool checkEdge(string city1,string city2);
 	float getEdgeWieght(string city1, string city2);

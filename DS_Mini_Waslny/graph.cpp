@@ -56,7 +56,7 @@ int graph::getEdges(string city1)
 {
 	int counter=0;
 	list<pair<string, float>> ad;
-	getAdjacentList(city1, ad);
+	getOutAdjacent(city1, ad);
 		for (listIterator = ad.begin();listIterator != ad.end();listIterator++)
 		{
 			counter++;
@@ -171,7 +171,7 @@ int graph::addRoad(string city1, string city2, float distance)
 	if (checkEdge(city1, city2))
 	{
 		list<pair <string, float>> adjacentList;
-		getAdjacentList(city1, adjacentList);
+		getOutAdjacent(city1, adjacentList);
 		for (auto& adjacentVertex : adjacentList)
 		{
 			if (city2 == adjacentVertex.first)
@@ -218,7 +218,7 @@ int graph::deleteCity(string cityName)
 	// reaching here means it exists
 	// delete its adjacent cities
 	list<pair <string, float>> adjacent;
-	getAdjacentList(cityName, adjacent);
+	getOutAdjacent(cityName, adjacent);
 	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
 		deleteRoad(cityName, listIterator->first);
 
@@ -381,9 +381,41 @@ void graph::display()
 *
 * Return: nothing
 */
-void graph::getAdjacentList(string city, list<pair <string, float>>& adj) {
+void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) { //getOutAdjacent ####
 	mapIterator = map.find(city);
 	adj = mapIterator->second;
+}
+
+/**
+* getAdj - gives the adjacency list of the given node
+* @city: the city to get its adjaceny list
+* @adj: a list that to point to the desired list
+*
+* Return: nothing
+*/
+void graph::getAdjacentVertices(string city, list<pair <string, float>>& adjList)
+{
+	getOutAdjacent(city, adjList);
+	float backDistance;
+
+	//search for cities connected with city
+	for (auto& vertex : map)
+	{
+		//if you find a back road from any city to the target city 
+		if (checkEdge(vertex.first, city))
+		{
+			//search for the distance in the adjacency list of the city connected to the target city
+			for (auto& listIterator : map[vertex.first])
+			{
+				if (listIterator.first == city)
+				{
+					backDistance = listIterator.second;
+				}
+			}
+			//add the founded city with its distance to the adjaceny list to be returned
+			adjList.push_back(make_pair(vertex.first, backDistance));
+		}
+	}
 }
 
 /**
@@ -418,7 +450,7 @@ bool graph::checkEdge(string city1, string city2) {
 	// cities exist :)
 
 	list<pair <string, float>> adjacent;
-	getAdjacentList(city1, adjacent);
+	getOutAdjacent(city1, adjacent);
 	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
 		if (city2 == listIterator->first)
 			return true;
@@ -435,7 +467,7 @@ bool graph::checkEdge(string city1, string city2) {
  */
 float graph::getEdgeWieght(string city1, string city2) {
 	list<pair <string, float>> adjacent;
-	getAdjacentList(city1, adjacent);
+	getOutAdjacent(city1, adjacent);
 	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
 		if (city2 == listIterator->first)
 			return listIterator->second;
