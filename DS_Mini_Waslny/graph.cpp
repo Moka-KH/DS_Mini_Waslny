@@ -47,6 +47,23 @@ int graph::getVertexNum()
 	return vertexNum;
 }
 
+
+/**
+* getEdges - returns #edges
+* Return: integer value -> #edges
+*/
+int graph::getEdges(string city1)
+{
+	int counter;
+	list<pair<string, float>> ad;
+	getAdjacentList(city1, ad);
+		for (listIterator = ad.begin();listIterator != ad.end();listIterator++)
+		{
+			counter++;
+		}
+	return counter;
+}
+
 /**
 * setVertexNum - set #vertices
 * Return: nothing

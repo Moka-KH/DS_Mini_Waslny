@@ -40,6 +40,8 @@ public:
 
 	int getVertexNum();
 	void setVertexNum(int);
+	int getEdges(string city1);
+
 	void display();
 	//Dina and Mayar
 	void getAdjacentList(string city, list<pair <string, float>>& adj);
