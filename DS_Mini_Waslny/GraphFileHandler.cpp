@@ -69,3 +69,22 @@ void writeMultipleGraphs( unordered_map<string, graph>& graphs, string& director
 		writeGraphToFile(g, filename);
 	}
 }
+// Function to read multiple graphs from files
+unordered_map<string, graph> readMultipleGraphs(string& directory) {
+	unordered_map<string, graph> graphs;
+	ifstream fileList(directory + "/filelist.txt");
+	if (!fileList.is_open()) {
+		cout << "Unable to open filelist.txt for reading." << endl;
+		return graphs;
+	}
+	string filename;
+	while (getline(fileList, filename)) {
+		string graphName = filename.substr(0, filename.length() - 4); // Remove ".txt" extension
+		string filepath = directory + "/" + filename;
+		graph g;
+		readGraphFromFile(g, filepath);
+		graphs[graphName] = g;
+	}
+	fileList.close();
+	return graphs;
+}
