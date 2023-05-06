@@ -4,6 +4,7 @@
 #include "GraphFileHandler.h"
 #include "graph.h"
 #include <fstream>
+#include <unordered_map>
 
 using namespace std;
 
@@ -57,4 +58,14 @@ void readGraphFromFile(graph& g, const string& filename) {
 		}
 	}
 	inFile.close();
+}
+
+// Function to write multiple graphs to files
+void writeMultipleGraphs( unordered_map<string, graph>& graphs, string& directory) {
+	for (auto& graphPair : graphs) {
+		string& graphName = graphPair.first;
+		graph& g = graphPair.second;
+		string filename = directory + "/" + graphName + ".txt";
+		writeGraphToFile(g, filename);
+	}
 }
