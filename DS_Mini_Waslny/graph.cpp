@@ -150,15 +150,16 @@ int graph::addRoad(string city1, string city2, float distance)
 		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
 			if (city2 == listIterator->first)
 				listIterator->second = distance;
-
+		cout << "The road is updated successfully" << endl;
 	}
-
-	// ===  both exist :) add the road  ===
-	// put city2 in city1 conncections
-	pairHolder.first = city2;
-	pairHolder.second = distance;
-	map.at(city1).push_back(pairHolder);
-
+	else
+	{
+		// put city2 in city1 conncections
+		pairHolder.first = city2;
+		pairHolder.second = distance;
+		map.at(city1).push_back(pairHolder);
+		cout << "The road is added successfully" << endl;
+	}
 	return 0;
 }
 

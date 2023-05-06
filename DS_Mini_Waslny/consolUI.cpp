@@ -16,106 +16,112 @@ using namespace std;
 void update(graph& myGraph)
 {
     int choice;
-    cout << "Enter An Option (1-5):\n";
-    cout << "1. Add New City\n";
-    cout << "2. Add New Road\n";
-    cout << "3. Delete City\n";
-    cout << "4. Delete Road\n";
-    cout << "5. Return to the Main menu\n";
-    cin >> choice;
-
-    switch (choice) {
-    case 1:
+    do
     {
-        string AddedCity;
-        cout << "Enter the name of the new city that you want to add it: \n";
-        cin >> AddedCity;
-
-        if (myGraph.addCity(AddedCity))
-            update(myGraph);
-
-        break;
-    }
-    case 2:
-    {
-        int choice;
-        string city1, city2;
-        float distance;
-        cout << "Enter the name of the two cities\n name of city number 1 is:\n";
-        cin >> city1;
-        cout << "name of city number 2 is:\n";
-        cin >> city2;
-        cout << "Enter the distance between them \n";
-        cin >> distance;
-
-
-        /*
-      1- the user will add a directed road or an undirected road
-      2- if dircted call addRoad once
-      3-if undirected call addRoad twice and switch the cities names
-      */
-        cout << "Is the road will be one way or roundway ?\n"
-            << "Press: 1 if it is one way \t press: 2 if it is roundway \n";
+        cout << "Enter An Option (1-5):\n";
+        cout << "1. Add New City\n";
+        cout << "2. Add New Road\n";
+        cout << "3. Delete City\n";
+        cout << "4. Delete Road\n";
+        cout << "5. Return to the Main menu\n";
         cin >> choice;
-        if (choice == 1)
+
+
+        switch (choice) {
+        case 1:
         {
-            cout << "If the road goes from " << city1 << " to " << city2 << " press 1\n"
-                << "If the road goes from " << city2 << " to " << city1 << " press 2\n";
+            string AddedCity;
+            cout << "Enter the name of the new city that you want to add it: \n";
+            cin >> AddedCity;
+
+            if (myGraph.addCity(AddedCity))
+                update(myGraph);
+
+            break;
+        }
+        case 2:
+        {
+            int choice;
+            string city1, city2;
+            float distance;
+            cout << "Enter the name of the two cities\n name of city number 1 is:\n";
+            cin >> city1;
+            cout << "name of city number 2 is:\n";
+            cin >> city2;
+            cout << "Enter the distance between them \n";
+            cin >> distance;
+
+
+            /*
+          1- the user will add a directed road or an undirected road
+          2- if dircted call addRoad once
+          3-if undirected call addRoad twice and switch the cities names
+          */
+            cout << "Is the road will be one way or roundway ?\n"
+                << "Press: 1 if it is one way \t press: 2 if it is roundway \n";
             cin >> choice;
-            if (choice == 1) {
-                if (myGraph.addRoad(city1, city2, distance))
-                    update(myGraph);
+            if (choice == 1)
+            {
+
+                cout << "If the road goes from " << city1 << " to " << city2 << " press 1\n"
+                    << "If the road goes from " << city2 << " to " << city1 << " press 2\n";
+                cin >> choice;
+                if (choice == 1) {
+
+                        if (myGraph.addRoad(city1, city2, distance))
+                            update(myGraph);
+                    
+                }
+                else                     
+                {
+                        if (myGraph.addRoad(city2, city1, distance))
+                            update(myGraph);
+     
+                }
             }
-            else {
-                if (myGraph.addRoad(city2, city1, distance))
-                    update(myGraph);
+            if (choice == 2)
+            {
+                    if (myGraph.addRoad(city1, city2, distance))
+                        update(myGraph);
+                    if (myGraph.addRoad(city2, city1, distance))
+                        update(myGraph);
             }
+            break;
         }
-        if (choice == 2)
+        case 3:
         {
-            if (myGraph.addRoad(city1, city2, distance))
-                update(myGraph);
-            if (myGraph.addRoad(city2, city1, distance))
+            string DeletedCity;
+            cout << "Enter the name of the new city that you want to delete it: \n";
+            cin >> DeletedCity;
+
+            if (myGraph.deleteCity(DeletedCity))
                 update(myGraph);
 
+            break;
         }
-
-        break;
-    }
-    case 3:
-    {
-        string DeletedCity;
-        cout << "Enter the name of the new city that you want to delete it: \n";
-        cin >> DeletedCity;
-
-        if (myGraph.deleteCity(DeletedCity))
-            update(myGraph);
-
-        break;
-    }
-    case 4:
-    {
-        string city1, city2;
-        cout << "Enter the name of the two cities\n name of city number 1 is:\n";
-        cin >> city1;
-        cout << "name of city number 2 is:\n";
-        cin >> city2;
-
-        if (myGraph.deleteRoad(city1,city2))
+        case 4:
         {
-            update(myGraph);
-        }       
-        break;
-    }
-    case 5:
-        return;
-    default:
-    {
-        cout << "invalid choice :\\n";
-        update(myGraph);
-    }
-    }
+            string city1, city2;
+            cout << "Enter the name of the two cities\n name of city number 1 is:\n";
+            cin >> city1;
+            cout << "name of city number 2 is:\n";
+            cin >> city2;
 
+            if (myGraph.deleteRoad(city1, city2))
+            {
+                update(myGraph);
+            }
+            break;
+        }
+        case 5:
+            return;
+        default:
+        {
+            cout << "invalid choice :\\n";
+            update(myGraph);
+        }
+        }
+    }while (true);
 }
 
 /**
@@ -138,19 +144,8 @@ void displayGraph(graph& myGraph)
 graph addGraph()
 {
     graph newGraph;
-    char choice;
-    cout << "Your Graph is created sucsessfully," << endl
-        << "if you want to update it by adding cities and roads to it entre 'y', " << endl
-        << "Else if you want to return to the main menu entre 'n' " << endl;
-    cin >> choice;
-    if (choice == 'y')
-        update(newGraph);
-    else if (choice == 'n')
-        return newGraph;
-    else {
-        cout << "Invalid input, you will be returned to the main menu to complete your journey!";
-        return newGraph;
-    }
+    cout << "Your Graph is created sucsessfully," << endl;
+    return newGraph;
 }
 
 /**
@@ -226,10 +221,10 @@ void intro()
                 int choice;
                 cout << endl << endl << endl;
                 cout << "Please choose from the following options:" << endl;
-                cout << "1. Add graph (Cities and Distances between them)" << endl;
-                cout << "2. Display graph data" << endl;
-                cout << "3. Update graph data" << endl;
-                cout << "4. Traverse the graph" << endl;
+                cout << "1. Add map (Cities and Distances between them)" << endl;
+                cout << "2. Display map data" << endl;
+                cout << "3. Update map data" << endl;
+                cout << "4. Traverse the map" << endl;
                 cout << "5. Find shortest path between two cities" << endl;
                 cout << "6. Return to the main menu" << endl;
                 cout << "===================================================================" << endl;

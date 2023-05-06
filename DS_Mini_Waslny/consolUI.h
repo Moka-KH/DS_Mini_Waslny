@@ -11,4 +11,4 @@ void displayGraph(graph& myGraph);
 graph addGraph();
 void Find(graph& myMap);
 void intro();
-void Traverse(traverse parameter);
+void Traverse(traverse parameter, graph& myGraph, string startCity);
