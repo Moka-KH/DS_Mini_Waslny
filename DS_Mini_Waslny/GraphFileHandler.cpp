@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "GraphFileHandler.h"
 #include "graph.h"
 #include <fstream>
@@ -63,7 +63,7 @@ void readGraphFromFile(graph& g, const string& filename) {
 // Function to write multiple graphs to files
 void writeMultipleGraphs( unordered_map<string, graph>& graphs, string& directory) {
 	for (auto& graphPair : graphs) {
-		string& graphName = graphPair.first;
+		const string& graphName = graphPair.first;
 		graph& g = graphPair.second;
 		string filename = directory + "/" + graphName + ".txt";
 		writeGraphToFile(g, filename);
