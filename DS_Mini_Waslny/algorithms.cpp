@@ -92,28 +92,40 @@ void BFS(string startCity, graph graph)
 	visited[startCity] = true;
 	queue.push(startCity);
 
-	cout << "BFS Traversal Starting From " << startCity << ":\n";
+	string currentCity;
 
 	while (!queue.empty())
 	{
 		// dequeue a vertex from queue and print it
-		startCity = queue.front();
-		cout << startCity << " ";
+		currentCity = queue.front();
+		cout << currentCity << endl;
 
-		// get all adjacent vertices of the dequeued vertex startCity
+		// get the adjacency list of the current vertex
+		list<pair<string, float>> adjacencyList;
+		graph.getAdjacentVertices(currentCity, adjacencyList);
+
+		// get all adjacent vertices of the dequeued vertex
 		// if an adjacent vertex has not been visited, mark it visited and enqueue it
-		for (auto& adj : graph.map[startCity])
+		for (auto& it : adjacencyList)
 		{
-			if (!visited[adj.first])
+			if (!visited[it.first])
 			{
-				visited[adj.first] = true;
-				queue.push(adj.first);
+				visited[it.first] = true;
+				queue.push(it.first);
 			}
 		}
 		// dequeue the visited vertex from the queue
 		queue.pop();
 	}
-	cout << endl;
+
+	//traverse on isolated vertices
+	for (auto& mapIterator : graph.map)
+	{
+		if (visited[mapIterator.first] == false)
+			cout << mapIterator.first << endl;
+	}
+
+	cout << "End of Vertices" << endl;
 }
 
 
