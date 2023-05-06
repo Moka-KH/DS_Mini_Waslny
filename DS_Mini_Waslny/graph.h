@@ -13,6 +13,7 @@ private:
 	int vertexNum;
 
 public:
+	string name;
 
 	// unordered_map (hash table) storing all data we have
 	// key: city name - value: linked list of the connected vertices
@@ -27,6 +28,7 @@ public:
 	list <pair <string, float>>::iterator listIterator;
 
 	graph();
+	graph(string);
 	~graph();
 
 	int addCity(string newCity);

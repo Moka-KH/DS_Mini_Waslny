@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string.h>
 #include "GraphFileHandler.h"
-#include"graph.h"
-#include<fstream>
+#include "graph.h"
+#include <fstream>
 
 using namespace std;
 
@@ -22,7 +22,8 @@ void writeGraphToFile(graph& g, const string& filename) {
 		// write the number of adjacent vertices
 		outFile << cityPair.second.size() << endl;
 		// iterate over each adjacent vertex and its distance
-		for (const auto& adjPair : cityPair.second) {
+		for (const auto& adjPair : cityPair.second)
+		{
 			// write the adjacent city name and its distance
 			outFile << adjPair.first << " " << adjPair.second << endl;
 		}

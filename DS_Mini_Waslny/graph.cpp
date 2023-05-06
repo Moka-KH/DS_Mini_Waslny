@@ -19,6 +19,12 @@ using namespace std;
 	* map.erase() -> return 1 if found key and erase it otherwise return 0
 */
 
+// this should be deleted
+graph::graph()
+{
+	vertexNum = 0;
+}
+
 /**
 * graph - the graph constructor
 *
@@ -26,9 +32,10 @@ using namespace std;
 *
 * Return: nothing
 */
-graph::graph()
+graph::graph(string name)
 {
 	vertexNum = 0;
+	this->name = name;
 }
 
 /**
@@ -39,6 +46,7 @@ int graph::getVertexNum()
 {
 	return vertexNum;
 }
+
 /**
 * setVertexNum - set #vertices
 * Return: nothing
@@ -117,7 +125,7 @@ int graph::addCity(string newCity, string adjCity, float distance)
 }
 
 /**
-* addRoad - Connects 2 cities
+* addRoad - Connects 2 cities / updates the distancde between them
 * @city1: first city
 * @city2: second city
 * @distance: Distance
@@ -142,14 +150,21 @@ int graph::addRoad(string city1, string city2, float distance)
 		return 1;
 	}
 
-	// if the road already exit , just update the distance
+	// if the road already exists , just update the distance
 	if (checkEdge(city1, city2))
 	{
-		list<pair <string, float>> adjacent;
-		getAdjacentList(city1, adjacent);
-		for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
-			if (city2 == listIterator->first)
-				listIterator->second = distance;
+		list<pair <string, float>> adjacentList;
+		getAdjacentList(city1, adjacentList);
+		for (auto& adjacentVertex : adjacentList)
+		{
+			cout << adjacentVertex.first << ' ' << adjacentVertex.second << endl;
+			if (city2 == adjacentVertex.first)
+			{
+				adjacentVertex.second = distance;
+				break;
+			}
+		}
+		cout << endl;
 		cout << "The road is updated successfully" << endl;
 	}
 	else
@@ -212,16 +227,16 @@ int graph::deleteRoad(string city1, string city2)
 	// if at least one city doesn't exist
 	if (!checkCity(city1))
 	{
-		cout << city1 << " doesn't exist :|\n";
+		cout << city1 << " doesn't exist :| (from delete road)\n";
 		return 1;
 	}
 	if (!checkCity(city2))
 	{
-		cout << city2 << " doesn't exist :|\n";
+		cout << city2 << " doesn't exist :| (from delete road)\n";
 		return 1;
 	}
 
-	// 1 road 
+	// one way road from city1 to city2
 	if (checkEdge(city1, city2) && !checkEdge(city2, city1))
 	{
 		for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
@@ -231,6 +246,7 @@ int graph::deleteRoad(string city1, string city2)
 				break;
 			}
 	}
+	// one way road from city2 to city1
 	else if (checkEdge(city2, city1) && !checkEdge(city1, city2))
 	{
 		for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
@@ -240,9 +256,10 @@ int graph::deleteRoad(string city1, string city2)
 				break;
 			}
 	}
-	// 2 roads with the same weight
+	// 2 way road
 	else if (checkEdge(city1, city2) && checkEdge(city2, city1))
 	{
+		// with the same distance
 		if (getEdgeWieght(city1, city2) == getEdgeWieght(city2, city1))
 		{
 			for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
@@ -259,13 +276,13 @@ int graph::deleteRoad(string city1, string city2)
 					break;
 				}
 		}
-		// 2 roads with different weights
+		// with different distances
 		else
 		{
 			int choice;
-			cout << "Press 1 if you want to delete road from " << city1 << " to " << city2 << "\n"
-				<< "Press 2 if you want to delete road from " << city2 << " to " << city1 << "\n"
-				<< "Press 3 if you want to delete  both roads \n";
+			cout << "1- delete road from " << city1 << " to " << city2 << "\n"
+				<< "2- delete road from " << city2 << " to " << city1 << "\n"
+				<< "3- delete  both roads \n";
 			cin >> choice;
 
 			if (choice == 1)
@@ -304,6 +321,7 @@ int graph::deleteRoad(string city1, string city2)
 			}
 		}
 	}
+	// no road
 	else
 	{
 		cout << "There is no road between " << city1 << " and " << city2 << ":(\n";
@@ -330,7 +348,7 @@ void graph::display()
 		//display the linked list compmnents "the value of the map's key"
 		for (listIterator = mapIterator->second.begin(); listIterator != mapIterator->second.end(); ++listIterator)
 		{
-			cout << (*listIterator).first << " ( Distance =  " << (*listIterator).second << " )" << endl;
+			cout <<'\t' << (*listIterator).first << " ( Distance =  " << (*listIterator).second << " )" << endl;
 		}
 		cout << "\t\t\t=======================================================================" << endl;
 	}
@@ -373,34 +391,21 @@ bool graph::checkCity(string cityName) {
  * @return True if an edge between the two cities exists in the graph, false otherwise.
  */
 bool graph::checkEdge(string city1, string city2) {
-
-	if (checkCity(city1))
-	{
-		if (checkCity(city2))
-		{
-			list<pair <string, float>> adjacent;
-			getAdjacentList(city1, adjacent);
-			for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
-				if (city2 == listIterator->first)
-					return true;
-				else
-				{
-					cout << "There is no road from " << city1 << " to " << city2 << " :(\n";
-					return false;
-				}
-			}
-		}
-		else
-		{
-			cout << city2 << " does not exists :(\n";
-			return false;
-		}	
-	}
-	else
-	{
-		cout << city1 << " does not exists :(\n";
+	if (!checkCity(city1))
 		return false;
-	}
+
+	if (!checkCity(city2))
+		return false;
+
+	// cities exist :)
+
+	list<pair <string, float>> adjacent;
+	getAdjacentList(city1, adjacent);
+	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
+		if (city2 == listIterator->first)
+			return true;
+
+	return false;
 }
 
 /**
@@ -424,6 +429,3 @@ graph :: ~graph()
 {
 	map.clear();
 }
-
-
-
