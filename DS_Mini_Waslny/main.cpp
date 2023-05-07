@@ -10,11 +10,11 @@ using namespace std;
 
 int main() {
     
-    graph myGraph;
+    /*graph myGraph;
     myGraph.addCity("Cairo");
     myGraph.addCity("Alex");
     myGraph.addRoad("Cairo", "Alex", 88);
-    myGraph.addRoad("Alex", "Cairo", 90);
+    myGraph.addRoad("Alex", "Cairo", 90);*/
 
  /*   list<pair <string, float>> list;
     myGraph.getAdjacentList("Alex", list);

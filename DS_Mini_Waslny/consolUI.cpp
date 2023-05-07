@@ -217,6 +217,7 @@ void intro()
         else if (mainChoice == 3)
         {
             cout << "Goodbye!" << endl;
+            break;
             // exit function goes here
         }
 
