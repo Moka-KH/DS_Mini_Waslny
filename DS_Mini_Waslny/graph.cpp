@@ -220,13 +220,36 @@ int graph::deleteCity(string cityName)
 	// delete its adjacent cities
 	list<pair <string, float>> adjacent;
 	getOutAdjacent(cityName, adjacent);
-	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
-		deleteRoad(cityName, listIterator->first);
 
+	//for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
+	//{
+	//	//deleteRoad(cityName, listIterator->first);
+	//	map[cityName].clear();
+	//	map[cityName].erase(listIterator);
+	//}
+	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) 
+	{
+		for (listIterator = map.at(cityName).begin(); listIterator != map.at(cityName).end(); listIterator++)
+			map[cityName].erase(listIterator);
+	}
+
+	////delete it from the lists of its adjacent cities
+	////search for cities connected with paramet city
+	for (auto& vertex : map)
+	{
+		//if you find a back road from any city to the target city 
+		if (checkEdge(vertex.first, cityName))
+			for (listIterator = map.at(vertex.first).begin(); listIterator != map.at(vertex.first).end(); listIterator++)
+				if(listIterator->first == cityName)
+					map[vertex.first].erase(listIterator);
+			//deleteRoad(vertex.first, cityName);
+	}
+	
 	// remove city 
 	map.erase(cityName);
 	vertexNum--;
 
+	cout << "City is deleted\n";
 	return 0;
 }
 
@@ -347,6 +370,7 @@ int graph::deleteRoad(string city1, string city2)
 		return 1;
 	}
 
+	cout << "Road is deleted\n";
 	return 0;
 }
 
@@ -361,8 +385,6 @@ void graph::display()
 		// itr->second stores the value part
 
 		cout << "City: " << mapIterator->first << endl;
-		cout << "Adjacent cities are: " << endl;
-
 
 		//display the linked list compmnents "the value of the map's key"
 		for (listIterator = mapIterator->second.begin(); listIterator != mapIterator->second.end(); ++listIterator)

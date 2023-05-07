@@ -101,9 +101,9 @@ void update(graph& myGraph)
         else if (choice == 4)
         {
             string city1, city2;
-            cout << "Deleing: \nCity 1: ";
+            cout << "Deleing: \n\tCity 1: ";
             cin >> city1;
-            cout << "\nCity 2: ";
+            cout << "\tCity 2: ";
             cin >> city2;
 
             if (myGraph.deleteRoad(city1, city2))

@@ -10,31 +10,46 @@ using namespace std;
 
 int main() {
     
-    graph myGraph;
-    myGraph.addCity("Cairo");
-    myGraph.addCity("Alex");
-    myGraph.addRoad("Cairo", "Alex", 88);
-    myGraph.addRoad("Alex", "Cairo", 90);
+    // intro();
 
- /*   list<pair <string, float>> list;
-    myGraph.getAdjacentList("Alex", list);
-    for (auto& x : list)
-        cout << x.first << ' ' << x.second << endl;
+    graph g;
 
-    myGraph.addRoad("Cairo", "Alex", 11);
-    myGraph.getAdjacentList("Cairo", list);
-    for (auto& x : list)
-        cout << x.first << ' ' << x.second << endl;*/
+    g.addCity("cairo");
+    g.addCity("alex");
+    g.addCity("siwa");
+    g.addCity("aswan");
+    g.addCity("qena");
 
-     intro();
+    g.display();
 
-   /* myGraph.addCity("Aswan");
-    myGraph.addCity("siwa");
-    myGraph.addCity("suez");
-    myGraph.addRoad("Aswan", "siwa", 100);
-    myGraph.addRoad("Aswan", "Cairo", 200); 
-    myGraph.addRoad("siwa", "Aswan", 100);
-    Traverse(myGraph);*/
+
+    g.addRoad("cairo", "alex", 88);
+    g.addRoad("alex", "cairo", 90);
+    g.addRoad("aswan", "cairo", 200);
+    g.addRoad("aswan", "siwa", 300);
+    g.addRoad("siwa", "aswan", 300);
+
+    g.display();
+
+
+
+    g.deleteRoad("aswan", "siwa");
+    g.deleteRoad("siwa", "aswan");
+
+    g.display();
+
+
+    g.deleteCity("cairo");
+
+    g.display();
+
+
+
+
+    g.display();
+
+
+
 
     return 0;
 }
