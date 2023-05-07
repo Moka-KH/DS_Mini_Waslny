@@ -7,16 +7,16 @@
 #include <queue>
 #include <string>
 #include <stack>
-#include <climits>
 #include "graph.h"
 #include "algorithms.h"
+#include <float.h>
 #include <string.h>
 #include <list>
 #include<queue>
 
 using namespace std;
 typedef pair<float, string> iPair;
-const float INFINITE = INT_MAX;
+const float INFINITE = FLT_MAX;
 
 /**
 * DFS - Traverses the graph and prints the vertices values
@@ -122,8 +122,6 @@ void BFS(string startCity, graph graph)
 }
 
 
-// create a vector to store the cities from the currentLocation to finalDistination
-vector<string> path;
 /**
  * Dijkstra's algorithm for finding the shortest path between two vertices in a graph.
  *
@@ -143,7 +141,6 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 	*/
 	priority_queue<iPair, vector<iPair>, greater<iPair> > uncheckedVertices;
 
-	float totalDistance;
 	int citiesNum = myMap.getVertexNum();
 
 	// shortestPaths is a map that stores the distance from the starting city to any city
@@ -201,7 +198,7 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 
 	// Check if the final destination is unreachable
 	if (shortestPaths[finalDistination] == INFINITE) {
-		totalDistance = -1;
+		return -1.0;
 	}
 
 	else {
@@ -213,9 +210,10 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 		while (current != startingNode) {
 
 			list<pair <string, float>> adjacentVertices;
-			myMap.getOutAdjacent(current, adjacentVertices);
+			myMap.getAdjacentVertices(current, adjacentVertices);
 			list <pair <string, float>>::iterator listIterator;
-			for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
+			listIterator = adjacentVertices.begin();
+			for (; listIterator != adjacentVertices.end(); listIterator++) {
 
 				string adjVertex = listIterator->first;
 				float weight = listIterator->second;
@@ -230,7 +228,8 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 		reverse(path.begin(), path.end());
 
 		// Return the shortest path from the source to the destination
-		totalDistance = shortestPaths[finalDistination];
+		
+		return shortestPaths[finalDistination];
 	}
-	return totalDistance;
+
 }

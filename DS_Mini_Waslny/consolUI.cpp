@@ -156,16 +156,15 @@ void Find(graph& myMap)
 {
     string city1, city2;
     float theShortestDistance;
-    cout << "Let's start our journey in finding the shortest path!" << endl
-        << "Please enter the starting city of your path to start your journey with us," << endl
-        << "Your starting city is:";
-    cin >> city1;
-    cout << "Now, Please enter Your destination city," << endl
-        << "Your destination city is:";
-    cin >> city2;
     vector<string> shortestPathVector;
+
+    cout << endl << "Let's start our journey in finding the shortest path!" << endl
+         << "Starting city is:";
+    cin >> city1;
+    cout << endl <<"Destination city is:";
+    cin >> city2;
     theShortestDistance = Dijkstra(myMap, city1, city2, shortestPathVector);
-    if (theShortestDistance == -1)
+    if (theShortestDistance == -1.0)
     {
         cout << "=============================================================" << endl
             << "There is no path between  " << city1 << " and " << city2 << endl;
@@ -173,15 +172,23 @@ void Find(graph& myMap)
     else
     {
         cout << "=============================================================" << endl
-            << "The total distance of the shortest path between " << city1 << " and " << city2 << "is = " << theShortestDistance;
+            << "The total distance of the shortest path between " << city1 << " and " << city2 << " is = " << theShortestDistance << endl;
 
 
         vector<string>::iterator vectorIt = shortestPathVector.begin();
-
+        int counter = 0;
         while (vectorIt != shortestPathVector.end())
         {
-            cout << *vectorIt << " -> ";
+            if (counter ==  shortestPathVector.size() - 1) 
+            {
+                cout << *vectorIt << endl;
+            } 
+            else 
+            {
+                cout << *vectorIt << " -> ";
+            }
             vectorIt++;
+            counter++;
         }
         cout << endl;
     }
@@ -216,9 +223,9 @@ void intro()
 
         else if (mainChoice == 3)
         {
+            // exit function goes here
             cout << "Goodbye!" << endl;
             break;
-            // exit function goes here
         }
 
         else
