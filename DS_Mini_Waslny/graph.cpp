@@ -388,7 +388,7 @@ void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) { //get
 }
 
 /**
-* getAdj - gives the adjacency list of the given node
+* getAdjacentVertices - gives the adjacency list of the given node
 * @city: the city to get its adjaceny list
 * @adj: a list that to point to the desired list
 *
@@ -405,16 +405,25 @@ void graph::getAdjacentVertices(string city, list<pair <string, float>>& adjList
 		//if you find a back road from any city to the target city 
 		if (checkEdge(vertex.first, city))
 		{
-			//search for the distance in the adjacency list of the city connected to the target city
-			for (auto& listIterator : map[vertex.first])
+			// make sure it's not already in the list
+			for (auto& listIterator : adjList)
 			{
-				if (listIterator.first == city)
+				// if the city was not already in the adjacency list of city
+				if (listIterator.first != vertex.first)
 				{
-					backDistance = listIterator.second;
+					//search for the distance in the adjacency list of the city connected to the target city
+					for (auto& listIterator : map[vertex.first])
+					{
+						if (listIterator.first == city)
+						{
+							backDistance = listIterator.second;
+						}
+					}
+
+					//add the founded city with its distance to the adjaceny list to be returned
+					adjList.push_back(make_pair(vertex.first, backDistance));
 				}
 			}
-			//add the founded city with its distance to the adjaceny list to be returned
-			adjList.push_back(make_pair(vertex.first, backDistance));
 		}
 	}
 }

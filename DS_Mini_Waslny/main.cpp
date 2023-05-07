@@ -10,6 +10,56 @@ using namespace std;
 
 int main() {
     
+    graph myGraph;
+    myGraph.addCity("A");
+    myGraph.addCity("B");
+    myGraph.addCity("C");
+    myGraph.addCity("D");
+    myGraph.addCity("E");
+    myGraph.addCity("F");
+    myGraph.addCity("G");
+    myGraph.addCity("H");
+    myGraph.addCity("I");
+
+    myGraph.addRoad("A", "B", 3);
+    myGraph.addRoad("A", "I", 3);
+    myGraph.addRoad("I", "C", 3);
+    myGraph.addRoad("I", "G", 3);
+    myGraph.addRoad("C", "D", 3);
+    myGraph.addRoad("C", "E", 3);
+    myGraph.addRoad("C", "F", 3);
+    myGraph.addRoad("G", "F", 3);
+    myGraph.addRoad("G", "H", 3);
+    myGraph.addRoad("E", "H", 3);
+
+
+    // Back Roads
+    myGraph.addRoad("B", "A", 3);
+    myGraph.addRoad("I", "A", 3);
+    myGraph.addRoad("C", "I", 3);
+    myGraph.addRoad("G", "I", 3);
+    myGraph.addRoad("D", "C", 3);
+    myGraph.addRoad("E", "C", 3);
+    myGraph.addRoad("F", "C", 3);
+    myGraph.addRoad("F", "G", 3);
+    myGraph.addRoad("H", "G", 3);
+    myGraph.addRoad("H", "E", 3);
+
+    myGraph.display();
+
+    cout << "===============================================================" << endl;
+    /*
+    list<pair<string, float>> adjacencyList;
+    graph.getOutAdjacent("A", adjacencyList);
+
+    cout << "Adjacents of A" << endl;
+    for (auto& it : adjacencyList)
+    {
+        cout << it.first << endl;
+    }
+    */
+    DFS(myGraph, "A");
+
     /*graph myGraph;
     myGraph.addCity("Cairo");
     myGraph.addCity("Alex");
@@ -26,7 +76,7 @@ int main() {
     for (auto& x : list)
         cout << x.first << ' ' << x.second << endl;*/
 
-     intro();
+    //intro();
 
    /* myGraph.addCity("Aswan");
     myGraph.addCity("siwa");
