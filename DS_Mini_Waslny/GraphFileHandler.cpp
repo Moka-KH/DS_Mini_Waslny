@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
-#include <string.h>
+#include <string>
 #include "GraphFileHandler.h"
 #include "graph.h"
 #include <fstream>
+#include <unordered_map>
 
 using namespace std;
 
@@ -57,4 +58,33 @@ void readGraphFromFile(graph& g, const string& filename) {
 		}
 	}
 	inFile.close();
+}
+
+// Function to write multiple graphs to files
+void writeMultipleGraphs( unordered_map<string, graph>& graphs, string& directory) {
+	for (auto& graphPair : graphs) {
+		const string& graphName = graphPair.first;
+		graph& g = graphPair.second;
+		string filename = directory + "/" + graphName + ".txt";
+		writeGraphToFile(g, filename);
+	}
+}
+// Function to read multiple graphs from files
+unordered_map<string, graph> readMultipleGraphs(string& directory) {
+	unordered_map<string, graph> graphs;
+	ifstream fileList(directory + "/filelist.txt");
+	if (!fileList.is_open()) {
+		cout << "Unable to open filelist.txt for reading." << endl;
+		return graphs;
+	}
+	string filename;
+	while (getline(fileList, filename)) {
+		string graphName = filename.substr(0, filename.length() - 4); // Remove ".txt" extension
+		string filepath = directory + "/" + filename;
+		graph g;
+		readGraphFromFile(g, filepath);
+		graphs[graphName] = g;
+	}
+	fileList.close();
+	return graphs;
 }

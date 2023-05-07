@@ -10,41 +10,11 @@ using namespace std;
 
 int main() {
     
-    // intro();
-
-    graph g;
-
-    g.addCity("cairo");
-    g.addCity("alex");
-    g.addCity("siwa");
-    g.addCity("aswan");
-    g.addCity("qena");
-
-    g.display();
-
-
-    g.addRoad("cairo", "alex", 88);
-    g.addRoad("alex", "cairo", 90);
-    g.addRoad("aswan", "cairo", 200);
-    g.addRoad("aswan", "siwa", 300);
-    g.addRoad("siwa", "aswan", 300);
-
-    g.display();
-
-
-
-    g.deleteRoad("aswan", "siwa");
-    g.deleteRoad("siwa", "aswan");
-
-    g.display();
-
-
-    g.deleteCity("cairo");
-
-    g.display();
-
-
-
+    /*graph myGraph;
+    myGraph.addCity("Cairo");
+    myGraph.addCity("Alex");
+    myGraph.addRoad("Cairo", "Alex", 88);
+    myGraph.addRoad("Alex", "Cairo", 90);*/
 
     g.display();
 
