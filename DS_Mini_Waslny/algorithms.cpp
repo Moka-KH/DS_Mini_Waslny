@@ -27,14 +27,12 @@ const float INFINITE = INT_MAX;
 */
 void DFS(graph& graph, string stratVetrex)
 {
+	// visited means it was printed on the screen
 	unordered_map<string, bool> visited;
 
 	// initialize the "visited" map to be all unvisited
 	for (auto& x : graph.map)
 		visited[x.first] = false;
-
-	// visited means the node was put in the stack
-	visited[stratVetrex] = true;
 
 	stack<string> NodesToCheckNeighbors;
 	NodesToCheckNeighbors.push(stratVetrex);
@@ -42,40 +40,34 @@ void DFS(graph& graph, string stratVetrex)
 	//traverse on connected vertices 
 	while (!NodesToCheckNeighbors.empty())
 	{
+		// take the top of the stack in a variable and pop it
 		string currentNode = NodesToCheckNeighbors.top();
-
-		// the action to do on the vertex (here we print)
 		NodesToCheckNeighbors.pop();
-		cout << currentNode << endl;
 
-		// get the adjacency list of the current vertex
-		list<pair<string, float>> adjacencyList;
-		graph.getAdjacentVertices(currentNode, adjacencyList);
-
-		// iterate over the adjacent vertices of current node
-		for (auto& it : adjacencyList)
+		// print & get the non-visited adjacents of the non-visited
+		if (!visited[currentNode])
 		{
-			// if you find a node that is not visited
-			if (!visited[it.first])
-			{
-				// push it to the stack
-				NodesToCheckNeighbors.push(it.first);
-				// and mark it as visited
-				visited[it.first] = true;
-			}
+			cout << currentNode << endl;
+			visited[currentNode] = true;
+
+			// get the adjacency list of the current vertex
+			list<pair<string, float>> adjacencyList;
+			graph.getAdjacentVertices(currentNode, adjacencyList);
+
+			// iterate over the adjacent vertices of current node
+			for (auto& it : adjacencyList)
+				// push the non-visited adjacents into the stack
+				if (!visited[it.first])
+					NodesToCheckNeighbors.push(it.first);
 		}
 	}
 
 	//traverse on isolated vertices
-	cout << "printing the isolated vetices" << endl;
 	for (auto& mapIterator : graph.map)
-	{
 		if (visited[mapIterator.first] == false)
 			cout << mapIterator.first << endl;
-	}
 
 	cout << "End of Vertices" << endl;
-	// if you wish, print the isolated vertices
 }
 
 // ================================================================================
