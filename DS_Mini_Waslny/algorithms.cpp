@@ -67,6 +67,7 @@ void DFS(graph& graph, string stratVetrex)
 	}
 
 	//traverse on isolated vertices
+	cout << "printing the isolated vetices" << endl;
 	for (auto& mapIterator : graph.map)
 	{
 		if (visited[mapIterator.first] == false)
