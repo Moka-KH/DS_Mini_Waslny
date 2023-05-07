@@ -157,13 +157,14 @@ void Find(graph& myMap)
     string city1, city2;
     float theShortestDistance;
     vector<string> shortestPathVector;
+    vector<float> distances;
 
     cout << endl << "Let's start our journey in finding the shortest path!" << endl
          << "Starting city is:";
     cin >> city1;
     cout << endl <<"Destination city is:";
     cin >> city2;
-    theShortestDistance = Dijkstra(myMap, city1, city2, shortestPathVector);
+    theShortestDistance = Dijkstra(myMap, city1, city2, shortestPathVector,distances);
     if (theShortestDistance == -1.0)
     {
         cout << "=============================================================" << endl
@@ -175,21 +176,29 @@ void Find(graph& myMap)
             << "The total distance of the shortest path between " << city1 << " and " << city2 << " is = " << theShortestDistance << endl;
 
 
-        vector<string>::iterator vectorIt = shortestPathVector.begin();
+        vector<string>::iterator pathIt = shortestPathVector.begin();
+        vector<float>::iterator distancesIt = distances.begin();
+
+        //to handle displayed errors
         int counter = 0;
-        while (vectorIt != shortestPathVector.end())
+
+        //display the path and distances 
+        while (pathIt != shortestPathVector.end())
         {
             if (counter ==  shortestPathVector.size() - 1) 
             {
-                cout << *vectorIt << endl;
+                cout << *pathIt << endl;
             } 
             else 
             {
-                cout << *vectorIt << " -> ";
+                cout << *pathIt << " -> " << *distancesIt << " -> ";
+                distancesIt++;
             }
-            vectorIt++;
+
+            pathIt++;
             counter++;
         }
+
         cout << endl;
     }
 }

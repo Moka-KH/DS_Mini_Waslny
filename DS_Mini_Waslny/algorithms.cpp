@@ -133,7 +133,7 @@ void BFS(string startCity, graph graph)
  * @return The shortest path vector from the starting vertex to the destination vertex.
  *     
  */
-float Dijkstra(graph& myMap, string startingNode, string finalDistination, vector<string>& path) {
+float Dijkstra(graph& myMap, string startingNode, string finalDistination, vector<string>& path,vector <float>& distances ) {
 
 	/*
 	greater<ipair> makes the queue uses the minimum heap data structure(binary tree)
@@ -212,20 +212,23 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 			list<pair <string, float>> adjacentVertices;
 			myMap.getAdjacentVertices(current, adjacentVertices);
 			list <pair <string, float>>::iterator listIterator;
-			listIterator = adjacentVertices.begin();
-			for (; listIterator != adjacentVertices.end(); listIterator++) {
+			for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
 
 				string adjVertex = listIterator->first;
 				float weight = listIterator->second;
 				if (shortestPaths[current] == shortestPaths[adjVertex] + weight) {
 					current = adjVertex;
 					path.push_back(current);
+					distances.push_back(weight);
 					break;
 				}
 			}
 
 		}
+		//cities name
 		reverse(path.begin(), path.end());
+		//distances between cities displayed
+		reverse(distances.begin(), distances.end());
 
 		// Return the shortest path from the source to the destination
 		
