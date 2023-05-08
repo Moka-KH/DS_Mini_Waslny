@@ -454,17 +454,17 @@ void graph::getAdjacentVertices(string city, list<pair <string, float>>& adjList
 }
 
 /**
- * Checks if a city with the given name exists in the graph.
- *
- * @param cityName The name of the city to check.
- * @return True if a city with the given name exists in the graph, false otherwise.
+ * checkCity - Checks if there is a city with the provided name or not.
+ * @cityName: The name of the city to check
+ * 
+ * Return: True if a city with the given name exists, false otherwise.
  */
-bool graph::checkCity(string cityName) {
-	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++) {
-		if (cityName == mapIterator->first) {
+bool graph::checkCity(string city)
+{
+	for (auto& bucket : map)
+		if (city == bucket.first)
 			return true;
-		}
-	}
+
 	return false;
 }
 
