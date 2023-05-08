@@ -395,7 +395,6 @@ void graph::display()
 	}
 }
 
-
 //DINA AND MAYAR
 /**
 * getAdj - gives the adjacency list of the given node
@@ -475,7 +474,8 @@ bool graph::checkCity(string city)
  * @param city2 the secondcity name
  * @return True if an edge between the two cities exists in the graph, false otherwise.
  */
-bool graph::checkEdge(string city1, string city2) {
+bool graph::checkEdge(string city1, string city2)
+{
 	if (!checkCity(city1))
 		return false;
 
@@ -494,19 +494,20 @@ bool graph::checkEdge(string city1, string city2) {
 }
 
 /**
- * Gets distance between two cities with the given names.
+ * Gets distance From City1 To City2 (notice the direction)
  *
  * @param city1 The name of the first city.
  * @param city2 The name of the second city.
  * @return distance if an edge between the two cities exists in the graph, -1 otherwise.
  */
-float graph::getEdgeWieght(string city1, string city2) {
-	list<pair <string, float>> adjacent;
-	getOutAdjacent(city1, adjacent);
-	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) {
-		if (city2 == listIterator->first)
-			return listIterator->second;
-	}
+float graph::getEdgeWieght(string city1, string city2)
+{
+	list<pair <string, float>> adjacents;
+	getOutAdjacent(city1, adjacents);
+	for (auto& listPair : adjacents)
+		if (listPair.first == city2)
+			return listPair.second;
+
 	return -1;
 }
 
