@@ -5,10 +5,9 @@
 #include <unordered_map>
 #include <list>
 #include "graph.h"
-#include<fstream>
+#include <fstream>
 
 using namespace std;
-
 
 /*
 	* Notes:
@@ -46,7 +45,6 @@ int graph::getVertexNum()
 {
 	return vertexNum;
 }
-
 
 /**
 * getEdges - returns #edges
@@ -216,25 +214,22 @@ int graph::deleteCity(string cityName)
 		return 1;
 	}
 
-	// reaching here means it exists
-	// delete its adjacent cities
-	list<pair <string, float>> adjacent;
-	getOutAdjacent(cityName, adjacent);
+	// get ALL of its adjacents
+	// uncomment this :   list<pair <string, float>> adjacents = map.find(cityName);
 
-	//for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
-	//{
-	//	//deleteRoad(cityName, listIterator->first);
-	//	map[cityName].clear();
-	//	map[cityName].erase(listIterator);
-	//}
-	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++) 
-	{
-		for (listIterator = map.at(cityName).begin(); listIterator != map.at(cityName).end(); listIterator++)
+	/*
+	// delete its connections with its out-adjacents
+	for (auto& listPair : adjacents)
+		for (auto& x : map.at(cityName))
 			map[cityName].erase(listIterator);
-	}
+	*/
+
+	// delete its connections with its out-adjacents
+	/*for (auto& listPair : adjacents)
+		map[cityName].erase(listPair);*/
 
 	////delete it from the lists of its adjacent cities
-	////search for cities connected with paramet city
+	////search for cities connected with parameter city
 	for (auto& vertex : map)
 	{
 		//if you find a back road from any city to the target city 
@@ -374,23 +369,22 @@ int graph::deleteRoad(string city1, string city2)
 	return 0;
 }
 
+/**
+* displays the adjacency list of all the nodes in the graph
+* 
+* @return nothing
+*/
 void graph::display()
 {
-	cout << "\n The elements in this Graph are: \n";
+	cout << "\n\tThe elements in this Graph are: \n";
 	//display the key value once
-	for (mapIterator = map.begin(); mapIterator != map.end(); mapIterator++)
+	for (auto& bucket : map)
 	{
-		// itr works as a pointer to 
-		// itr->first stores the key part and
-		// itr->second stores the value part
+		cout << "City: " << bucket.first << endl;
 
-		cout << "City: " << mapIterator->first << endl;
+		for (auto& listPair : bucket.second)
+			cout <<'\t' << listPair.first << " ( Distance =  " << listPair.second << " )" << endl;
 
-		//display the linked list compmnents "the value of the map's key"
-		for (listIterator = mapIterator->second.begin(); listIterator != mapIterator->second.end(); ++listIterator)
-		{
-			cout <<'\t' << (*listIterator).first << " ( Distance =  " << (*listIterator).second << " )" << endl;
-		}
 		cout << "\t\t\t=======================================================================" << endl;
 	}
 }
@@ -409,47 +403,48 @@ void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) {
 }
 
 /**
+* fills the given list with the in-adjacent vertices.
+* 
+* @param city the city to get its in-adjacents
+* @param myList a list to fill in with in-adjacents
+* @return nothing
+*/
+void graph::getInAdjacents(string city, list<pair <string, float>>& myList)
+{
+	float backDistance;
+	for (auto& bucket : map)
+	{
+		// if you find a road from any city to the city we're getting its in-adjacents
+		if (checkEdge(bucket.first, city))
+		{
+			// get the distance from that city to to city we're getting its in-adjacents
+			for (auto& listPair : bucket.second)
+				if (listPair.first == city)
+					backDistance = listPair.second;
+
+			// add the founded city with its distance to the adjaceny list we're filling
+			myList.push_back(make_pair(bucket.first, backDistance));
+		}
+	}
+}
+
+/**
 * getAdjacentVertices - puts all the adjacent vertices (in & out) in the provided list
 * @city: the city to get its adjacents
 * @adj: the list to fill with the adjacents
 * 
-* Description: note that if the provided city had 2 roads with another city with different distances,
-* it'll put only one element in the list with the distance of the out-Edge
+* note: the list will have duplicates if there were 2 edges with the same weight between
+* the given city and any other city
 *
 * Return: nothing
 */
 void graph::getAdjacentVertices(string city, list<pair <string, float>>& adjList)
 {
-	// put the out-adjacents in the list
+	// fill it with the out-adjacents in the list
 	getOutAdjacent(city, adjList);
 
-	////// put the in-adjacents in the list
-	float backDistance;
-	bool inList = false;
-	for (auto& bucket : map)
-	{
-		// if you find a road from any city to city we're getting its in-adjacents
-		if (checkEdge(bucket.first, city))
-		{
-			// if we have that far city already in the adjacents list, don't put it again
-			// it will go for the next bucket
-			for (auto& listIterator : adjList)
-				if (bucket.first == listIterator.first)
-					inList = true;
-
-			// if it's not in the list, add it (its name and distance)
-			if (!inList)
-			{
-				// get the distance from that city to to city we're getting its in-adjacents
-				for (auto& listPair : bucket.second)
-					if (listPair.first == city)
-						backDistance = listPair.second;
-
-				// add the founded city with its distance to the adjaceny list we're filling
-				adjList.push_back(make_pair(bucket.first, backDistance));
-			}
-		}
-	}
+	// put the in-adjacents in the list
+	getInAdjacents(city, adjList);
 }
 
 /**

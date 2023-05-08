@@ -29,6 +29,8 @@ int main() {
     myGraph.addRoad("B", "X", 25);
     myGraph.addRoad("D", "X", 10);
 
+    myGraph.addRoad("F", "A", 15);
+    /*
     // Back Roads
     myGraph.addRoad("F", "A", 15);
     myGraph.addRoad("B", "F", 20);
@@ -43,6 +45,26 @@ int main() {
     cout << "\nDeleted the City F\n";
 
     myGraph.display();
+    */
+    myGraph.display();
+    
+    list<pair<string, float>> myList;
+    myGraph.getOutAdjacent("F", myList);
+    cout << "\tOut Adjacents: \n";
+    for (auto& listPair : myList)
+        cout << listPair.first << " (" << listPair.second << ")\n";
+
+    myList.clear();
+    myGraph.getInAdjacents("F", myList);
+    cout << "\tIn Adjacents: \n";
+    for (auto& listPair : myList)
+        cout << listPair.first << " (" << listPair.second << ")\n";
+
+    myList.clear();
+    myGraph.getAdjacentVertices("F", myList);
+    cout << "\tAll Adjacents: \n";
+    for (auto& listPair : myList)
+        cout << listPair.first << " (" << listPair.second << ")\n";
 
     return 0;
 }
