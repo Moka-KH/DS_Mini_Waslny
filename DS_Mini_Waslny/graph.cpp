@@ -513,5 +513,8 @@ float graph::getEdgeWieght(string city1, string city2)
 
 graph :: ~graph()
 {
+	for (auto& bucket : map)
+		bucket.second.clear();
+
 	map.clear();
 }
