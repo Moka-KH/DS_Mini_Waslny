@@ -415,7 +415,7 @@ void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) {
 * @adj: the list to fill with the adjacents
 * 
 * Description: note that if the provided city had 2 roads with another city with different distances,
-* it'll put only one element in the list with the distance of the in-Edge
+* it'll put only one element in the list with the distance of the out-Edge
 *
 * Return: nothing
 */
@@ -469,10 +469,10 @@ bool graph::checkCity(string city)
 }
 
 /**
- * Checks if an edge between two cities with the given names exists in the graph.
+ * Checks if there is an edge going from city1 to city2
  *
- * @param city1 The name of the first city.
- * @param city2 The name of the second city.
+ * @param city1 the first city name
+ * @param city2 the secondcity name
  * @return True if an edge between the two cities exists in the graph, false otherwise.
  */
 bool graph::checkEdge(string city1, string city2) {
@@ -484,10 +484,10 @@ bool graph::checkEdge(string city1, string city2) {
 
 	// cities exist :)
 
-	list<pair <string, float>> adjacent;
-	getOutAdjacent(city1, adjacent);
-	for (listIterator = adjacent.begin(); listIterator != adjacent.end(); listIterator++)
-		if (city2 == listIterator->first)
+	list<pair <string, float>> adjacents;
+	getOutAdjacent(city1, adjacents);
+	for (auto& listPair : adjacents)
+		if (listPair.first == city2)
 			return true;
 
 	return false;
