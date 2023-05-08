@@ -70,7 +70,6 @@ void DFS(graph& graph, string stratVetrex)
 	cout << "End of Vertices" << endl;
 }
 
-// ================================================================================
 void BFS(string startCity, graph graph)
 {
 	// mark all vertices as not visited
@@ -120,7 +119,6 @@ void BFS(string startCity, graph graph)
 
 	cout << "End of Vertices" << endl;
 }
-
 
 /**
  * Dijkstra's algorithm for finding the shortest path between two vertices in a graph.

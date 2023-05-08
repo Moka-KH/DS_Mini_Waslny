@@ -14,8 +14,8 @@ using namespace std;
 	* Notes:
 	* map.at() -> returns a pointer to the value
 	* map.insert() -> adds a new key-value
-	* map.find() -> return an iterator pointing to the vertex if it exists
-	*				and to the last vertex if it doesn't
+	* map.find() -> return an iterator pointing to bucket value (the vertex in our case)
+	*				if it exists and to the last vertex if it doesn't
 	* map.erase() -> return 1 if found key and erase it otherwise return 0
 */
 
@@ -404,49 +404,51 @@ void graph::display()
 *
 * Return: nothing
 */
-void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) { //getOutAdjacent ####
+void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) {
 	mapIterator = map.find(city);
 	adj = mapIterator->second;
 }
 
 /**
-* getAdjacentVertices - gives the adjacency list of the given node
-* @city: the city to get its adjaceny list
-* @adj: a list that to point to the desired list
+* getAdjacentVertices - puts all the adjacent vertices (in & out) in the provided list
+* @city: the city to get its adjacents
+* @adj: the list to fill with the adjacents
+* 
+* Description: note that if the provided city had 2 roads with another city with different distances,
+* it'll put only one element in the list with the distance of the in-Edge
 *
 * Return: nothing
 */
 void graph::getAdjacentVertices(string city, list<pair <string, float>>& adjList)
 {
-	getOutAdjacent(city, adjList); //adjList contains B, I
+	// put the out-adjacents in the list
+	getOutAdjacent(city, adjList);
+
+	////// put the in-adjacents in the list
 	float backDistance;
-	bool exists = false;
-
-	//search for cities connected with city
-	for (auto& vertex : map)
+	bool inList = false;
+	for (auto& bucket : map)
 	{
-		//if you find a back road from any city to the target city 
-		if (checkEdge(vertex.first, city)) //vertex.first => B
+		// if you find a road from any city to city we're getting its in-adjacents
+		if (checkEdge(bucket.first, city))
 		{
-			
-			// if the city was already in the adjacency list of city mark as exists
+			// if we have that far city already in the adjacents list, don't put it again
+			// it will go for the next bucket
 			for (auto& listIterator : adjList)
-				if (vertex.first == listIterator.first)
-					exists = true;
+				if (bucket.first == listIterator.first)
+					inList = true;
 
-			// make sure it's not already in the list
-			if (exists == false)
+			// if it's not in the list, add it (its name and distance)
+			if (!inList)
 			{
-				for (auto& listIterator : map[vertex.first])
-					if (listIterator.first == city)
-						backDistance = listIterator.second;
+				// get the distance from that city to to city we're getting its in-adjacents
+				for (auto& listPair : bucket.second)
+					if (listPair.first == city)
+						backDistance = listPair.second;
 
-				//add the founded city with its distance to the adjaceny list to be returned
-				adjList.push_back(make_pair(vertex.first, backDistance));
+				// add the founded city with its distance to the adjaceny list we're filling
+				adjList.push_back(make_pair(bucket.first, backDistance));
 			}
-
-
-
 		}
 	}
 }
