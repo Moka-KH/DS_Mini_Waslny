@@ -14,27 +14,27 @@ int main() {
     graph myGraph;
     vector<string> path;
     float x;
-    myGraph.addCity("Aaaa");
-    myGraph.addCity("Bbbb");
-    myGraph.addCity("Cccc");
-    myGraph.addCity("Dddd");
-    myGraph.addCity("Eeee");
-    myGraph.addCity("Ffff");
+    //myGraph.addCity("Aaaa");
+    //myGraph.addCity("Bbbb");
+    //myGraph.addCity("Cccc");
+    //myGraph.addCity("Dddd");
+    //myGraph.addCity("Eeee");
+    //myGraph.addCity("Ffff");
 
 
-    myGraph.addRoad("Aaaa", "Bbbb", 2);
-    myGraph.addRoad("Aaaa", "Cccc", 4);
-    myGraph.addRoad("Bbbb", "Cccc", 1);
-    myGraph.addRoad("Bbbb", "Eeee", 2);
-    myGraph.addRoad("Bbbb", "Dddd", 4);
-    myGraph.addRoad("Cccc", "Eeee", 3);
-    myGraph.addRoad("Eeee", "Dddd", 3);
-    myGraph.addRoad("Eeee", "Ffff", 2);
-    myGraph.addRoad("Dddd", "Ffff", 3);
+    //myGraph.addRoad("Aaaa", "Bbbb", 2);
+    //myGraph.addRoad("Aaaa", "Cccc", 4);
+    //myGraph.addRoad("Bbbb", "Cccc", 1);
+    //myGraph.addRoad("Bbbb", "Eeee", 2);
+    //myGraph.addRoad("Bbbb", "Dddd", 4);
+    //myGraph.addRoad("Cccc", "Eeee", 3);
+    //myGraph.addRoad("Eeee", "Dddd", 3);
+    //myGraph.addRoad("Eeee", "Ffff", 2);
+    //myGraph.addRoad("Dddd", "Ffff", 3);
 
     
     
-    Find(myGraph);
+    //Find(myGraph);
 
     //graph myGraph;
     //myGraph.addCity("A");
@@ -126,7 +126,7 @@ int main() {
     myGraph.addRoad("Alex", "Cairo", 90);*/
 
 
-    //intro();
+    intro();
 
 
     return 0;
