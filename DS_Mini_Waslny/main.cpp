@@ -13,16 +13,16 @@ using namespace std;
 int main() {
     graph myGraph;
     
-    myGraph.addCity("A");
+    /*myGraph.addCity("A");
     myGraph.addCity("B");
     myGraph.addCity("X");
     myGraph.addCity("F");
     myGraph.addCity("D");
-    myGraph.addCity("K");
+    myGraph.addCity("K");*/
 
 
     // Roads
-    myGraph.addRoad("A", "F", 15);
+    /*myGraph.addRoad("A", "F", 15);
     myGraph.addRoad("F", "B", 20);
     myGraph.addRoad("F", "K", 10);
     myGraph.addRoad("F", "D", 60);
@@ -30,6 +30,7 @@ int main() {
     myGraph.addRoad("D", "X", 10);
 
     myGraph.addRoad("F", "A", 15);
+    my-Graph.addRoad("X", "B", 30);*/
     /*
     // Back Roads
     myGraph.addRoad("F", "A", 15);
@@ -46,9 +47,9 @@ int main() {
 
     myGraph.display();
     */
-    myGraph.display();
+    //myGraph.display();
     
-    list<pair<string, float>> myList;
+    /*list<pair<string, float>> myList;
     myGraph.getOutAdjacent("F", myList);
     cout << "\tOut Adjacents: \n";
     for (auto& listPair : myList)
@@ -64,7 +65,10 @@ int main() {
     myGraph.getAdjacentVertices("F", myList);
     cout << "\tAll Adjacents: \n";
     for (auto& listPair : myList)
-        cout << listPair.first << " (" << listPair.second << ")\n";
+        cout << listPair.first << " (" << listPair.second << ")\n";*/
 
+    /*myGraph.deleteCity("X");
+    myGraph.display();*/
+    intro();
     return 0;
 }

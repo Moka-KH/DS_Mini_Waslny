@@ -272,6 +272,9 @@ void workOnMap()
 
     string mapName;
     cin >> mapName;
+    
+    // check here that you have a valid map name
+
     do {
         int choice;
         cout << endl << endl << endl;

@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include <string.h>
+#include <string>
 #include <utility>
 #include <unordered_map>
 #include <list>
@@ -214,32 +214,18 @@ int graph::deleteCity(string cityName)
 		return 1;
 	}
 
-	// get ALL of its adjacents
-	// uncomment this :   list<pair <string, float>> adjacents = map.find(cityName);
-
-	/*
-	// delete its connections with its out-adjacents
-	for (auto& listPair : adjacents)
-		for (auto& x : map.at(cityName))
-			map[cityName].erase(listIterator);
-	*/
-
-	// delete its connections with its out-adjacents
-	/*for (auto& listPair : adjacents)
-		map[cityName].erase(listPair);*/
-
-	////delete it from the lists of its adjacent cities
-	////search for cities connected with parameter city
-	for (auto& vertex : map)
-	{
-		//if you find a back road from any city to the target city 
-		if (checkEdge(vertex.first, cityName))
-			for (listIterator = map.at(vertex.first).begin(); listIterator != map.at(vertex.first).end(); listIterator++)
-				if(listIterator->first == cityName)
-					map[vertex.first].erase(listIterator);
-			//deleteRoad(vertex.first, cityName);
-	}
+	list<pair<string, float>> adjacents;
 	
+	// delete connections with its out-adjacents
+	getOutAdjacent(cityName, adjacents);
+	for (auto& listPair : adjacents)
+		deleteRoad(cityName, listPair.first);
+
+	// delete connections with its in-adjacents
+	getInAdjacents(cityName, adjacents);
+	for (auto& listPair : adjacents)
+		deleteRoad(listPair.first, cityName);
+
 	// remove city 
 	map.erase(cityName);
 	vertexNum--;
