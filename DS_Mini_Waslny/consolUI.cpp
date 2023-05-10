@@ -9,7 +9,6 @@
 
 using namespace std;
 
-unordered_map<string, graph> maps;
 
 /**
  * @brief This function allows the user to update the graph data structure by adding new cities,
@@ -50,7 +49,29 @@ void update(graph& myGraph)
             cout << "\tCity 2: ";
             cin >> city2;
             cout << "\tDistance: ";
-            cin >> distance;
+            // Handling exception 
+            do {
+                try {
+                    cin >> distance;
+                    //if we have string instead of numerical number
+                    if (cin.fail())
+                    {
+                        cin.clear();
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        throw std::runtime_error("Invalid input=(  Please enter a numerical input");
+                    }
+                    //ensure that the distance is positive
+                    else if (distance <= 0) 
+                        cout << "please enter a psitive distance"<<endl;
+                    else
+                        break;
+                }
+                catch (runtime_error& exp)
+                {
+                    cout << exp.what() << endl;
+                }
+                
+            } while (true);
 
             /*
              1- the user will add a directed road or an undirected road
@@ -136,7 +157,7 @@ void displayGraph(graph& myGraph)
 *
 * @return graph The newly created and updated graph object.
 */
-void addGraph()
+void addGraph(unordered_map<string, graph> maps)
 {
     string graphName;
     cout << "Map Name: ";
@@ -210,9 +231,8 @@ void Find(graph& myMap)
 *
 * Retrun: nothing
 */
-void intro()
+void intro(unordered_map<string, graph> maps)
 {
-    maps=readMultipleGraphs(".\\");
     cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
     cout << "\t\t\t===================================================================" << endl;
     cout << "\t\t\t===================================================================" << endl;
@@ -228,17 +248,19 @@ void intro()
         cin >> mainChoice;
 
         if (mainChoice == 1)
-            addGraph();
+            addGraph(maps);
 
-        else if (mainChoice == 2)
-            workOnMap();
-
+        else if (mainChoice == 2) 
+        {
+            if (maps.size() == 0)
+                cout << "Sorry=( You don't have any map to work on please create a new map" << endl;
+            else
+                workOnMap(maps);
+        }
         else if (mainChoice == 3)
         {
             // exit function goes here
-            
             writeMultipleGraphs(maps, ".\\");
-            
             cout << "Goodbye!" << endl;
             break;
         }
@@ -268,16 +290,32 @@ void Traverse(graph& mygraph)
         cout << "Invalid Choice please try again :(\n";
 }
 
-void workOnMap()
+void workOnMap(unordered_map<string, graph> maps)
 {
+    string mapName;
+    bool mapExist=false;
     cout << "Which map ? \n" << "Available maps: ";
     // show the user all the maps
-    for (unordered_map<string, graph>::iterator it = maps.begin(); it != maps.end(); it++)
-        cout << it->first << ' ';
+    for (auto& it : maps)
+        cout << it.first << ' ';
     cout << endl;
 
-    string mapName;
-    cin >> mapName;
+    do {
+        cin >> mapName;
+        for (auto& it : maps)
+        {
+            if (mapName == it.first)
+            {
+                mapExist = true;
+                break;
+            }
+        }
+        if (mapExist)
+            break;
+        else
+            cout << "Sorry=( This map dose not exist please enter another map name " << endl;
+
+    } while (true);
     
     // check here that you have a valid map name
 

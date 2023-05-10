@@ -74,10 +74,6 @@ void readGraphFromFile(graph& g, const string& filename) {
 	inFile.close();
 }
 
-
-
-
-
 // Function to write multiple graphs to files
 void writeMultipleGraphs( unordered_map<string, graph>& graphs, const string& directory) {
 	ofstream fileList(directory + "/filelist.txt");
