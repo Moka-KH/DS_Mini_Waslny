@@ -30,6 +30,8 @@ int main() {
     myGraph.addRoad("D", "X", 10);
 
     myGraph.addRoad("F", "A", 15);
+    myGraph.addRoad("X", "B", 30);
+
     /*
     // Back Roads
     myGraph.addRoad("F", "A", 15);
@@ -46,7 +48,15 @@ int main() {
 
     myGraph.display();
     */
-    myGraph.display();
+    //myGraph.display();
+
+
+    //myGraph.deleteRoad("A", "F");
+    //myGraph.deleteRoad("F", "D");
+    //myGraph.deleteRoad("D", "F");
+    //myGraph.deleteRoad("X", "B");
+
+    //myGraph.display();
     
     list<pair<string, float>> myList;
     myGraph.getOutAdjacent("F", myList);

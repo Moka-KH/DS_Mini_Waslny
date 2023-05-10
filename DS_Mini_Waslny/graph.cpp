@@ -213,20 +213,19 @@ int graph::deleteCity(string cityName)
 			<< "Make sure you wrote the name right\n";
 		return 1;
 	}
-
+	/*
 	// get ALL of its adjacents
 	// uncomment this :   list<pair <string, float>> adjacents = map.find(cityName);
-
-	/*
+	
 	// delete its connections with its out-adjacents
-	for (auto& listPair : adjacents)
-		for (auto& x : map.at(cityName))
-			map[cityName].erase(listIterator);
-	*/
+	//for (auto& listPair : adjacents)
+		//for (auto& x : map.at(cityName))
+			//map[cityName].erase(listIterator);
+
 
 	// delete its connections with its out-adjacents
-	/*for (auto& listPair : adjacents)
-		map[cityName].erase(listPair);*/
+	//for (auto& listPair : adjacents)
+		//map[cityName].erase(listPair);
 
 	////delete it from the lists of its adjacent cities
 	////search for cities connected with parameter city
@@ -243,7 +242,21 @@ int graph::deleteCity(string cityName)
 	// remove city 
 	map.erase(cityName);
 	vertexNum--;
+	*/
 
+	list<pair <string, float>> adjacents;
+
+	//delete "out connections" of parameter city
+	getOutAdjacent(cityName,adjacents);
+	for (listIterator = adjacents.begin(); listIterator != adjacents.end(); listIterator++)
+			map[cityName].erase(listIterator);
+	adjacents.clear();
+
+	//delete "in connections" of parameter city
+
+	
+	
+	
 	cout << "City is deleted\n";
 	return 0;
 }
