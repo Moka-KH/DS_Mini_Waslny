@@ -24,10 +24,19 @@
     <ClCompile Include="algorithms.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="consolUI.cpp">
+    <ClCompile Include="homePage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GraphFileHandler.cpp">
+    <ClCompile Include="files.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enumerators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="roads.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dashboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +47,16 @@
     <ClInclude Include="algorithms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="consolUI.h">
+    <ClInclude Include="homePage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphFileHandler.h">
+    <ClInclude Include="files.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="roads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dashboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

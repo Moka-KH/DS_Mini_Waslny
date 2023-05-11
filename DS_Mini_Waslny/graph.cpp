@@ -4,8 +4,9 @@
 #include <utility>
 #include <unordered_map>
 #include <list>
-#include "graph.h"
 #include <fstream>
+#include "graph.h"
+#include "enumerators.cpp"
 
 using namespace std;
 
@@ -153,23 +154,16 @@ int graph::addRoad(string city1, string city2, float distance)
 {
 	// if the first one doesn't exist
 	if (!checkCity(city1))
-	{
-		cout << "City: " << city1 << " doesn't exist\n";
-		return 1;
-	}
+		return noCity1;
+
 	// if the second one doesnt exist
 	if (!checkCity(city2))
-	{
-		cout << "City: " << city2 << " doesn't exist\n";
-		return 1;
-	}
+		return noCity2;
 
 	// if the road already exists , just update the distance
 	if (checkEdge(city1, city2))
 	{
-		list<pair <string, float>> adjacentList;
-		adjacentList=getOutAdjacent(city1);
-		for (auto& x : adjacentList)
+		for (auto& x : map.at(city1))
 		{
 			if (city2 == x.first)
 			{
@@ -177,21 +171,16 @@ int graph::addRoad(string city1, string city2, float distance)
 				break;
 			}
 		}
-		//update the adjacency list of city1
-		map[city1].clear();
-		map[city1] = adjacentList;
 		cout << endl;
-		cout << "The road is updated successfully" << endl;
+		return updatedRoad;
 	}
+
+	// no road between them.. add it
 	else
 	{
-		// put city2 in city1 conncections
-		pairHolder.first = city2;
-		pairHolder.second = distance;
-		map.at(city1).push_back(pairHolder);
-		cout << "The road is added successfully" << endl;
+		map.at(city1).push_back(make_pair(city2, distance));
+		return addedRoad;
 	}
-	return 0;
 }
 
 /**
@@ -350,11 +339,9 @@ void graph::display()
 *
 * Return: nothing
 */
-list<pair <string, float>> graph::getOutAdjacent(string city) {
-	unordered_map <string, list<pair <string, float>>>::iterator mapIterator;
-
-	mapIterator = map.find(city);
-	return mapIterator->second;
+list<pair <string, float>> graph::getOutAdjacent(string city)
+{
+	return map.at(city);
 }
 
 /**

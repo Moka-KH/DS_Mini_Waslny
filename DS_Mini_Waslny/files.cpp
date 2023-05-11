@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "GraphFileHandler.h"
+#include "files.h"
 #include "graph.h"
 #include <fstream>
 #include <unordered_map>

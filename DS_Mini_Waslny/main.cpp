@@ -4,19 +4,18 @@
 #include <string>
 #include "graph.h"
 #include "algorithms.h"
-#include "consolUI.h"
+#include "homePage.h"
 #include <list>
 #include <utility>
 #include <unordered_map>
-#include "GraphFileHandler.h"
+#include "files.h"
 
 using namespace std;
 unordered_map<string, graph> maps;
 
 int main() {
-   maps=readMultipleGraphs(".\\");
-    graph myGraph;
-    vector<string> path;
+    /*graph myGraph;
+    vector<string> path;*/
     
     // test case of dikstra
   /*  myGraph.addCity("A");
@@ -39,10 +38,6 @@ int main() {
 
     Find(myGraph);*/
 
-
-
-
-
     /*float x;
     myGraph.addCity("Aaaa");
     myGraph.addCity("Bbbb");
@@ -50,8 +45,6 @@ int main() {
     myGraph.addCity("Dddd");
     myGraph.addCity("Eeee");
     myGraph.addCity("Ffff");*/
-
-
 
     // Roads
     /*myGraph.addRoad("A", "F", 15);
@@ -102,6 +95,11 @@ int main() {
     /*myGraph.deleteCity("X");
     myGraph.display();*/
 
-    intro(maps);
+    maps = readMultipleGraphs(".\\");
+
+    homePage(maps);
+
+    writeMultipleGraphs(maps, ".\\");
+
     return 0;
 }
