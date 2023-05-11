@@ -128,12 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="algorithms.cpp" />
-    <ClCompile Include="homePage.cpp" />
     <ClCompile Include="enumerators.cpp" />
+    <ClCompile Include="homePage.cpp" />
     <ClCompile Include="files.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="graph.cpp" />
-    <ClCompile Include="roads.cpp" />
+    <ClCompile Include="updateMap.cpp" />
     <ClCompile Include="dashboard.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +141,7 @@
     <ClInclude Include="homePage.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="files.h" />
-    <ClInclude Include="roads.h" />
+    <ClInclude Include="updateMap.h" />
     <ClInclude Include="dashboard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

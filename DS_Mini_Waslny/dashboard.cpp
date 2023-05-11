@@ -1,9 +1,10 @@
 #include "dashboard.h"
+#include "updateMap.h"
+#include "Algorithms.h"
 
-//       update = add city + add/edit road + delete city + delete road + Dashboard again
 /**
- * @brief This function allows the user to update the graph data structure by adding new cities,
- *        adding new edges between existing cities, deleting existing cities, or deleting edges between existing cities.
+ * This function allows the user to update the map by adding new cities and roads,
+ * and deleting existing cities or edges between existing cities.
  *
  * @param myGraph a reference to the graph data structure that the user wants to update.
  * @retun void
@@ -11,55 +12,48 @@
 void updateMap(graph& myGraph)
 {
     int choice;
-    do
+    while (true)
     {
         cout << "\t\t\t\t\tUpdating " << myGraph.name << endl;
-        cout << "1. Add City\n";
+        cout << "1. Add a City\n";
         cout << "2. Add / Edit a Road\n";
-        cout << "3. Delete City\n";
-        cout << "4. Delete Road\n";
-        cout << "5. Return to the " << myGraph.name << " Dashboard\n";
+        cout << "3. Delete a City\n";
+        cout << "4. Delete a Road\n";
+        cout << "5. Return to \"" << myGraph.name << "\" Dashboard\n";
         cin >> choice;
 
         if (choice == 1)
-        {
-            string AddedCity;
-            cout << "\tName: ";
-            cin >> AddedCity;
+            addCity(myGraph);
 
-            if (myGraph.addCity(AddedCity))
-                updateMap(myGraph);
-        }
         else if (choice == 2)
-        {
             addOrEditRoad(myGraph);
-        }
+
         else if (choice == 3)
         {
-            string DeletedCity;
-            cout << "Enter the name of the new city that you want to delete it: \n";
-            cin >> DeletedCity;
+            string city;
+            cout << "Delete the City: ";
+            cin >> city;
 
-            if (myGraph.deleteCity(DeletedCity))
-                updateMap(myGraph);
+            myGraph.deleteCity(city);
         }
+
         else if (choice == 4)
         {
             string city1, city2;
-            cout << "Deleing: \n\tCity 1: ";
+            cout << "Deleing Road: \n";
+            cout << "\tCity 1: ";
             cin >> city1;
             cout << "\tCity 2: ";
             cin >> city2;
 
-            if (myGraph.deleteRoad(city1, city2))
-                updateMap(myGraph);
+            myGraph.deleteRoad(city1, city2);
         }
+
         else if (choice == 5)
             return;
         else
             cout << "invalid choice :/ \n";
-
-    } while (true);
+    }
 }
 
 void Traverse(graph& mygraph)

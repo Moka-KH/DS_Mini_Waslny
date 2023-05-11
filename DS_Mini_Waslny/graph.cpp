@@ -72,31 +72,25 @@ void graph::setVertexNum(int noVertx)
 }
 
 /**
-* addCity - Adds a new City
-* @newCity: City Name
+* @brief Adds a new City
+* 
 *
-* Description: if the city already exists, it gives an Error Message
-*			   else it adds a new vertex for the city with an empty list of
-*			   adjacent vertices
-*
-* Return: 0 when it ends successfully, 1 otherwise
+* it exits with an error code if the city already exists
+* otherwise, it adds a city in the map and a list for it
+* 
+* @city City Name
+* @return returns an addCity_enum according to the ending state (success / failure)
 */
-int graph::addCity(string newCity)
+int graph::addCity(string city)
 {
-	// if it already exists
-	if (checkCity(newCity))
-	{
-		cout << "City " << newCity << "already exists =| \n";
-		return 1;
-	}
+	if (checkCity(city))
+		return cityExists;
 
-	//add the new city and give it a list as a value in the map
 	list <pair <string, float>> newList;
-	map[newCity] = newList;
+	map[city] = newList;
 	vertexNum++;
 
-	cout << newCity << " is Added Successfully =)\n";
-	return 0;
+	return success;
 }
 
 /**
@@ -114,18 +108,19 @@ int graph::addCity(string newCity)
 */
 int graph::addCity(string newCity, string adjCity, float distance)
 {
+	// I didn't handle messages of this function yet.. I think we'll remove it
 	// if the vetex to be added already exists
 	if (checkCity(newCity))
 	{
 		cout << "City " << newCity << " already exists =| \n";
-		return 1;
+		return cityExists;
 	}
 
 	// if the vertex we'are connecting to doesn't exist
 	if (!checkCity(adjCity))
 	{
 		cout << "City " << adjCity << " doesn't exist. You can't link to it\n";
-		return 1;
+		return noCity2;
 	}
 
 	// reaching here means the input is valid
@@ -193,13 +188,12 @@ int graph::addRoad(string city1, string city2, float distance)
 *
 * Return: 0 when it ends successfully, 1 otherwise
 */
-int graph::deleteCity(string cityName)
+void graph::deleteCity(string cityName)
 {
 	if (!checkCity(cityName))
 	{
-		cout << "city " << cityName << " does not exist.. I can't delete it :(\n"
-			<< "Make sure you wrote the name right\n";
-		return 1;
+		cout << "city " << cityName << " does not exist.. I can't delete it =(\n";
+		return;
 	}
 
 	list<pair<string, float>> adjacents;
@@ -214,59 +208,57 @@ int graph::deleteCity(string cityName)
 	for (auto& listPair : adjacents)
 		deleteRoad(listPair.first, cityName);
 
-	// remove city 
+	// remove city
 	map.erase(cityName);
 	vertexNum--;
 
 	cout << "City is deleted\n";
-	return 0;
+	return;
 }
 
 /**
-* deleteRoad - deletes a road between 2 cities
-* @city1: first city
-* @city2: second city
+* @brief This function deletes a road between 2 cities
+* 
 *
-* Description: first makes sure that cities exist. if so,
-*			   it makes sure they're conncected. if so,
-*			   it deletes the connection
+* first makes sure that cities exist. if so, it makes sure they're conncected.
+* if so, it deletes the connection depending on its type (one way or roundway)
 *
-* Return: 0 when it ends successfully, 1 otherwise
+* @param city1 first city
+* @param city2 second city
+* @return void
 */
-int graph::deleteRoad(string city1, string city2)
+void graph::deleteRoad(string city1, string city2)
 {
 	// if at least one city doesn't exist
 	if (!checkCity(city1))
 	{
 		cout << city1 << " doesn't exist :| (from delete road)\n";
-		return 1;
+		return;
 	}
 	if (!checkCity(city2))
 	{
 		cout << city2 << " doesn't exist :| (from delete road)\n";
-		return 1;
+		return;
 	}
 
 	// one way road from city1 to city2
 	if (checkEdge(city1, city2) && !checkEdge(city2, city1))
-	{
-		// delete city2 from the adjacent list of city1
+		// delete city2 from the adjacency list of city1
 		deleteEdge(city1, city2);
-	}
+	
 	// one way road from city2 to city1
 	else if (checkEdge(city2, city1) && !checkEdge(city1, city2))
-	{
-		// delete city1 from the adjacent list of city2
+		// delete city1 from the adjacency list of city2
 		deleteEdge(city2, city1);
-	}
+	
 	// 2 way road
 	else if (checkEdge(city1, city2) && checkEdge(city2, city1))
 	{
 		// with the same distance
 		if (getEdgeWieght(city1, city2) == getEdgeWieght(city2, city1))
 		{
-			// delete city2 from the adjacent list of city1 
-		    // AND delete city1 from the adjacent list of city2
+			// delete city2 from the adjacency list of city1 
+		    // AND delete city1 from the adjacency list of city2
 			deleteEdge(city1, city2);
 			deleteEdge(city2, city1);
 		}
@@ -274,31 +266,40 @@ int graph::deleteRoad(string city1, string city2)
 		else
 		{
 			int choice;
-			cout << "1- delete road from " << city1 << " to " << city2 << "\n"
-				<< "2- delete road from " << city2 << " to " << city1 << "\n"
-				<< "3- delete  both roads \n";
-			cin >> choice;
-
-			if (choice == 1)
-				deleteEdge(city1, city2);
-			else if (choice == 2)
-				deleteEdge(city2, city1);
-			else
+			while (true)
 			{
-				deleteEdge(city1, city2);
-				deleteEdge(city2, city1);
+				cout << "1- delete road from " << city1 << " to " << city2 << "\n"
+					<< "2- delete road from " << city2 << " to " << city1 << "\n"
+					<< "3- delete  both roads \n";
+				cin >> choice;
+
+				if (choice == 1)
+					deleteEdge(city1, city2);
+				else if (choice == 2)
+					deleteEdge(city2, city1);
+				else if (choice == 3)
+				{
+					deleteEdge(city1, city2);
+					deleteEdge(city2, city1);
+				}
+				else
+				{
+					cout << "Invalid choice!  Try agian\n";
+					continue;
+				}
+				break;
 			}
 		}
 	}
 	// no road
 	else
 	{
-		cout << "There is no road between " << city1 << " and " << city2 << ":(\n";
-		return 1;
+		cout << "There is no road between " << city1 << " and " << city2 << "=(\n";
+		return;
 	}
 
 	cout << "Road is deleted\n";
-	return 0;
+	return;
 }
 
 void graph::deleteEdge(string city1,string city2) 

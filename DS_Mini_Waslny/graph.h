@@ -22,18 +22,16 @@ public:
 	// name of adjacent city - the distance between it and the original vertex
 	unordered_map <string, list<pair <string, float>>> map;
 
-	pair <string, float> pairHolder;
-
 	graph();
 	graph(string);
 	~graph();
 
-	int addCity(string newCity);
+	int addCity(string city);
 	int addCity(string newCity, string adjCity, float distance);
 	int addRoad(string city1, string city2, float distance);
 
-	int deleteCity(string cityName);
-	int deleteRoad(string city1, string city2);
+	void deleteCity(string cityName);
+	void deleteRoad(string city1, string city2);
 
 	int getVertexNum();
 	void setVertexNum(int);

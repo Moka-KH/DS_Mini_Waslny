@@ -6,7 +6,9 @@ enum addRoad_enum
 	noCity2 = 2,
 	updatedRoad = 3,
 	addedRoad = 4,
-
-	success = updatedRoad || addedRoad,
-	failure = noCity1 || noCity2
+};
+enum addCity_enum
+{
+	cityExists = 1,
+	success = 2,
 };

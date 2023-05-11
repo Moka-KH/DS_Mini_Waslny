@@ -30,13 +30,13 @@
     <ClCompile Include="files.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="enumerators.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="roads.cpp">
+    <ClCompile Include="updateMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dashboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="enumerators.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClInclude Include="files.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="roads.h">
+    <ClInclude Include="updateMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dashboard.h">

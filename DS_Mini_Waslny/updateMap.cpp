@@ -1,40 +1,60 @@
-#include "roads.h"
-#include "enumerators.cpp""
+#include "graph.h"
+#include "updateMap.h"
+#include "homePage.h"
+#include "enumerators.cpp"
 
+// This file has functions that separate the messages from the graph class functions
+// in order to make the data loading in the beginning of the program silent
+
+/**
+* This function adds the city to the provided graph and based on the return value
+* of addCity(), it displays a feedback message
+* 
+* @param myGraph the graph to add the city to
+* @return void
+*/
+void addCity(graph myGraph)
+{
+    cout << "\tName: ";
+    string city;
+    cin >> city;
+
+    int message = myGraph.addCity(city);
+
+    if (message == cityExists)
+        cout << "City " << city << " already exists =/\n";
+    else if (message == success)
+        cout <<"Added \"" << city << "\" =)\n";
+}
+
+/**
+* This function lets the user add / edit a road.. it uses the the addRoad function from
+* the graph class and calls addRoadFeedback() which handles the feedback messages that appear
+* to the user
+* 
+* @param myGraph the graph to add / edit its roads
+* @return void
+*/
 void addOrEditRoad(graph& myGraph)
 {
     string city1, city2;
     float distance;
-    cout << "Adding / Updating Road:\n" << "\tCity 1: ";
+    cout << "Adding / Updating Road:\n";
+    cout << "\tCity 1: ";
     cin >> city1;
     cout << "\tCity 2: ";
-    cin >> city2;
+    cin >> city2;   
     cout << "\tDistance: ";
-
-    // get the distance input
-    do {
-        try {
-            cin >> distance;
-            // if we have string instead of numeric value
-            if (cin.fail())
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw std::runtime_error("Invalid input =(\nPlease enter a numerical input");
-            }
-            // ensure that the distance is positive
-            else if (distance <= 0)
-                cout << "Please enter a psitive distance\n" << endl;
-            else
-                break;
-        }
-        catch (runtime_error& exp)
-        {
-            // just print the exception message
-            cout << exp.what() << endl;
-        }
-
-    } while (true);
+    
+    // input valid distance
+    while (true)
+    {
+        distance = validateNumber();
+        if (distance <= 0)
+            cout << "please enter a psitive distance" << endl;
+        else
+            break;
+    }
 
     // ask the user: Directed or Undirected ?
     int choice;
@@ -50,7 +70,7 @@ void addOrEditRoad(graph& myGraph)
             << "-> ";
         cin >> choice;
 
-        // add the road and call the messenger to give feedback
+        // add the road and call addRoadFeedback() to give feedback
         int message;
         if (choice == 1)
         {
@@ -74,6 +94,15 @@ void addOrEditRoad(graph& myGraph)
         addRoadFeedback(city2, city1, message2);
     }
 }
+
+/**
+* this function prints a message in the console depending on the given message parameter
+* 
+* @param city1 city1 name
+* @param city2 city2 name
+* @param message the return value form calling addRoad() function in the graph class
+* @return void
+*/
 void addRoadFeedback(string city1, string city2, int message)
 {
     if (message == noCity1)
