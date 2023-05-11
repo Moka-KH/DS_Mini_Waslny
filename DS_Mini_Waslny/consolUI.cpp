@@ -1,5 +1,5 @@
 #pragma once
-#include<iostream>
+#include <iostream>
 #include <unordered_map>
 #include "graph.h"
 #include "algorithms.h"

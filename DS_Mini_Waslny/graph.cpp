@@ -18,7 +18,6 @@ using namespace std;
 	* map.erase() -> return 1 if found key and erase it otherwise return 0
 */
 
-// this should be deleted
 graph::graph()
 {
 	vertexNum = 0;
@@ -324,7 +323,6 @@ void graph::deleteEdge(string city1,string city2)
 		}
 }
 
-
 /**
 * displays the adjacency list of all the nodes in the graph
 * 
@@ -345,7 +343,6 @@ void graph::display()
 	}
 }
 
-//DINA AND MAYAR
 /**
 * getAdj - gives the adjacency list of the given node
 * @city: the city to get its adjaceny list
