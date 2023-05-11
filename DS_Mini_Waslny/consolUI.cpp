@@ -157,7 +157,7 @@ void displayGraph(graph& myGraph)
 *
 * @return graph The newly created and updated graph object.
 */
-void addGraph(unordered_map<string, graph> maps)
+void addGraph(unordered_map<string, graph>& maps)
 {
     string graphName;
     cout << "Map Name: ";
@@ -231,7 +231,7 @@ void Find(graph& myMap)
 *
 * Retrun: nothing
 */
-void intro(unordered_map<string, graph> maps)
+void intro(unordered_map<string, graph>& maps)
 {
     cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
     cout << "\t\t\t===================================================================" << endl;
@@ -290,7 +290,7 @@ void Traverse(graph& mygraph)
         cout << "Invalid Choice please try again :(\n";
 }
 
-void workOnMap(unordered_map<string, graph> maps)
+void workOnMap(unordered_map<string, graph>& maps)
 {
     string mapName;
     bool mapExist=false;
