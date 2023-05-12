@@ -4,6 +4,8 @@
 #include "graph.h"
 #include "algorithms.h"
 #include "consolUI.h"
+#include "GraphFileHandler.h"
+#include <string>
 
 using namespace std;
 
@@ -210,6 +212,7 @@ void Find(graph& myMap)
 */
 void intro()
 {
+    maps=readMultipleGraphs(".\\");
     cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
     cout << "\t\t\t===================================================================" << endl;
     cout << "\t\t\t===================================================================" << endl;
@@ -233,6 +236,9 @@ void intro()
         else if (mainChoice == 3)
         {
             // exit function goes here
+            
+            writeMultipleGraphs(maps, ".\\");
+            
             cout << "Goodbye!" << endl;
             break;
         }
@@ -272,6 +278,9 @@ void workOnMap()
 
     string mapName;
     cin >> mapName;
+    
+    // check here that you have a valid map name
+
     do {
         int choice;
         cout << endl << endl << endl;
