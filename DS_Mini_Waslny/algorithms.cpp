@@ -131,102 +131,94 @@ void BFS(string startCity, graph& myGraph)
  * @return The shortest path vector from the starting vertex to the destination vertex.
  *     
  */
-float Dijkstra(graph& myMap, string startingNode, string finalDistination, vector<string>& path,vector <float>& distances ) {
+float Dijkstra(graph& myGraph, string startingNode, string finalDistination, vector<string>& path,vector <float>& distances ) {
 
 	/*
-	greater<ipair> makes the queue uses the minimum heap data structure(binary tree)
+	greater<ipair> makes the queue uses the minimum heap data structure
 	which puts the smallest element at the top of the queue
 	*/
-	priority_queue<iPair, vector<iPair>, greater<iPair> > uncheckedVertices;
+	priority_queue<iPair,vector<iPair>,greater<iPair>> unKnownVertices;
+	int citiesNum = myGraph.getVertexNum();
 
-	int citiesNum = myMap.getVertexNum();
+	// stores the shortest path from starting point 
+	map<string,float> cost;
 
-	// shortestPaths is a map that stores the distance from the starting city to any city
-	// (the table row in video)
-	map<string, float> shortestPaths;
+	// set all costs paths to infinity
+	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end();bucket++)
+		cost.insert(make_pair(bucket->first, INFINITE));
 
+	// the shortestpath from the source to itself as 0
+	cost[startingNode] = 0;
 
-	// set all shortest paths to infinity
-	unordered_map <string, list<pair <string, float>>>::iterator mapIterator;
-	for (mapIterator = myMap.map.begin(); mapIterator != myMap.map.end(); mapIterator++)
-		shortestPaths.insert(make_pair(mapIterator->first, INFINITE));
-
-
-	// put the distance from the source to itself as 0
-	shortestPaths[startingNode] = 0;
-	// and push it into the queue to check its adjacent vertices
-	uncheckedVertices.push(make_pair(0, startingNode));
+	// and push it into the queue to check its adjacent vertices------------
+	unKnownVertices.push(make_pair(0, startingNode));
 
 	// Determine the shortest path for each city 
-	while (!uncheckedVertices.empty())
+	while (!unKnownVertices.empty())
 	{
-		// the city name with the minimum distance till now (the priority queue top)
-		string minDistCity = uncheckedVertices.top().second;
+		// get city's name with minimum distance and pop it
+		string minDistCity = unKnownVertices.top().second;
 
-		// I stored its name so, Pop it
-		uncheckedVertices.pop();
+		// I stored its name so, Pop it-----------------
+		unKnownVertices.pop();
 
-		// store the its adjacent cities in a list
+		// store its adjacents
 		list<pair <string, float>> adjacentVertices;
-		adjacentVertices=myMap.getOutAdjacents(minDistCity);
+		adjacentVertices= myGraph.getOutAdjacents(minDistCity);
 
-		// iterate over this list to find a better path
+		//find a better path
 		for (auto& listIterator: adjacentVertices) {
 
 			string cityName = listIterator.first;
 			float weight = listIterator.second;
 
 			//check if the path that I have in my array was greater than the new one ->update ,else don't change
-			// if the node at which I'm pointing at this iteration is a better path
-			// (the path from the preceding node 
-			if (shortestPaths[cityName] > shortestPaths[minDistCity] + weight) {
-
-				// Updating the shortest path of the city
-				shortestPaths[cityName] = shortestPaths[minDistCity] + weight;
+			if (cost[cityName] > cost[minDistCity] + weight)
+			{
+				// Update shortest path of the city
+				cost[cityName] = cost[minDistCity] + weight;
 				//push the city in the array with its shortest path to check its adjacent later
-				uncheckedVertices.push(make_pair(shortestPaths[cityName], cityName));
+				unKnownVertices.push(make_pair(cost[cityName], cityName));
 			}
 		}
-
-
 	}
 
 	// Check if the final destination is unreachable
-	if (shortestPaths[finalDistination] == INFINITE) {
+	if (cost[finalDistination] == INFINITE)
 		return -1.0;
+	else 
+	{
+		backTracking(myGraph, startingNode, finalDistination, path, distances, cost);
+		return cost[finalDistination];
 	}
+}
 
-	else {
-		//store the final distination index in the list
-		string current = finalDistination;
-		path.push_back(current);
+void backTracking(graph& myGraph, string startingNode, string finalDistination, vector<string>& path, vector <float>& distances, map<string, float> cost) {
 
-		// Backtrack from the destination to the source to get the shortest path
-		while (current != startingNode) {
+	//store the final distination index in the list
+	string current = finalDistination;
+	path.push_back(current);
 
-			list<pair <string, float>> adjacentVertices;
-			adjacentVertices=myMap.getInAdjacents(current);
-			for (auto& listIterator: adjacentVertices) {
-
-				string adjVertex = listIterator.first;
-				float weight = listIterator.second;
-				if (shortestPaths[current] == shortestPaths[adjVertex] + weight) {
-					current = adjVertex;
-					path.push_back(current);
-					distances.push_back(weight);
-					break;
-				}
+	// Backtrack from the destination to the source to get the shortest path
+	while (current != startingNode) 
+	{
+		list<pair <string, float>> adjacentVertices;
+		adjacentVertices = myGraph.getInAdjacents(current);
+		for (auto& listIterator : adjacentVertices) 
+		{
+			string adjVertex = listIterator.first;
+			float weight = listIterator.second;
+			if (cost[current] == cost[adjVertex] + weight)
+			{
+				current = adjVertex;
+				path.push_back(current);
+				distances.push_back(weight);
+				break;
 			}
-
 		}
-		//cities name
-		reverse(path.begin(), path.end());
-		//distances between cities displayed
-		reverse(distances.begin(), distances.end());
-
-		// Return the shortest path from the source to the destination
-		
-		return shortestPaths[finalDistination];
 	}
-
+	//cities name
+	reverse(path.begin(), path.end());
+	//distances between cities displayed
+	reverse(distances.begin(), distances.end());
 }
