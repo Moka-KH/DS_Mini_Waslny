@@ -17,7 +17,41 @@ int main() {
    maps=readMultipleGraphs(".\\");
     graph myGraph;
     vector<string> path;
+
+
+
+    //test case for getadjacent
+    myGraph.addCity("A");
+    myGraph.addCity("B");
+    myGraph.addCity("C");
+    myGraph.addCity("D");
+    myGraph.addCity("E");
+    myGraph.addCity("F");
+    myGraph.addCity("G");
+    myGraph.addCity("H");
+    myGraph.addCity("I");
+
     
+    myGraph.addRoad("I", "A", 4);
+
+    myGraph.addRoad("I", "C", 1);
+
+
+    myGraph.addRoad("C", "D", 4);
+    myGraph.addRoad("D", "C", 4);
+
+    myGraph.addRoad("C", "E", 3);
+    myGraph.addRoad("E", "C", 4);
+
+    myGraph.addRoad("C", "F", 3);
+   
+
+    list<pair <string, float>> Adjacents;
+    Adjacents=myGraph.getAdjacentVertices("C");
+    for (auto& x : Adjacents) {
+        cout << x.first <<" " << x.second<<"\n";
+    }
+
     // test case of dikstra
   /*  myGraph.addCity("A");
     myGraph.addCity("B");
@@ -102,6 +136,6 @@ int main() {
     /*myGraph.deleteCity("X");
     myGraph.display();*/
 
-    intro(maps);
+    //intro(maps);
     return 0;
 }

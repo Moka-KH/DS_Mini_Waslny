@@ -398,34 +398,36 @@ list<pair <string, float>> graph::getInAdjacents(string city)
 *
 * Return: nothing
 */
-list<pair <string, float>> graph::getAdjacentVertices(string city)
+list<pair<string, float>> graph::getAdjacentVertices(string city)
 {
-	list<pair <string, float>> adjOut,adjIn;
-	// fill it with the out-adjacents in the list
-	adjOut =getOutAdjacent(city);
+	list<pair<string, float>> adjOut, adjIn;
 
-	// put the in-adjacents in the list
-	adjIn =getInAdjacents(city);
-	for (auto& x : adjIn) 
+	// Fill it with the out-adjacents in the list
+	adjOut = getOutAdjacent(city);
+
+	// Put the in-adjacents in the list
+	adjIn = getInAdjacents(city);
+
+	// Check if each in-adjacent is already in the out-adjacent list
+	for (const auto& x : adjIn)
 	{
-		for (auto y : adjOut) 
+		bool cityExist = false;
+		for (const auto& y : adjOut)
 		{
-			// if the value already exist (like undirected) ->don't add it to the list
+			// If the value already exists (like undirected), don't add it to the list
 			if (x.first == y.first && x.second == y.second)
+			{
+				cityExist = true;
 				break;
-			// if the value dosen't exist add it to the list
-			else 
-				adjOut.push_back(make_pair(x.first, x.second));
+			}
 		}
+		if (!cityExist)
+			adjOut.push_back(make_pair(x.first, x.second));
 	}
-
-	// delete the adjIn
-	list<pair <string, float>>* a;
-	a = &adjIn;
-	delete a;
 
 	return adjOut;
 }
+
 
 /**
  * checkCity - Checks if there is a city with the provided name or not.

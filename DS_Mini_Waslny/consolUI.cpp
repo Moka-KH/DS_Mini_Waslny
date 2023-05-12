@@ -49,30 +49,16 @@ void update(graph& myGraph)
             cout << "\tCity 2: ";
             cin >> city2;
             cout << "\tDistance: ";
-            // Handling exception 
-            do {
-                try {
-                    cin >> distance;
-                    //if we have string instead of numerical number
-                    if (cin.fail())
-                    {
-                        cin.clear();
-                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                        throw std::runtime_error("Invalid input=(  Please enter a numerical input");
-                    }
-                    //ensure that the distance is positive
-                    else if (distance <= 0) 
-                        cout << "please enter a psitive distance"<<endl;
-                    else
-                        break;
-                }
-                catch (runtime_error& exp)
-                {
-                    cout << exp.what() << endl;
-                }
-                
-            } while (true);
+            do
+            {
+                distance = validateNumber();
+                if (distance <= 0)
+                    cout << "please enter a psitive distance" << endl;
+                else
+                    break;
 
+            } while (true);
+             
             /*
              1- the user will add a directed road or an undirected road
              2- if dircted call addRoad once
@@ -157,7 +143,7 @@ void displayGraph(graph& myGraph)
 *
 * @return graph The newly created and updated graph object.
 */
-void addGraph(unordered_map<string, graph> maps)
+void addGraph(unordered_map<string, graph>& maps)
 {
     string graphName;
     cout << "Map Name: ";
@@ -231,7 +217,7 @@ void Find(graph& myMap)
 *
 * Retrun: nothing
 */
-void intro(unordered_map<string, graph> maps)
+void intro(unordered_map<string, graph>& maps)
 {
     cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
     cout << "\t\t\t===================================================================" << endl;
@@ -290,7 +276,7 @@ void Traverse(graph& mygraph)
         cout << "Invalid Choice please try again :(\n";
 }
 
-void workOnMap(unordered_map<string, graph> maps)
+void workOnMap(unordered_map<string, graph>& maps)
 {
     string mapName;
     bool mapExist=false;
@@ -351,4 +337,29 @@ void workOnMap(unordered_map<string, graph> maps)
             cout << "Invalid choice. Please try again." << endl;
 
     } while (true);
+}
+
+int validateNumber() 
+{
+    int inputNum;
+    do {
+        try {
+            cin >> inputNum;
+            //if we have string instead of numerical number
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw std::runtime_error("Invalid input=(  Please enter a numerical input");
+            }
+            else
+                break;
+        }
+        catch (runtime_error& exp)
+        {
+            cout << exp.what() << endl;
+        }
+    } while (true);
+    return inputNum;
+
 }
