@@ -41,7 +41,6 @@ void readGraphFromFile(graph& g, const string& filename) {
 
 	int vertexNum;
 	inFile >> vertexNum;
-	g.setVertexNum(vertexNum);
 
 	string cityName, adjCityName;
 	float distance;

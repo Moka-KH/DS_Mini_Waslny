@@ -11,6 +11,7 @@ class graph
 {
 private:
 	int vertexNum;
+	int edgeNum;
 	void deleteEdge(string city1, string city2);
 
 public:
@@ -34,14 +35,14 @@ public:
 	void deleteRoad(string city1, string city2);
 
 	int getVertexNum();
-	void setVertexNum(int);
-	int getEdges(string city1);
+	int getEdgeNum();
 
 	void display();
-	list<pair <string, float>> getOutAdjacent(string city);
+	list<pair <string, float>> getOutAdjacents(string city);
 	list<pair <string, float>> getInAdjacents(string city);
-	list<pair <string, float>> getAdjacentVertices(string city);
-	bool checkCity(string city);
-	bool checkEdge(string city1,string city2);
-	float getEdgeWieght(string city1, string city2);
+	list<pair <string, float>> getAdjacents(string city);
+	int outEdgesNumber(string city1);
+	bool vertexExists(string city);
+	bool edgeExists(string city1,string city2);
+	float EdgeWieght(string city1, string city2);
 };
