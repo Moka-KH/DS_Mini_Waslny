@@ -37,6 +37,13 @@ graph::graph(string name)
 	this->name = name;
 }
 
+bool graph::emptyGraph()
+{
+	if (map.empty())
+		return true;
+	return false;
+}
+
 /**
 * getVertexNum - returns #vertices
 * Return: integer value -> #vertices
@@ -86,7 +93,7 @@ int graph::addCity(string newCity)
 	// if it already exists
 	if (checkCity(newCity))
 	{
-		cout << "City " << newCity << "already exists =| \n";
+		cout << "City " << newCity << " already exists =| \n";
 		return 1;
 	}
 
@@ -229,20 +236,8 @@ int graph::deleteCity(string cityName)
 	// remove city 
 	map.erase(cityName);
 	vertexNum--;
-	*/
-
-	list<pair <string, float>> adjacents;
-
-	//delete "out connections" of parameter city
-	getOutAdjacent(cityName,adjacents);
-	for (listIterator = adjacents.begin(); listIterator != adjacents.end(); listIterator++)
-			map[cityName].erase(listIterator);
+	
 	adjacents.clear();
-
-	//delete "in connections" of parameter city
-
-	
-	
 	
 	cout << "City is deleted\n";
 	return 0;
@@ -347,6 +342,7 @@ void graph::deleteEdge(string city1,string city2)
 void graph::display()
 {
 	cout << "\n\tThe elements in this Graph are: \n";
+
 	//display the key value once
 	for (auto& bucket : map)
 	{

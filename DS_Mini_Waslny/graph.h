@@ -38,6 +38,7 @@ public:
 	int getVertexNum();
 	void setVertexNum(int);
 	int getEdges(string city1);
+	bool emptyGraph();
 
 	void display();
 	//Dina and Mayar

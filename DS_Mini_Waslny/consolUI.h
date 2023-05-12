@@ -8,4 +8,4 @@ void Find(graph& myMap);
 void intro(unordered_map<string, graph>& maps);
 void Traverse(graph& myGraph);
 void workOnMap(unordered_map<string, graph>& maps);
-int validateNumber();
+float validateNumber();

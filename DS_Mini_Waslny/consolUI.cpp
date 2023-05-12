@@ -1,9 +1,9 @@
 #pragma once
 #include<iostream>
 #include <unordered_map>
-#include "graph.h"
 #include "algorithms.h"
 #include "consolUI.h"
+#include "graph.h"
 #include "GraphFileHandler.h"
 #include <string>
 
@@ -134,7 +134,10 @@ void update(graph& myGraph)
 */
 void displayGraph(graph& myGraph)
 {
-    myGraph.display();
+    if (myGraph.emptyGraph())
+        cout << "There is no cities in the map\n";
+    else
+        myGraph.display();
 }
 
 /**
@@ -147,11 +150,30 @@ void addGraph(unordered_map<string, graph>& maps)
 {
     string graphName;
     cout << "Map Name: ";
-    cin >> graphName;
 
-    graph newGraph(graphName);
-    maps[graphName] = newGraph;
-    cout << "Created your graph :)" << endl;
+    // check here that you have a valid map name
+    do {
+        bool nameExist = false;
+        cin >> graphName;
+        for (auto& it : maps)
+        {
+            if (graphName == it.first)
+            {
+                nameExist = true;
+                break;
+            }
+        }
+        if (nameExist)
+            cout << "Sorry =( This name exists please enter another unique map name " << endl;
+        else
+        {
+            graph newGraph(graphName);
+            maps[graphName] = newGraph;
+            cout << "Created your graph :)" << endl;
+            break;
+        }
+
+    } while (true);
 }
 
 /**
@@ -286,6 +308,7 @@ void workOnMap(unordered_map<string, graph>& maps)
         cout << it.first << ' ';
     cout << endl;
 
+    // check here that you have a valid map name
     do {
         cin >> mapName;
         for (auto& it : maps)
@@ -299,16 +322,15 @@ void workOnMap(unordered_map<string, graph>& maps)
         if (mapExist)
             break;
         else
-            cout << "Sorry=( This map dose not exist please enter another map name " << endl;
+            cout << "Sorry =( This map dose not exist please enter another map name " << endl;
 
     } while (true);
     
-    // check here that you have a valid map name
 
     do {
         int choice;
         cout << endl << endl << endl;
-        cout << "\t\t\t\t\tWorking on " << mapName << endl;
+        cout << "\t\t\t\t\tWorking on " << mapName << " map"<< endl;
         cout << "1. Display map data" << endl;
         cout << "2. Update map data" << endl;
         cout << "3. Traverse the map" << endl;
@@ -339,21 +361,27 @@ void workOnMap(unordered_map<string, graph>& maps)
     } while (true);
 }
 
-int validateNumber() 
+//mK-> make it return float not integer because we work with floats and this is more generic 
+//mk-> make func reject non-positive values  
+float validateNumber() 
 {
-    int inputNum;
+    float inputNum;
     do {
         try {
             cin >> inputNum;
-            //if we have string instead of numerical number
-            if (cin.fail())
+            //if we have string instead of numerical number or non-positive values
+            if (cin.fail() || inputNum <= 0)
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw std::runtime_error("Invalid input=(  Please enter a numerical input");
+                throw std::runtime_error("Invalid input=(  Please enter a positive numerical input");
             }
             else
+            {
+                cout << "NO PROBLEM =)";
                 break;
+
+            }
         }
         catch (runtime_error& exp)
         {
