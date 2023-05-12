@@ -303,13 +303,14 @@ void graph::deleteRoad(string city1, string city2)
 
 void graph::deleteEdge(string city1,string city2) 
 {
-	// for (auto& listPair : map.at(city1))
-	for (pair<string, float> listPair : map.at(city1))
-		if (listPair.first == city2)
+	for (auto listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+	{
+		if (listIterator->first == city2)
 		{
-			map.at(city1).erase(listPair);
+			listIterator = map.at(city1).erase(listIterator);
 			break;
 		}
+	}
 }
 
 ///

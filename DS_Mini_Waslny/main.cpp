@@ -14,29 +14,25 @@ using namespace std;
 unordered_map<string, graph> maps;
 
 int main() {
-    /*graph myGraph;
-    vector<string> path;*/
+    graph myGraph;
     
     // test case of dikstra
-  /*  myGraph.addCity("A");
+    myGraph.addCity("A");
     myGraph.addCity("B");
     myGraph.addCity("C");
     myGraph.addCity("D");
-    myGraph.addCity("E");
-    myGraph.addCity("F");
-
-
+    
     myGraph.addRoad("A", "B", 2);
-    myGraph.addRoad("A", "C", 4);
+    myGraph.addRoad("C", "A", 4);
     myGraph.addRoad("B", "C", 1);
-    myGraph.addRoad("B", "E", 2);
+    myGraph.addRoad("C", "B", 2);
     myGraph.addRoad("B", "D", 4);
-    myGraph.addRoad("C", "E", 3);
-    myGraph.addRoad("E", "D", 3);
-    myGraph.addRoad("E", "F", 2);
-    myGraph.addRoad("D", "F", 3);
+    myGraph.addRoad("D", "D", 4);
+    
+    myGraph.display();
+    BFS("A", myGraph);
 
-    Find(myGraph);*/
+    //Find(myGraph);
 
     /*float x;
     myGraph.addCity("Aaaa");
@@ -94,12 +90,13 @@ int main() {
 
     /*myGraph.deleteCity("X");
     myGraph.display();*/
-
+    /*
     maps = readMultipleGraphs(".\\");
 
     homePage(maps);
 
     writeMultipleGraphs(maps, ".\\");
+    */
 
     return 0;
 }
