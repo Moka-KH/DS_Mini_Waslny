@@ -52,7 +52,7 @@ void DFS(graph& myGraph, string stratVetrex)
 
 			// get the adjacency list of the current vertex
 			list<pair<string, float>> adjacencyList;
-			adjacencyList= myGraph.getAdjacents(currentNode);
+			adjacencyList = myGraph.getAdjacents(currentNode);
 
 			// iterate over the adjacent vertices of current node
 			for (auto& it : adjacencyList)
@@ -94,7 +94,7 @@ void BFS(string startCity, graph& myGraph)
 
 		// get the adjacency list of the current vertex
 		list<pair<string, float>> adjacencyList;
-		adjacencyList= myGraph.getAdjacents(currentCity);
+		adjacencyList = myGraph.getAdjacents(currentCity);
 
 		// get all adjacent vertices of the dequeued vertex
 		// if an adjacent vertex has not been visited, mark it visited and enqueue it

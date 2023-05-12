@@ -13,7 +13,7 @@
 * @param myGraph the graph to add the city to
 * @return void
 */
-void addCity(graph myGraph)
+void addCity(graph& myGraph)
 {
     cout << "\tName: ";
     string city;
@@ -49,7 +49,10 @@ void addOrEditRoad(graph& myGraph)
     // input valid distance
     while (true)
     {
+        // validate it's a number
         distance = validateNumber();
+
+        // validate it's positive
         if (distance <= 0)
             cout << "please enter a psitive distance" << endl;
         else
@@ -107,7 +110,7 @@ void addRoadFeedback(string city1, string city2, int message)
 {
     if (message == noCity1)
         cout << "Sorry! " << city1 << " doesn't exist" << endl;
-    else if (message == noCity1)
+    else if (message == noCity2)
         cout << "Sorry! " << city2 << " doesn't exist" << endl;
     else if (message == addedRoad)
         cout << "Added a road successfully =)" << endl;
