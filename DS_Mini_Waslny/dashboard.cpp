@@ -56,6 +56,14 @@ void updateMap(graph& myGraph)
     }
 }
 
+/**
+ * Traverses the graph starting from a specified city using 
+ * either DFS (Depth-First Search) or BFS (Breadth-First Search).
+ *
+ * @param mygraph The graph to traverse.
+ * 
+ * @return void
+ */
 void Traverse(graph& mygraph)
 {
     string startCity;
@@ -77,46 +85,50 @@ void Traverse(graph& mygraph)
 }
 
 /**
-* @brief This function finds the shortest path between two cities in a graph
-*        using Dijkstra's algorithm.
+* This function finds the shortest path between two cities in a graph
+* using Dijkstra's algorithm.
 *
 * @param myMap A reference to the graph object containing cities and roads.
 * @return void.
 */
-void Find(graph& myMap)
-{
-    string city1, city2;
-    float theShortestDistance;
-    vector<string> shortestPathVector;
-    vector<float> distances;
+void pathFinder(graph& myMap)
+{   
+    string startingCity, destinationCity;
+    float shortestDistance;
+    vector<string> shortestPath;
+    vector<float> pathDistances;
 
-    cout << endl << "Let's start our journey in finding the shortest path!" << endl
-        << "Starting city is:";
-    cin >> city1;
+    // Prompt user for starting and destination cities
+    cout << endl << "Let's start our journey in finding the shortest path!" << endl << "Starting city is:";
+    cin >> startingCity;
     cout << endl << "Destination city is:";
-    cin >> city2;
-    theShortestDistance = Dijkstra(myMap, city1, city2, shortestPathVector, distances);
-    if (theShortestDistance == -1.0)
+    cin >> destinationCity;
+
+    // Call Dijkstra's algorithm to calculate the shortest path and distance
+    shortestDistance = Dijkstra(myMap, startingCity, destinationCity, shortestPath, pathDistances);
+
+    // Check if a path exists between the cities
+    if (shortestDistance == -1.0)
     {
         cout << "=============================================================" << endl
-            << "There is no path between  " << city1 << " and " << city2 << endl;
+             << "There is no path between " << startingCity << " and " << destinationCity << endl;
     }
     else
     {
         cout << "=============================================================" << endl
-            << "The total distance of the shortest path between " << city1 << " and " << city2 << " is = " << theShortestDistance << endl;
+             << "The total distance of the shortest path between " << startingCity << " and " << destinationCity << " is = " << shortestDistance << endl;
 
+        // Iterators for traversing the shortest path and distances vectors
+        vector<string>::iterator pathIt = shortestPath.begin();
+        vector<float>::iterator distancesIt = pathDistances.begin();
 
-        vector<string>::iterator pathIt = shortestPathVector.begin();
-        vector<float>::iterator distancesIt = distances.begin();
-
-        //to handle displayed errors
+        // Counter to handle displayed errors
         int counter = 0;
 
-        //display the path and distances 
-        while (pathIt != shortestPathVector.end())
+        // Display the path and distances
+        while (pathIt != shortestPath.end())
         {
-            if (counter == shortestPathVector.size() - 1)
+            if (counter == shortestPath.size() - 1)
             {
                 cout << *pathIt << endl;
             }
@@ -125,11 +137,9 @@ void Find(graph& myMap)
                 cout << *pathIt << " -> " << *distancesIt << " -> ";
                 distancesIt++;
             }
-
             pathIt++;
             counter++;
         }
-
         cout << endl;
     }
 }
