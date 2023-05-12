@@ -15,7 +15,7 @@
 #include<queue>
 
 using namespace std;
-typedef pair<float, string> iPair;
+typedef pair<float, string> myPair;
 const float INFINITE = FLT_MAX;
 
 /**
@@ -121,86 +121,81 @@ void BFS(string startCity, graph& myGraph)
 }
 
 /**
- * Dijkstra's algorithm for finding the shortest path between two vertices in a graph.
+ * Dijkstra's algorithm for finding the shortest path between two vertices in a graph
+ * See this video before reading the function:
+ * https://www.youtube.com/watch?v=pVfj6mxhdMw
  *
  * @param myMap A graphDS object representing the graph to search for the shortest path.
  * @param currentLocation The starting vertex for the shortest path search.
  * @param finalDistination The destination vertex for the shortest path search.
  * @param totalDistance The shortest distance between the two cities 
  *
- * @return The shortest path vector from the starting vertex to the destination vertex.
- *     
+ * @return The shortest path vector from the starting vertex to the destination vertex
  */
-float Dijkstra(graph& myGraph, string startingNode, string finalDistination, vector<string>& path,vector <float>& distances ) {
-
+float Dijkstra(graph& myGraph, string startingNode, string targetVertex, vector<string>& path,vector <float>& distances )
+{
 	/*
-	greater<ipair> makes the queue uses the minimum heap data structure
-	which puts the smallest element at the top of the queue
+	this structure is a priority queue using the minimum heap data structure(greater<myPair>)
+	(a queue that puts the least element in its front)
+	knowing a vertex means updating its adjacents' costs with new better values (if any)
 	*/
-	priority_queue<iPair,vector<iPair>,greater<iPair>> unKnownVertices;
+	priority_queue<myPair, vector<myPair>, greater<myPair>> unKnownVertices;
 	int citiesNum = myGraph.getVertexNum();
 
-	// stores the shortest path from starting point 
+	// stores the shortest found path till now for all the verteces
 	map<string,float> cost;
 
-	// set all costs paths to infinity
+	// set all costs to infinity
 	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end();bucket++)
 		cost.insert(make_pair(bucket->first, INFINITE));
 
-	// the shortestpath from the source to itself as 0
 	cost[startingNode] = 0;
 
-	// and push it into the queue to check its adjacent vertices------------
 	unKnownVertices.push(make_pair(0, startingNode));
 
-	// Determine the shortest path for each city 
+	// Determine the shortest path for each city
 	while (!unKnownVertices.empty())
 	{
-		// get city's name with minimum distance and pop it
-		string minDistCity = unKnownVertices.top().second;
-
-		// I stored its name so, Pop it-----------------
+		// get the name of the city with minimum distance
+		string currentVertexName = unKnownVertices.top().second;
 		unKnownVertices.pop();
 
-		// store its adjacents
-		list<pair <string, float>> adjacentVertices;
-		adjacentVertices= myGraph.getOutAdjacents(minDistCity);
+		list<pair <string, float>> outAdjacents = myGraph.getOutAdjacents(currentVertexName);
 
-		//find a better path
-		for (auto& listIterator: adjacentVertices) {
+		// if taking a path using the current node to one of its adjacents is shorter
+		// update it the costs with this value
+		for (auto& adjacent: outAdjacents)
+		{
+			string adjacentName = adjacent.first;
+			float weight = adjacent.second; // from the current vertex to this adjacent
 
-			string cityName = listIterator.first;
-			float weight = listIterator.second;
-
-			//check if the path that I have in my array was greater than the new one ->update ,else don't change
-			if (cost[cityName] > cost[minDistCity] + weight)
+			if (cost[adjacentName] > cost[currentVertexName] + weight)
 			{
-				// Update shortest path of the city
-				cost[cityName] = cost[minDistCity] + weight;
-				//push the city in the array with its shortest path to check its adjacent later
-				unKnownVertices.push(make_pair(cost[cityName], cityName));
+				cost[adjacentName] = cost[currentVertexName] + weight;
+				// put this adjacent in the unknown vertices to know it later
+				unKnownVertices.push(make_pair(cost[adjacentName], adjacentName)); // Why this push is here ?
 			}
 		}
 	}
 
-	// Check if the final destination is unreachable
-	if (cost[finalDistination] == INFINITE)
+	// if there is no path to the target vertex
+	if (cost[targetVertex] == INFINITE)
 		return -1.0;
 	else 
 	{
-		backTracking(myGraph, startingNode, finalDistination, path, distances, cost);
-		return cost[finalDistination];
+		backTracking(myGraph, startingNode, targetVertex, path, distances, cost);
+		return cost[targetVertex];
 	}
 }
 
-void backTracking(graph& myGraph, string startingNode, string finalDistination, vector<string>& path, vector <float>& distances, map<string, float> cost) {
-
+void backTracking(graph& myGraph, string startingNode, string targetVertex, vector<string>& path, vector <float>& distances, map<string, float> cost)
+{
 	//store the final distination index in the list
-	string current = finalDistination;
+	string current = targetVertex;
 	path.push_back(current);
 
 	// Backtrack from the destination to the source to get the shortest path
-	while (current != startingNode) 
+	while (current != startingNode)
 	{
 		list<pair <string, float>> adjacentVertices;
 		adjacentVertices = myGraph.getInAdjacents(current);
