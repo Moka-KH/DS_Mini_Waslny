@@ -23,10 +23,6 @@ public:
 
 	pair <string, float> pairHolder;
 
-	// itrators for Map and List
-	unordered_map <string, list<pair <string, float>>>::iterator mapIterator;
-	list <pair <string, float>>::iterator listIterator;
-
 	graph();
 	graph(string);
 	~graph();
@@ -34,6 +30,7 @@ public:
 	int addCity(string newCity);
 	int addCity(string newCity, string adjCity, float distance);
 	int addRoad(string city1, string city2, float distance);
+	void deleteEdge(string city1, string city2);
 
 	int deleteCity(string cityName);
 	int deleteRoad(string city1, string city2);
@@ -44,9 +41,9 @@ public:
 
 	void display();
 	//Dina and Mayar
-	void getOutAdjacent(string city, list<pair <string, float>>& adj);
-	void getInAdjacents(string city, list<pair <string, float>>& myList);
-	void getAdjacentVertices(string city, list<pair <string, float>>& adjList);
+	list<pair <string, float>> getOutAdjacent(string city);
+	list<pair <string, float>> getInAdjacents(string city);
+	list<pair <string, float>> getAdjacentVertices(string city);
 	bool checkCity(string city);
 	bool checkEdge(string city1,string city2);
 	float getEdgeWieght(string city1, string city2);

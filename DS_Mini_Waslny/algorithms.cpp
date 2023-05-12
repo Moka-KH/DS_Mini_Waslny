@@ -52,7 +52,7 @@ void DFS(graph& graph, string stratVetrex)
 
 			// get the adjacency list of the current vertex
 			list<pair<string, float>> adjacencyList;
-			graph.getAdjacentVertices(currentNode, adjacencyList);
+			adjacencyList=graph.getAdjacentVertices(currentNode);
 
 			// iterate over the adjacent vertices of current node
 			for (auto& it : adjacencyList)
@@ -94,7 +94,7 @@ void BFS(string startCity, graph graph)
 
 		// get the adjacency list of the current vertex
 		list<pair<string, float>> adjacencyList;
-		graph.getAdjacentVertices(currentCity, adjacencyList);
+		adjacencyList=graph.getAdjacentVertices(currentCity);
 
 		// get all adjacent vertices of the dequeued vertex
 		// if an adjacent vertex has not been visited, mark it visited and enqueue it
@@ -168,16 +168,13 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 
 		// store the its adjacent cities in a list
 		list<pair <string, float>> adjacentVertices;
-		myMap.getOutAdjacent(minDistCity, adjacentVertices);
-
-		// an iterator for this list
-		list <pair <string, float>>::iterator listIterator;
+		adjacentVertices=myMap.getOutAdjacent(minDistCity);
 
 		// iterate over this list to find a better path
-		for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
+		for (auto& listIterator: adjacentVertices) {
 
-			string cityName = listIterator->first;
-			float weight = listIterator->second;
+			string cityName = listIterator.first;
+			float weight = listIterator.second;
 
 			//check if the path that I have in my array was greater than the new one ->update ,else don't change
 			// if the node at which I'm pointing at this iteration is a better path
@@ -208,12 +205,11 @@ float Dijkstra(graph& myMap, string startingNode, string finalDistination, vecto
 		while (current != startingNode) {
 
 			list<pair <string, float>> adjacentVertices;
-			myMap.getAdjacentVertices(current, adjacentVertices);
-			list <pair <string, float>>::iterator listIterator;
-			for (listIterator = adjacentVertices.begin(); listIterator != adjacentVertices.end(); listIterator++) {
+			adjacentVertices=myMap.getInAdjacents(current);
+			for (auto& listIterator: adjacentVertices) {
 
-				string adjVertex = listIterator->first;
-				float weight = listIterator->second;
+				string adjVertex = listIterator.first;
+				float weight = listIterator.second;
 				if (shortestPaths[current] == shortestPaths[adjVertex] + weight) {
 					current = adjVertex;
 					path.push_back(current);

@@ -8,18 +8,82 @@
 #include <list>
 #include <utility>
 #include <unordered_map>
+#include "GraphFileHandler.h"
+
 using namespace std;
+unordered_map<string, graph> maps;
 
 int main() {
+   maps=readMultipleGraphs(".\\");
     graph myGraph;
     vector<string> path;
-    float x;
+
+
+
+    //test case for getadjacent
+    myGraph.addCity("A");
+    myGraph.addCity("B");
+    myGraph.addCity("C");
+    myGraph.addCity("D");
+    myGraph.addCity("E");
+    myGraph.addCity("F");
+    myGraph.addCity("G");
+    myGraph.addCity("H");
+    myGraph.addCity("I");
+
+    
+    myGraph.addRoad("I", "A", 4);
+
+    myGraph.addRoad("I", "C", 1);
+
+
+    myGraph.addRoad("C", "D", 4);
+    myGraph.addRoad("D", "C", 4);
+
+    myGraph.addRoad("C", "E", 3);
+    myGraph.addRoad("E", "C", 4);
+
+    myGraph.addRoad("C", "F", 3);
+   
+
+    list<pair <string, float>> Adjacents;
+    Adjacents=myGraph.getAdjacentVertices("C");
+    for (auto& x : Adjacents) {
+        cout << x.first <<" " << x.second<<"\n";
+    }
+
+    // test case of dikstra
+  /*  myGraph.addCity("A");
+    myGraph.addCity("B");
+    myGraph.addCity("C");
+    myGraph.addCity("D");
+    myGraph.addCity("E");
+    myGraph.addCity("F");
+
+
+    myGraph.addRoad("A", "B", 2);
+    myGraph.addRoad("A", "C", 4);
+    myGraph.addRoad("B", "C", 1);
+    myGraph.addRoad("B", "E", 2);
+    myGraph.addRoad("B", "D", 4);
+    myGraph.addRoad("C", "E", 3);
+    myGraph.addRoad("E", "D", 3);
+    myGraph.addRoad("E", "F", 2);
+    myGraph.addRoad("D", "F", 3);
+
+    Find(myGraph);*/
+
+
+
+
+
+    /*float x;
     myGraph.addCity("Aaaa");
     myGraph.addCity("Bbbb");
     myGraph.addCity("Cccc");
     myGraph.addCity("Dddd");
     myGraph.addCity("Eeee");
-    myGraph.addCity("Ffff");
+    myGraph.addCity("Ffff");*/
 
 
 
@@ -71,6 +135,7 @@ int main() {
 
     /*myGraph.deleteCity("X");
     myGraph.display();*/
-    intro();
+
+    //intro(maps);
     return 0;
 }

@@ -54,8 +54,8 @@ int graph::getEdges(string city1)
 {
 	int counter=0;
 	list<pair<string, float>> ad;
-	getOutAdjacent(city1, ad);
-		for (listIterator = ad.begin();listIterator != ad.end();listIterator++)
+	ad=getOutAdjacent(city1);
+		for (auto& x:ad)
 		{
 			counter++;
 		}
@@ -169,12 +169,12 @@ int graph::addRoad(string city1, string city2, float distance)
 	if (checkEdge(city1, city2))
 	{
 		list<pair <string, float>> adjacentList;
-		getOutAdjacent(city1, adjacentList);
-		for (auto& listIterator : adjacentList)
+		adjacentList=getOutAdjacent(city1);
+		for (auto& x : adjacentList)
 		{
-			if (city2 == listIterator.first)
+			if (city2 == x.first)
 			{
-				listIterator.second = distance;
+				x.second = distance;
 				break;
 			}
 		}
@@ -217,12 +217,12 @@ int graph::deleteCity(string cityName)
 	list<pair<string, float>> adjacents;
 	
 	// delete connections with its out-adjacents
-	getOutAdjacent(cityName, adjacents);
+	adjacents=getOutAdjacent(cityName);
 	for (auto& listPair : adjacents)
 		deleteRoad(cityName, listPair.first);
 
 	// delete connections with its in-adjacents
-	getInAdjacents(cityName, adjacents);
+	adjacents=getInAdjacents(cityName);
 	for (auto& listPair : adjacents)
 		deleteRoad(listPair.first, cityName);
 
@@ -276,22 +276,14 @@ int graph::deleteRoad(string city1, string city2)
 	// one way road from city1 to city2
 	if (checkEdge(city1, city2) && !checkEdge(city2, city1))
 	{
-		for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
-			if (listIterator->first == city2)
-			{
-				map[city1].erase(listIterator);
-				break;
-			}
+		// delete city2 from the adjacent list of city1
+		deleteEdge(city1, city2);
 	}
 	// one way road from city2 to city1
 	else if (checkEdge(city2, city1) && !checkEdge(city1, city2))
 	{
-		for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
-			if (listIterator->first == city1)
-			{
-				map[city2].erase(listIterator);
-				break;
-			}
+		// delete city1 from the adjacent list of city2
+		deleteEdge(city2, city1);
 	}
 	// 2 way road
 	else if (checkEdge(city1, city2) && checkEdge(city2, city1))
@@ -299,19 +291,10 @@ int graph::deleteRoad(string city1, string city2)
 		// with the same distance
 		if (getEdgeWieght(city1, city2) == getEdgeWieght(city2, city1))
 		{
-			for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
-				if (listIterator->first == city2)
-				{
-					map[city1].erase(listIterator);
-					break;
-				}
-
-			for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
-				if (listIterator->first == city1)
-				{
-					map[city2].erase(listIterator);
-					break;
-				}
+			// delete city2 from the adjacent list of city1 
+		    // AND delete city1 from the adjacent list of city2
+			deleteEdge(city1, city2);
+			deleteEdge(city2, city1);
 		}
 		// with different distances
 		else
@@ -323,38 +306,13 @@ int graph::deleteRoad(string city1, string city2)
 			cin >> choice;
 
 			if (choice == 1)
-			{
-				for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
-					if (listIterator->first == city2)
-					{
-						map[city1].erase(listIterator);
-						break;
-					}
-			}
+				deleteEdge(city1, city2);
 			else if (choice == 2)
-			{
-				for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
-					if (listIterator->first == city1)
-					{
-						map[city2].erase(listIterator);
-						break;
-					}
-			}
+				deleteEdge(city2, city1);
 			else
 			{
-				for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
-					if (listIterator->first == city2)
-					{
-						map[city1].erase(listIterator);
-						break;
-					}
-
-				for (listIterator = map.at(city2).begin(); listIterator != map.at(city2).end(); listIterator++)
-					if (listIterator->first == city1)
-					{
-						map[city2].erase(listIterator);
-						break;
-					}
+				deleteEdge(city1, city2);
+				deleteEdge(city2, city1);
 			}
 		}
 	}
@@ -368,6 +326,18 @@ int graph::deleteRoad(string city1, string city2)
 	cout << "Road is deleted\n";
 	return 0;
 }
+
+void graph::deleteEdge(string city1,string city2) 
+{
+	list <pair <string, float>>::iterator listIterator;
+	for (listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
+		if (listIterator->first == city2)
+		{
+			map[city1].erase(listIterator);
+			break;
+		}
+}
+
 
 /**
 * displays the adjacency list of all the nodes in the graph
@@ -397,9 +367,11 @@ void graph::display()
 *
 * Return: nothing
 */
-void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) {
+list<pair <string, float>> graph::getOutAdjacent(string city) {
+	unordered_map <string, list<pair <string, float>>>::iterator mapIterator;
+
 	mapIterator = map.find(city);
-	adj = mapIterator->second;
+	return mapIterator->second;
 }
 
 /**
@@ -409,8 +381,9 @@ void graph::getOutAdjacent(string city, list<pair <string, float>>& adj) {
 * @param myList a list to fill in with in-adjacents
 * @return nothing
 */
-void graph::getInAdjacents(string city, list<pair <string, float>>& myList)
+list<pair <string, float>> graph::getInAdjacents(string city)
 {
+	list<pair <string, float>> myList;
 	float backDistance;
 	for (auto& bucket : map)
 	{
@@ -426,26 +399,49 @@ void graph::getInAdjacents(string city, list<pair <string, float>>& myList)
 			myList.push_back(make_pair(bucket.first, backDistance));
 		}
 	}
+	return myList;
 }
 
 /**
 * getAdjacentVertices - puts all the adjacent vertices (in & out) in the provided list
 * @city: the city to get its adjacents
 * @adj: the list to fill with the adjacents
-* 
+*
 * note: the list will have duplicates if there were 2 edges with the same weight between
 * the given city and any other city
 *
 * Return: nothing
 */
-void graph::getAdjacentVertices(string city, list<pair <string, float>>& adjList)
+list<pair<string, float>> graph::getAdjacentVertices(string city)
 {
-	// fill it with the out-adjacents in the list
-	getOutAdjacent(city, adjList);
+	list<pair<string, float>> adjOut, adjIn;
 
-	// put the in-adjacents in the list
-	getInAdjacents(city, adjList);
+	// Fill it with the out-adjacents in the list
+	adjOut = getOutAdjacent(city);
+
+	// Put the in-adjacents in the list
+	adjIn = getInAdjacents(city);
+
+	// Check if each in-adjacent is already in the out-adjacent list
+	for (const auto& x : adjIn)
+	{
+		bool cityExist = false;
+		for (const auto& y : adjOut)
+		{
+			// If the value already exists (like undirected), don't add it to the list
+			if (x.first == y.first && x.second == y.second)
+			{
+				cityExist = true;
+				break;
+			}
+		}
+		if (!cityExist)
+			adjOut.push_back(make_pair(x.first, x.second));
+	}
+
+	return adjOut;
 }
+
 
 /**
  * checkCity - Checks if there is a city with the provided name or not.
@@ -480,7 +476,7 @@ bool graph::checkEdge(string city1, string city2)
 	// cities exist :)
 
 	list<pair <string, float>> adjacents;
-	getOutAdjacent(city1, adjacents);
+	adjacents=getOutAdjacent(city1);
 	for (auto& listPair : adjacents)
 		if (listPair.first == city2)
 			return true;
@@ -498,7 +494,7 @@ bool graph::checkEdge(string city1, string city2)
 float graph::getEdgeWieght(string city1, string city2)
 {
 	list<pair <string, float>> adjacents;
-	getOutAdjacent(city1, adjacents);
+	adjacents=getOutAdjacent(city1);
 	for (auto& listPair : adjacents)
 		if (listPair.first == city2)
 			return listPair.second;
