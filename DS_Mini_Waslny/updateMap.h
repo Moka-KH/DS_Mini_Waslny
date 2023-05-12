@@ -3,7 +3,7 @@
 #pragma once
 
 // Adding Cities
-void addCity(graph myGraph);
+void addCity(graph& myGraph);
 
 // Adding Roads
 void addOrEditRoad(graph& myGraph);

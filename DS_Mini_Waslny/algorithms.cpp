@@ -25,13 +25,13 @@ const float INFINITE = FLT_MAX;
 * 
 * Return: nothing
 */
-void DFS(graph& graph, string stratVetrex)
+void DFS(graph& myGraph, string stratVetrex)
 {
 	// visited means it was printed on the screen
 	unordered_map<string, bool> visited;
 
 	// initialize the "visited" map to be all unvisited
-	for (auto& x : graph.map)
+	for (auto& x : myGraph.map)
 		visited[x.first] = false;
 
 	stack<string> NodesToCheckNeighbors;
@@ -52,7 +52,7 @@ void DFS(graph& graph, string stratVetrex)
 
 			// get the adjacency list of the current vertex
 			list<pair<string, float>> adjacencyList;
-			adjacencyList=graph.getAdjacents(currentNode);
+			adjacencyList = myGraph.getAdjacents(currentNode);
 
 			// iterate over the adjacent vertices of current node
 			for (auto& it : adjacencyList)
@@ -63,18 +63,18 @@ void DFS(graph& graph, string stratVetrex)
 	}
 
 	//traverse on isolated vertices
-	for (auto& mapIterator : graph.map)
+	for (auto& mapIterator : myGraph.map)
 		if (visited[mapIterator.first] == false)
 			cout << mapIterator.first << endl;
 
 	cout << "End of Vertices" << endl;
 }
 
-void BFS(string startCity, graph graph)
+void BFS(string startCity, graph& myGraph)
 {
 	// mark all vertices as not visited
 	unordered_map<string, bool> visited;
-	for (auto& x : graph.map)
+	for (auto& x : myGraph.map)
 		visited[x.first] = false;
 
 	// create a queue for BFS
@@ -94,7 +94,7 @@ void BFS(string startCity, graph graph)
 
 		// get the adjacency list of the current vertex
 		list<pair<string, float>> adjacencyList;
-		adjacencyList=graph.getAdjacents(currentCity);
+		adjacencyList = myGraph.getAdjacents(currentCity);
 
 		// get all adjacent vertices of the dequeued vertex
 		// if an adjacent vertex has not been visited, mark it visited and enqueue it
@@ -111,7 +111,7 @@ void BFS(string startCity, graph graph)
 	}
 
 	//traverse on isolated vertices
-	for (auto& mapIterator : graph.map)
+	for (auto& mapIterator : myGraph.map)
 	{
 		if (visited[mapIterator.first] == false)
 			cout << mapIterator.first << endl;

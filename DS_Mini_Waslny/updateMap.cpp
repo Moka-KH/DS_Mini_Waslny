@@ -13,7 +13,7 @@
 * @param myGraph the graph to add the city to
 * @return void
 */
-void addCity(graph myGraph)
+void addCity(graph& myGraph)
 {
     cout << "\tName: ";
     string city;
