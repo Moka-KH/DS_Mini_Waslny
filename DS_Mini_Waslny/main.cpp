@@ -21,13 +21,23 @@ int main() {
     myGraph.addCity("B");
     myGraph.addCity("C");
     myGraph.addCity("D");
+    myGraph.addCity("E");
+    myGraph.addCity("F");
+    myGraph.addCity("G");
+    myGraph.addCity("H");
+    myGraph.addCity("I");
     
-    myGraph.addRoad("A", "B", 2);
-    myGraph.addRoad("C", "A", 4);
-    myGraph.addRoad("B", "C", 1);
-    myGraph.addRoad("C", "B", 2);
-    myGraph.addRoad("B", "D", 4);
-    myGraph.addRoad("D", "D", 4);
+    myGraph.addRoad("B", "A", 2);
+    myGraph.addRoad("I", "A", 4);
+    myGraph.addRoad("I", "C", 4);
+    myGraph.addRoad("I", "G", 4);
+    myGraph.addRoad("G", "I", 1);
+    myGraph.addRoad("G", "F", 1);
+    myGraph.addRoad("H", "G", 2);
+    myGraph.addRoad("H", "E", 2);
+    myGraph.addRoad("C", "F", 4);
+    myGraph.addRoad("C", "E", 4);
+    myGraph.addRoad("C", "D", 4);
     
     myGraph.display();
     BFS("A", myGraph);

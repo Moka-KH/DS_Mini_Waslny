@@ -19,7 +19,8 @@ void homePage(unordered_map<string, graph>& maps)
     cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
     cout << "\t\t\t===================================================================" << endl;
     cout << "\t\t\t===================================================================" << endl;
-    do {
+    while (true)
+    {
         int choice;
         cout << endl << endl << endl;
         cout << "\t\t\t\t\tHome Page" << endl;
@@ -44,7 +45,7 @@ void homePage(unordered_map<string, graph>& maps)
 
         else
             cout << "Invalid choice ,Please try again \n";
-    } while (true);
+    }
 }
 
 /**

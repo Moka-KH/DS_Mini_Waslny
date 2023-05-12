@@ -163,7 +163,6 @@ int graph::addRoad(string city1, string city2, float distance)
 				break;
 			}
 		}
-		cout << endl;
 		return updatedRoad;
 	}
 
