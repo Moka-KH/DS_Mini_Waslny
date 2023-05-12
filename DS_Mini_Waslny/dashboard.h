@@ -4,4 +4,5 @@
 
 void updateMap(graph& myGraph);
 void Traverse(graph& mygraph);
-void Find(graph& myMap);
+void pathFinder(graph& myMap);
+void displayPathFinder(vector<string> shortestPath, vector<float> pathDistances);

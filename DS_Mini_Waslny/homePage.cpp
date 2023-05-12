@@ -114,7 +114,7 @@ void mapsDashboard(unordered_map<string, graph>& maps)
             Traverse(maps[mapName]);
 
         else if (choice == 4)
-            Find(maps[mapName]);
+            pathFinder(maps[mapName]);
 
         else if (choice == 5)
             return;
