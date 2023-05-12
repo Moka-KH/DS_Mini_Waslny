@@ -37,6 +37,10 @@ graph::graph(string name)
 	this->name = name;
 }
 
+/**
+* emptyGraph - check if graph empty or not
+* Return: boolean value -> true if empty false if not empty
+*/
 bool graph::emptyGraph()
 {
 	if (map.empty())

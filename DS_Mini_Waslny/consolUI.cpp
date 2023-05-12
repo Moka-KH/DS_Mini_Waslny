@@ -151,7 +151,7 @@ void addGraph(unordered_map<string, graph>& maps)
     string graphName;
     cout << "Map Name: ";
 
-    // check here that you have a valid map name
+    // check here that you have a unique map name
     do {
         bool nameExist = false;
         cin >> graphName;
