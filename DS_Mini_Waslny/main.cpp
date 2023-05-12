@@ -9,6 +9,7 @@
 #include <utility>
 #include <unordered_map>
 #include "files.h"
+#include "dashboard.h"
 
 using namespace std;
 unordered_map<string, graph> maps;
@@ -17,7 +18,7 @@ int main() {
     graph myGraph;
     
     // test case of dikstra
-    myGraph.addCity("A");
+   /* myGraph.addCity("A");
     myGraph.addCity("B");
     myGraph.addCity("C");
     myGraph.addCity("D");
@@ -38,11 +39,32 @@ int main() {
     myGraph.addRoad("C", "F", 4);
     myGraph.addRoad("C", "E", 4);
     myGraph.addRoad("C", "D", 4);
-    
-    myGraph.display();
-    BFS("A", myGraph);
+    */
+    //myGraph.display();
+    //BFS("A", myGraph);
 
-    //Find(myGraph);
+
+    // pathFinder() testcases
+    vector<string> path;
+
+    myGraph.addCity("A");
+    myGraph.addCity("B");
+    myGraph.addCity("C");
+    myGraph.addCity("D");
+    myGraph.addCity("E");
+    myGraph.addCity("F");
+
+
+    myGraph.addRoad("A", "B", 2);
+    myGraph.addRoad("A", "C", 4);
+    myGraph.addRoad("B", "C", 1);
+    myGraph.addRoad("B", "E", 2);
+    myGraph.addRoad("B", "D", 4);
+    myGraph.addRoad("C", "E", 3);
+    myGraph.addRoad("E", "D", 3);
+    myGraph.addRoad("E", "F", 2);
+    myGraph.addRoad("D", "F", 3);
+    pathFinder(myGraph);
 
     /*float x;
     myGraph.addCity("Aaaa");

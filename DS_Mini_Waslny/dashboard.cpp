@@ -86,7 +86,8 @@ void Traverse(graph& mygraph)
 
 /**
 * This function finds the shortest path between two cities in a graph
-* using Dijkstra's algorithm.
+* using Dijkstra's algorithm and display the path and distances between 
+* them using displayPathFinder().
 *
 * @param myMap A reference to the graph object containing cities and roads.
 * @return void.
@@ -118,28 +119,45 @@ void pathFinder(graph& myMap)
         cout << "=============================================================" << endl
              << "The total distance of the shortest path between " << startingCity << " and " << destinationCity << " is = " << shortestDistance << endl;
 
-        // Iterators for traversing the shortest path and distances vectors
-        vector<string>::iterator pathIt = shortestPath.begin();
-        vector<float>::iterator distancesIt = pathDistances.begin();
+        // Display the shortest path 
+        displayPathFinder(shortestPath, pathDistances);
 
-        // Counter to handle displayed errors
-        int counter = 0;
-
-        // Display the path and distances
-        while (pathIt != shortestPath.end())
-        {
-            if (counter == shortestPath.size() - 1)
-            {
-                cout << *pathIt << endl;
-            }
-            else
-            {
-                cout << *pathIt << " -> " << *distancesIt << " -> ";
-                distancesIt++;
-            }
-            pathIt++;
-            counter++;
-        }
         cout << endl;
+    }
+}
+
+/**
+ * Displays the shortest path and corresponding distances between cities.
+ *
+ * @param shortestPath The vector containing the cities in the shortest path.
+ * @param pathDistances The vector containing the distances between consecutive cities in the shortest path.
+ *
+ * @return void.
+ */
+void displayPathFinder(vector<string> shortestPath, vector<float> pathDistances)
+{
+    // Iterators for traversing the shortest path and distances vectors
+    vector<string>::iterator pathIt = shortestPath.begin();
+    vector<float>::iterator distancesIt = pathDistances.begin();
+
+    // Counter to handle displayed errors
+    int counter = 0;
+
+    // Display the path and distances
+    while (pathIt != shortestPath.end())
+    {
+        if (counter == shortestPath.size() - 1)
+        {
+            // Last city in the path, display it without distance
+            cout << *pathIt << endl;
+        }
+        else
+        {
+            // Intermediate city, display it with distance
+            cout << *pathIt << " -> " << *distancesIt << " -> ";
+            distancesIt++;
+        }
+        pathIt++;
+        counter++;
     }
 }
