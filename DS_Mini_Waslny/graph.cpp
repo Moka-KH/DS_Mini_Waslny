@@ -263,12 +263,12 @@ int graph::deleteRoad(string city1, string city2)
 	// if at least one city doesn't exist
 	if (!checkCity(city1))
 	{
-		cout << city1 << " doesn't exist :| (from delete road)\n";
+		cout << city1 << " doesn't exist :| \n";
 		return 1;
 	}
 	if (!checkCity(city2))
 	{
-		cout << city2 << " doesn't exist :| (from delete road)\n";
+		cout << city2 << " doesn't exist :| \n";
 		return 1;
 	}
 
