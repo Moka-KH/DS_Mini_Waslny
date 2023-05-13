@@ -12,7 +12,8 @@
 #include <float.h>
 #include <string.h>
 #include <list>
-#include<queue>
+#include <queue>
+#include <stack>
 
 using namespace std;
 typedef pair<float, string> myPair;
@@ -132,7 +133,7 @@ void BFS(string startCity, graph& myGraph)
  *
  * @return The shortest path vector from the starting vertex to the destination vertex
  */
-float Dijkstra(graph& myGraph, string startingNode, string targetVertex, vector<string>& path,vector <float>& distances )
+float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<pair<string, float>>& path)
 {
 	/*
 	this structure is a priority queue using the minimum heap data structure(greater<myPair>)
@@ -142,14 +143,17 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, vector<
 	priority_queue<myPair, vector<myPair>, greater<myPair>> unKnownVertices;
 	int citiesNum = myGraph.getVertexNum();
 
-	// stores the shortest found path till now for all the verteces
+	// stores the shortest found path till now for all the verteces & set all costs to infinity
 	map<string,float> cost;
-
-	// set all costs to infinity
-	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end();bucket++)
+	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end(); bucket++)
 		cost.insert(make_pair(bucket->first, INFINITE));
 
 	cost[startingNode] = 0;
+
+	// stores the previous vertex of each vertex (set it all to "" )
+	unordered_map<string, string> previousVerteces;
+	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end(); bucket++)
+		previousVerteces[bucket->first] = "";
 
 	unKnownVertices.push(make_pair(0, startingNode));
 
@@ -171,9 +175,14 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, vector<
 
 			if (cost[adjacentName] > cost[currentVertexName] + weight)
 			{
+				// update the cost
 				cost[adjacentName] = cost[currentVertexName] + weight;
+				
+				// set the preceding vertex
+				previousVerteces[adjacentName] = currentVertexName;
+
 				// put this adjacent in the unknown vertices to know it later
-				unKnownVertices.push(make_pair(cost[adjacentName], adjacentName)); // Why this push is here ?
+				unKnownVertices.push(make_pair(cost[adjacentName], adjacentName));
 			}
 		}
 	}
@@ -183,37 +192,40 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, vector<
 		return -1.0;
 	else 
 	{
-		backTracking(myGraph, startingNode, targetVertex, path, distances, cost);
+		path = backTracking(myGraph, startingNode, targetVertex, previousVerteces);
 		return cost[targetVertex];
 	}
 }
 
-void backTracking(graph& myGraph, string startingNode, string targetVertex, vector<string>& path, vector <float>& distances, map<string, float> cost)
+/**
+* This function does the backtracking for Dijkstra's algorithm to return the path in detail
+* 
+* @param myGraph the graph that Dijkstra's was implemented on
+* @param startingVertex the vertex the Dijkstra's started from
+* @param targetVertex the target destination
+* @param previousVerteces hash table of every city and its previous vertex
+* 
+* @return a list of pairs containing the name of each city and the distance to reach it from its previous vertex
+*/
+stack<pair<string, float>> backTracking(graph& myGraph, string startingVertex, string targetVertex, unordered_map<string, string> previousVerteces)
 {
-	//store the final distination index in the list
-	string current = targetVertex;
-	path.push_back(current);
+	stack<pair<string, float>> path;
+	string currentVertex = targetVertex;
+	string previousVertex = previousVerteces[currentVertex];
+	float distance;
 
-	// Backtrack from the destination to the source to get the shortest path
-	while (current != startingNode)
+	while (currentVertex != startingVertex)
 	{
-		list<pair <string, float>> adjacentVertices;
-		adjacentVertices = myGraph.getInAdjacents(current);
-		for (auto& listIterator : adjacentVertices) 
-		{
-			string adjVertex = listIterator.first;
-			float weight = listIterator.second;
-			if (cost[current] == cost[adjVertex] + weight)
-			{
-				current = adjVertex;
-				path.push_back(current);
-				distances.push_back(weight);
-				break;
-			}
-		}
+		// get the distance from previous vertex to the current one
+		list<pair<string, float>> inCurrentAdjacent = myGraph.getInAdjacents(currentVertex);
+		for (auto listPair : inCurrentAdjacent)
+			if (listPair.first == previousVertex)
+				distance = listPair.second;
+
+		path.push(make_pair(currentVertex, distance));
+
+		currentVertex = previousVertex;
+		previousVertex = previousVerteces[currentVertex];
 	}
-	//cities name
-	reverse(path.begin(), path.end());
-	//distances between cities displayed
-	reverse(distances.begin(), distances.end());
+	return path;
 }

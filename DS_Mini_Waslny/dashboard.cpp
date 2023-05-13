@@ -1,3 +1,4 @@
+#include <stack>
 #include "dashboard.h"
 #include "updateMap.h"
 #include "Algorithms.h"
@@ -94,35 +95,25 @@ void Traverse(graph& mygraph)
 */
 void pathFinder(graph& myMap)
 {   
-    string startingCity, destinationCity;
-    float shortestDistance;
-    vector<string> shortestPath;
-    vector<float> pathDistances;
+    string startingCity, targetCity;
+    float totalDistance;
+    stack<pair<string, float>> path;
 
-    // Prompt user for starting and destination cities
-    cout << endl << "Let's start our journey in finding the shortest path!" << endl << "Starting city is:";
+    cout << "Path Finder:" << endl << "\tStarting city: ";
     cin >> startingCity;
-    cout << endl << "Destination city is:";
-    cin >> destinationCity;
+    cout << "\tDestination city: ";
+    cin >> targetCity;
 
-    // Call Dijkstra's algorithm to calculate the shortest path and distance
-    shortestDistance = Dijkstra(myMap, startingCity, destinationCity, shortestPath, pathDistances);
+    totalDistance = Dijkstra(myMap, startingCity, targetCity, path);
 
     // Check if a path exists between the cities
-    if (shortestDistance == -1.0)
-    {
-        cout << "=============================================================" << endl
-             << "There is no path between " << startingCity << " and " << destinationCity << endl;
-    }
+    if (totalDistance == -1.0)
+        cout << "There is no path between " << startingCity << " and " << targetCity << "=|\n";
     else
     {
-        cout << "=============================================================" << endl
-             << "The total distance of the shortest path between " << startingCity << " and " << destinationCity << " is = " << shortestDistance << endl;
+        cout << "From " << startingCity << " to " << targetCity << " -> " << totalDistance << endl;
 
-        // Display the shortest path 
-        displayPathFinder(shortestPath, pathDistances);
-
-        cout << endl;
+        displayPath(path, startingCity);
     }
 }
 
@@ -134,30 +125,12 @@ void pathFinder(graph& myMap)
  *
  * @return void.
  */
-void displayPathFinder(vector<string> shortestPath, vector<float> pathDistances)
+void displayPath(stack<pair<string, float>> path, string startingCity)
 {
-    // Iterators for traversing the shortest path and distances vectors
-    vector<string>::iterator pathIt = shortestPath.begin();
-    vector<float>::iterator distancesIt = pathDistances.begin();
-
-    // Counter to handle displayed errors
-    int counter = 0;
-
-    // Display the path and distances
-    while (pathIt != shortestPath.end())
+    cout << startingCity;
+    while (!path.empty())
     {
-        if (counter == shortestPath.size() - 1)
-        {
-            // Last city in the path, display it without distance
-            cout << *pathIt << endl;
-        }
-        else
-        {
-            // Intermediate city, display it with distance
-            cout << *pathIt << " -> " << *distancesIt << " -> ";
-            distancesIt++;
-        }
-        pathIt++;
-        counter++;
+        cout << " -> " << path.top().second << " -> " << path.top().first;
+        path.pop();
     }
 }
