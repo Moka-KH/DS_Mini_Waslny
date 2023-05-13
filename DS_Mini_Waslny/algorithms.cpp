@@ -15,7 +15,7 @@
 #include<queue>
 
 using namespace std;
-typedef pair<float, string> iPair;
+typedef pair<float, string> myPair;
 const float INFINITE = FLT_MAX;
 
 /**
@@ -25,13 +25,13 @@ const float INFINITE = FLT_MAX;
 * 
 * Return: nothing
 */
-void DFS(graph& graph, string stratVetrex)
+void DFS(graph& myGraph, string stratVetrex)
 {
 	// visited means it was printed on the screen
 	unordered_map<string, bool> visited;
 
 	// initialize the "visited" map to be all unvisited
-	for (auto& x : graph.map)
+	for (auto& x : myGraph.map)
 		visited[x.first] = false;
 
 	stack<string> NodesToCheckNeighbors;
@@ -52,7 +52,7 @@ void DFS(graph& graph, string stratVetrex)
 
 			// get the adjacency list of the current vertex
 			list<pair<string, float>> adjacencyList;
-			adjacencyList=graph.getAdjacentVertices(currentNode);
+			adjacencyList = myGraph.getAdjacents(currentNode);
 
 			// iterate over the adjacent vertices of current node
 			for (auto& it : adjacencyList)
@@ -63,18 +63,18 @@ void DFS(graph& graph, string stratVetrex)
 	}
 
 	//traverse on isolated vertices
-	for (auto& mapIterator : graph.map)
+	for (auto& mapIterator : myGraph.map)
 		if (visited[mapIterator.first] == false)
 			cout << mapIterator.first << endl;
 
 	cout << "End of Vertices" << endl;
 }
 
-void BFS(string startCity, graph graph)
+void BFS(string startCity, graph& myGraph)
 {
 	// mark all vertices as not visited
 	unordered_map<string, bool> visited;
-	for (auto& x : graph.map)
+	for (auto& x : myGraph.map)
 		visited[x.first] = false;
 
 	// create a queue for BFS
@@ -94,7 +94,7 @@ void BFS(string startCity, graph graph)
 
 		// get the adjacency list of the current vertex
 		list<pair<string, float>> adjacencyList;
-		adjacencyList=graph.getAdjacentVertices(currentCity);
+		adjacencyList = myGraph.getAdjacents(currentCity);
 
 		// get all adjacent vertices of the dequeued vertex
 		// if an adjacent vertex has not been visited, mark it visited and enqueue it
@@ -111,7 +111,7 @@ void BFS(string startCity, graph graph)
 	}
 
 	//traverse on isolated vertices
-	for (auto& mapIterator : graph.map)
+	for (auto& mapIterator : myGraph.map)
 	{
 		if (visited[mapIterator.first] == false)
 			cout << mapIterator.first << endl;
@@ -121,112 +121,99 @@ void BFS(string startCity, graph graph)
 }
 
 /**
- * Dijkstra's algorithm for finding the shortest path between two vertices in a graph.
+ * Dijkstra's algorithm for finding the shortest path between two vertices in a graph
+ * See this video before reading the function:
+ * https://www.youtube.com/watch?v=pVfj6mxhdMw
  *
  * @param myMap A graphDS object representing the graph to search for the shortest path.
  * @param currentLocation The starting vertex for the shortest path search.
  * @param finalDistination The destination vertex for the shortest path search.
  * @param totalDistance The shortest distance between the two cities 
  *
- * @return The shortest path vector from the starting vertex to the destination vertex.
- *     
+ * @return The shortest path vector from the starting vertex to the destination vertex
  */
-float Dijkstra(graph& myMap, string startingNode, string finalDistination, vector<string>& path,vector <float>& distances ) {
-
+float Dijkstra(graph& myGraph, string startingNode, string targetVertex, vector<string>& path,vector <float>& distances )
+{
 	/*
-	greater<ipair> makes the queue uses the minimum heap data structure(binary tree)
-	which puts the smallest element at the top of the queue
+	this structure is a priority queue using the minimum heap data structure(greater<myPair>)
+	(a queue that puts the least element in its front)
+	knowing a vertex means updating its adjacents' costs with new better values (if any)
 	*/
-	priority_queue<iPair, vector<iPair>, greater<iPair> > uncheckedVertices;
+	priority_queue<myPair, vector<myPair>, greater<myPair>> unKnownVertices;
+	int citiesNum = myGraph.getVertexNum();
 
-	int citiesNum = myMap.getVertexNum();
+	// stores the shortest found path till now for all the verteces
+	map<string,float> cost;
 
-	// shortestPaths is a map that stores the distance from the starting city to any city
-	// (the table row in video)
-	map<string, float> shortestPaths;
+	// set all costs to infinity
+	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end();bucket++)
+		cost.insert(make_pair(bucket->first, INFINITE));
 
+	cost[startingNode] = 0;
 
-	// set all shortest paths to infinity
-	unordered_map <string, list<pair <string, float>>>::iterator mapIterator;
-	for (mapIterator = myMap.map.begin(); mapIterator != myMap.map.end(); mapIterator++)
-		shortestPaths.insert(make_pair(mapIterator->first, INFINITE));
+	unKnownVertices.push(make_pair(0, startingNode));
 
-
-	// put the distance from the source to itself as 0
-	shortestPaths[startingNode] = 0;
-	// and push it into the queue to check its adjacent vertices
-	uncheckedVertices.push(make_pair(0, startingNode));
-
-	// Determine the shortest path for each city 
-	while (!uncheckedVertices.empty())
+	// Determine the shortest path for each city
+	while (!unKnownVertices.empty())
 	{
-		// the city name with the minimum distance till now (the priority queue top)
-		string minDistCity = uncheckedVertices.top().second;
+		// get the name of the city with minimum distance
+		string currentVertexName = unKnownVertices.top().second;
+		unKnownVertices.pop();
 
-		// I stored its name so, Pop it
-		uncheckedVertices.pop();
+		list<pair <string, float>> outAdjacents = myGraph.getOutAdjacents(currentVertexName);
 
-		// store the its adjacent cities in a list
-		list<pair <string, float>> adjacentVertices;
-		adjacentVertices=myMap.getOutAdjacent(minDistCity);
+		// if taking a path using the current node to one of its adjacents is shorter
+		// update it the costs with this value
+		for (auto& adjacent: outAdjacents)
+		{
+			string adjacentName = adjacent.first;
+			float weight = adjacent.second; // from the current vertex to this adjacent
 
-		// iterate over this list to find a better path
-		for (auto& listIterator: adjacentVertices) {
-
-			string cityName = listIterator.first;
-			float weight = listIterator.second;
-
-			//check if the path that I have in my array was greater than the new one ->update ,else don't change
-			// if the node at which I'm pointing at this iteration is a better path
-			// (the path from the preceding node 
-			if (shortestPaths[cityName] > shortestPaths[minDistCity] + weight) {
-
-				// Updating the shortest path of the city
-				shortestPaths[cityName] = shortestPaths[minDistCity] + weight;
-				//push the city in the array with its shortest path to check its adjacent later
-				uncheckedVertices.push(make_pair(shortestPaths[cityName], cityName));
+			if (cost[adjacentName] > cost[currentVertexName] + weight)
+			{
+				cost[adjacentName] = cost[currentVertexName] + weight;
+				// put this adjacent in the unknown vertices to know it later
+				unKnownVertices.push(make_pair(cost[adjacentName], adjacentName)); // Why this push is here ?
 			}
 		}
-
-
 	}
 
-	// Check if the final destination is unreachable
-	if (shortestPaths[finalDistination] == INFINITE) {
+	// if there is no path to the target vertex
+	if (cost[targetVertex] == INFINITE)
 		return -1.0;
+	else 
+	{
+		backTracking(myGraph, startingNode, targetVertex, path, distances, cost);
+		return cost[targetVertex];
 	}
+}
 
-	else {
-		//store the final distination index in the list
-		string current = finalDistination;
-		path.push_back(current);
+void backTracking(graph& myGraph, string startingNode, string targetVertex, vector<string>& path, vector <float>& distances, map<string, float> cost)
+{
+	//store the final distination index in the list
+	string current = targetVertex;
+	path.push_back(current);
 
-		// Backtrack from the destination to the source to get the shortest path
-		while (current != startingNode) {
-
-			list<pair <string, float>> adjacentVertices;
-			adjacentVertices=myMap.getInAdjacents(current);
-			for (auto& listIterator: adjacentVertices) {
-
-				string adjVertex = listIterator.first;
-				float weight = listIterator.second;
-				if (shortestPaths[current] == shortestPaths[adjVertex] + weight) {
-					current = adjVertex;
-					path.push_back(current);
-					distances.push_back(weight);
-					break;
-				}
+	// Backtrack from the destination to the source to get the shortest path
+	while (current != startingNode)
+	{
+		list<pair <string, float>> adjacentVertices;
+		adjacentVertices = myGraph.getInAdjacents(current);
+		for (auto& listIterator : adjacentVertices) 
+		{
+			string adjVertex = listIterator.first;
+			float weight = listIterator.second;
+			if (cost[current] == cost[adjVertex] + weight)
+			{
+				current = adjVertex;
+				path.push_back(current);
+				distances.push_back(weight);
+				break;
 			}
-
 		}
-		//cities name
-		reverse(path.begin(), path.end());
-		//distances between cities displayed
-		reverse(distances.begin(), distances.end());
-
-		// Return the shortest path from the source to the destination
-		
-		return shortestPaths[finalDistination];
 	}
-
+	//cities name
+	reverse(path.begin(), path.end());
+	//distances between cities displayed
+	reverse(distances.begin(), distances.end());
 }

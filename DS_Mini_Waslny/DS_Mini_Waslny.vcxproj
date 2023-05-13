@@ -128,16 +128,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="algorithms.cpp" />
-    <ClCompile Include="consolUI.cpp" />
-    <ClCompile Include="GraphFileHandler.cpp" />
+    <ClCompile Include="enumerators.cpp" />
+    <ClCompile Include="homePage.cpp" />
+    <ClCompile Include="files.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="graph.cpp" />
+    <ClCompile Include="updateMap.cpp" />
+    <ClCompile Include="dashboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="algorithms.h" />
-    <ClInclude Include="consolUI.h" />
+    <ClInclude Include="homePage.h" />
     <ClInclude Include="graph.h" />
-    <ClInclude Include="GraphFileHandler.h" />
+    <ClInclude Include="files.h" />
+    <ClInclude Include="updateMap.h" />
+    <ClInclude Include="dashboard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "GraphFileHandler.h"
+#include "files.h"
 #include "graph.h"
 #include <fstream>
 #include <unordered_map>
@@ -31,6 +31,7 @@ void writeGraphToFile(graph& g, const string& filename) {
 	}
 	outFile.close();
 }
+
 void readGraphFromFile(graph& g, const string& filename) {
 	ifstream inFile(filename);
 	if (!inFile.is_open()) {
@@ -40,7 +41,6 @@ void readGraphFromFile(graph& g, const string& filename) {
 
 	int vertexNum;
 	inFile >> vertexNum;
-	g.setVertexNum(vertexNum);
 
 	string cityName, adjCityName;
 	float distance;
@@ -85,6 +85,7 @@ void writeMultipleGraphs( unordered_map<string, graph>& graphs, const string& di
 		fileList << graphName << ".txt" << endl; // Add the graph name to filelist.txt
 	}
 }
+
 unordered_map<string, graph> readMultipleGraphs(const string& directory) {
 	unordered_map<string, graph> graphs;
 	ifstream fileList(directory + "/filelist.txt");
@@ -103,4 +104,3 @@ unordered_map<string, graph> readMultipleGraphs(const string& directory) {
 	fileList.close();
 	return graphs;
 }
-

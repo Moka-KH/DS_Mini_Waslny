@@ -11,6 +11,8 @@ class graph
 {
 private:
 	int vertexNum;
+	int edgeNum;
+	void deleteEdge(string city1, string city2);
 
 public:
 	string name;
@@ -21,34 +23,27 @@ public:
 	// name of adjacent city - the distance between it and the original vertex
 	unordered_map <string, list<pair <string, float>>> map;
 
-	pair <string, float> pairHolder;
-
 	graph();
 	graph(string);
 	~graph();
 
-	int addCity(string newCity);
+	int addCity(string city);
 	int addCity(string newCity, string adjCity, float distance);
 	int addRoad(string city1, string city2, float distance);
-	void deleteEdge(string city1, string city2);
 
-	int deleteCity(string cityName);
-	int deleteRoad(string city1, string city2);
+	void deleteCity(string cityName);
+	void deleteRoad(string city1, string city2);
 
 	int getVertexNum();
-	void setVertexNum(int);
-	int getEdges(string city1);
-	bool emptyGraph();
+	int getEdgeNum();
 
 	void display();
-	//Dina and Mayar
-	list<pair <string, float>> getOutAdjacent(string city);
+	list<pair <string, float>> getOutAdjacents(string city);
 	list<pair <string, float>> getInAdjacents(string city);
-	list<pair <string, float>> getAdjacentVertices(string city);
-	bool checkCity(string city);
-	bool checkEdge(string city1,string city2);
-	float getEdgeWieght(string city1, string city2);
-	/*void writeGraphToFile(graph& g, const string& filename);
-	void readGraphFromFile(graph& g, const string& filename);*/
-
+	list<pair <string, float>> getAdjacents(string city);
+	int outEdgesNumber(string city1);
+	bool vertexExists(string city);
+	bool edgeExists(string city1,string city2);
+	float EdgeWieght(string city1, string city2);
+	bool emptyGraph();
 };
