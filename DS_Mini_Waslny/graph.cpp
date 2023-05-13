@@ -214,12 +214,28 @@ void graph::deleteCity(string cityName)
 	// delete connections with its out-adjacents
 	adjacents=getOutAdjacents(cityName);
 	for (auto& listPair : adjacents)
-		deleteRoad(cityName, listPair.first);
+	{
+		if (edgeExists(cityName, listPair.first) && edgeExists(listPair.first, cityName))
+		{
+			if (EdgeWieght(cityName, listPair.first) != EdgeWieght(listPair.first, cityName))
+			{
+				// delete city2 from the adjacency list of city1 
+				// AND delete city1 from the adjacency list of city2
+				deleteEdge(cityName, listPair.first);
+				deleteEdge(listPair.first, cityName);
+			}
+			else
+				deleteRoad(listPair.first, cityName);
+		}
+		else
+			deleteRoad(listPair.first, cityName);
+
+	}
 
 	// delete connections with its in-adjacents
 	adjacents=getInAdjacents(cityName);
 	for (auto& listPair : adjacents)
-		deleteRoad(listPair.first, cityName);
+			deleteRoad(listPair.first, cityName);
 
 	// remove city
 	map.erase(cityName);
@@ -257,7 +273,7 @@ void graph::deleteRoad(string city1, string city2)
 	// no road
 	if(!edgeExists(city1, city2))
 	{
-		cout << "There is no road between " << city1 << " and " << city2 << "=(\n";
+		cout << "There is no road between " << city1 << " and " << city2 << " =(\n";
 		return;
 	}
 	// one way road from city1 to city2

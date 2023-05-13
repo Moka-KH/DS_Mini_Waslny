@@ -35,7 +35,18 @@ int main() {
 
     myGraph.addRoad("A", "A", 0.5);
 
-    myGraph.deleteRoad("A", "B");
+
+    //gives a message that the road is deleted then the city is deleted
+        // "messages are annoying =("
+    myGraph.deleteCity("D");
+    myGraph.display();
+
+    //ask the user which road to delete between C and E 
+        //"Doesn't make sense and needs to be removed," said the TA"
+    myGraph.deleteCity("C");
+    myGraph.display();
+
+    myGraph.deleteCity("A");
     myGraph.display();
 
     return 0;
