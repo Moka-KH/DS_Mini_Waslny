@@ -217,7 +217,8 @@ stack<pair<string, float>> backTracking(graph& myGraph, string startingVertex, s
 	while (currentVertex != startingVertex)
 	{
 		// get the distance from previous vertex to the current one
-		for (auto listPair : myGraph.map[currentVertex])
+		list<pair<string, float>> inCurrentAdjacent = myGraph.getInAdjacents(currentVertex);
+		for (auto listPair : inCurrentAdjacent)
 			if (listPair.first == previousVertex)
 				distance = listPair.second;
 
