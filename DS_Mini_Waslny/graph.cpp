@@ -254,8 +254,14 @@ void graph::deleteRoad(string city1, string city2)
 		return;
 	}
 
+	// no road
+	if(!edgeExists(city1, city2))
+	{
+		cout << "There is no road between " << city1 << " and " << city2 << "=(\n";
+		return;
+	}
 	// one way road from city1 to city2
-	if (edgeExists(city1, city2) && !edgeExists(city2, city1))
+	else if (edgeExists(city1, city2) && !edgeExists(city2, city1))
 		// delete city2 from the adjacency list of city1
 		deleteEdge(city1, city2);
 	
@@ -304,13 +310,7 @@ void graph::deleteRoad(string city1, string city2)
 			}
 		}
 	}
-	// no road
-	else
-	{
-		cout << "There is no road between " << city1 << " and " << city2 << "=(\n";
-		return;
-	}
-
+	
 	cout << "Road is deleted\n";
 	return;
 }
