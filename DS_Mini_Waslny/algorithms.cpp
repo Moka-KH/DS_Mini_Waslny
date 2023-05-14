@@ -26,28 +26,27 @@ const float INFINITE = FLT_MAX;
 * 
 * Return: nothing
 */
-void DFS(graph& myGraph, string stratVetrex)
+void DFS(graph& myGraph, string startVetrex)
 {
-	// visited means it was printed on the screen
 	unordered_map<string, bool> visited;
 
-	// initialize the "visited" map to be all unvisited
+	// initialize all vertices to be "unvisited" first
 	for (auto& x : myGraph.map)
 		visited[x.first] = false;
 
 	stack<string> NodesToCheckNeighbors;
-	NodesToCheckNeighbors.push(stratVetrex);
+	NodesToCheckNeighbors.push(startVetrex);
 
 	//traverse on connected vertices 
 	while (!NodesToCheckNeighbors.empty())
 	{
-		// take the top of the stack in a variable and pop it
+		// return top vertex and pop it to mark it as "visited"
 		string currentNode = NodesToCheckNeighbors.top();
 		NodesToCheckNeighbors.pop();
 
-		// print & get the non-visited adjacents of the non-visited
 		if (!visited[currentNode])
 		{
+			// print & mark the current vertex as "visited"
 			cout << currentNode << endl;
 			visited[currentNode] = true;
 
