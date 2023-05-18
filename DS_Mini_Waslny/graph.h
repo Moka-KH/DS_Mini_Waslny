@@ -46,5 +46,5 @@ public:
 	bool vertexExists(string city);
 	bool edgeExists(string city1,string city2);
 	float EdgeWieght(string city1, string city2);
-	bool emptyGraph();
+	bool empty();
 };

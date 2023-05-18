@@ -15,6 +15,7 @@
 */
 void addCity(graph& myGraph)
 {
+    cout << "\t\tAdding a City\n";
     cout << "\tName: ";
     string city;
     cin >> city;

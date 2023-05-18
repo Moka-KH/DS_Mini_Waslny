@@ -29,23 +29,23 @@ graph::graph(string name)
 	graph();
 	this->name = name;
 }
-/**
-* emptyGraph - check if graph empty or not
-* Return: boolean value -> true if empty false if not empty
-*/
-bool graph::emptyGraph()
-{
-	if (map.empty())
-		return true;
-	return false;
-}
-
 graph :: ~graph()
 {
 	for (auto& bucket : map)
 		bucket.second.clear();
 
 	map.clear();
+}
+
+/**
+* emptyGraph - check if graph empty or not
+* Return: boolean value -> true if empty false if not empty
+*/
+bool graph::empty()
+{
+	if (map.empty())
+		return true;
+	return false;
 }
 
 /**
@@ -68,6 +68,12 @@ int graph::getEdgeNum()
 */
 void graph::display()
 {
+	if (map.empty())
+	{
+		cout << "You don't have any cities in this map yet!" << endl;
+		return;
+	}
+
 	cout << "\n\tMap Cities:\n";
 
 	for (auto& bucket : map)

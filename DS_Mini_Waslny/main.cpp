@@ -15,7 +15,7 @@ using namespace std;
 unordered_map<string, graph> maps;
 
 int main() {
-    graph myGraph;
+    /*graph myGraph;
 
     myGraph.addCity("A");
     myGraph.addCity("B");
@@ -48,6 +48,8 @@ int main() {
 
     myGraph.deleteCity("A");
     myGraph.display();
+    */
 
+    homePage(maps);
     return 0;
 }

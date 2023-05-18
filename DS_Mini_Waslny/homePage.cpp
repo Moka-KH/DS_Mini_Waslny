@@ -16,6 +16,7 @@ using namespace std;
 */
 void homePage(unordered_map<string, graph>& maps)
 {
+    system("cls");  // clear the console
     cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
     cout << "\t\t\t===================================================================" << endl;
     cout << "\t\t\t===================================================================" << endl;
@@ -30,6 +31,7 @@ void homePage(unordered_map<string, graph>& maps)
         cout << "-> ";
 
         cin >> choice;
+        system("cls");  // clear the console
 
         if (choice == 1)
             addMap(maps);
@@ -94,7 +96,7 @@ void mapsDashboard(unordered_map<string, graph>& maps)
     int choice;
     while (true) {
         cout << endl << endl << endl;
-        cout << "\t\t\t\t\t" << mapName << " Dashboard" << endl;
+        cout << "\t\t\t\t\t\"" << mapName << "\" Dashboard" << endl;
         cout << "1. Display map data" << endl;
         cout << "2. Update map data" << endl;
         cout << "3. Traverse the map" << endl;
@@ -103,6 +105,7 @@ void mapsDashboard(unordered_map<string, graph>& maps)
         cout << "===================================================================" << endl;
 
         cin >> choice;
+        system("cls");   // clear the console
 
         if (choice == 1)
             maps[mapName].display();
