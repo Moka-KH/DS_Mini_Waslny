@@ -140,7 +140,6 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<p
 	knowing a vertex means updating its adjacents' costs with new better values (if any)
 	*/
 	priority_queue<myPair, vector<myPair>, greater<myPair>> unKnownVertices;
-	int citiesNum = myGraph.getVertexNum();
 
 	// stores the shortest found path till now for all the verteces & set all costs to infinity
 	map<string,float> cost;
