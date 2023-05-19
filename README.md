@@ -26,7 +26,7 @@ Data Structures used:
 * priority queue
 
 Team members:
-* Malk Khalid Khatab : https:/www.linkedin.com/in/malk-khatab
+* Malk Khalid Khatab : www.linkedin.com/in/malk-khatab
 * Ahmed-Aboalasaad 
 * DinaSolitah
 * MahmoudHany908
