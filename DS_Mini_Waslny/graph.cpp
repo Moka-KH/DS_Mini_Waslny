@@ -188,11 +188,8 @@ int graph::addRoad(string city1, string city2, float distance)
 	}
 
 	// no road between them.. add it
-	else
-	{
-		map.at(city1).push_back(make_pair(city2, distance));
-		return addedRoad;
-	}
+	map.at(city1).push_back(make_pair(city2, distance));
+	return addedRoad;
 }
 
 ///
