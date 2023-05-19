@@ -78,12 +78,12 @@ void addOrEditRoad(graph& myGraph)
         int message;
         if (choice == 1)
         {
-            message = myGraph.addRoad(city1, city2, distance);
+            message = myGraph.addEditRoad(city1, city2, distance);
             addRoadFeedback(city1, city2, message);
         }
         else if (choice == 2)
         {
-            message = myGraph.addRoad(city2, city1, distance);
+            message = myGraph.addEditRoad(city2, city1, distance);
             addRoadFeedback(city2, city1, message);
         }
         else
@@ -91,10 +91,10 @@ void addOrEditRoad(graph& myGraph)
     }
     else if (choice == 2)
     {
-        int message1 = myGraph.addRoad(city1, city2, distance);
+        int message1 = myGraph.addEditRoad(city1, city2, distance);
         addRoadFeedback(city1, city2, message1);
 
-        int message2 = myGraph.addRoad(city2, city1, distance);
+        int message2 = myGraph.addEditRoad(city2, city1, distance);
         addRoadFeedback(city2, city1, message2);
     }
 }

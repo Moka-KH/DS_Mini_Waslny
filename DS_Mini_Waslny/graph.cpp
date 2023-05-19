@@ -148,7 +148,7 @@ int graph::addCity(string newCity, string adjCity, float distance)
 	map[newCity] = newList;
 
 	// link it with city2
-	addRoad(newCity, adjCity, distance);
+	addEditRoad(newCity, adjCity, distance);
 	return 0;
 }
 
@@ -163,7 +163,7 @@ int graph::addCity(string newCity, string adjCity, float distance)
 * @param distance Distance
 * @return returns a addRoad_enum according to the ending state
 */
-int graph::addRoad(string city1, string city2, float distance)
+int graph::addEditRoad(string city1, string city2, float distance)
 {
 	// if the first one doesn't exist
 	if (!vertexExists(city1))
