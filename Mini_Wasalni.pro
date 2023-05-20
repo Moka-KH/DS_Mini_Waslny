@@ -18,6 +18,7 @@ SOURCES += \
     addmap.cpp \
     addmap_error.cpp \
     addmap_successfully.cpp \
+    algorithms.cpp \
     bfs.cpp \
     choosemap.cpp \
     dashboard.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     exitloader.cpp \
     fivecities_path.cpp \
     fourcities_path.cpp \
+    graph.cpp \
     homepage.cpp \
     main.cpp \
     mini_wasalni_gui.cpp \
@@ -45,6 +47,7 @@ HEADERS += \
     addmap.h \
     addmap_error.h \
     addmap_successfully.h \
+    algorithms.h \
     bfs.h \
     choosemap.h \
     dashboard.h \
@@ -55,6 +58,7 @@ HEADERS += \
     exitloader.h \
     fivecities_path.h \
     fourcities_path.h \
+    graph.h \
     homepage.h \
     mini_wasalni_gui.h \
     pathfinder_main.h \
