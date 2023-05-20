@@ -59,6 +59,7 @@ HEADERS += \
     exitloader.h \
     fivecities_path.h \
     fourcities_path.h \
+    gVariables.h \
     graph.h \
     homepage.h \
     mini_wasalni_gui.h \
