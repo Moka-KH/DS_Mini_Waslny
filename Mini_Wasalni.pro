@@ -28,6 +28,7 @@ SOURCES += \
     enumerators.cpp \
     error_pathfinder.cpp \
     exitloader.cpp \
+    files.cpp \
     fivecities_path.cpp \
     fourcities_path.cpp \
     graph.cpp \
@@ -57,6 +58,7 @@ HEADERS += \
     displaymapdata.h \
     error_pathfinder.h \
     exitloader.h \
+    files.h \
     fivecities_path.h \
     fourcities_path.h \
     gVariables.h \
