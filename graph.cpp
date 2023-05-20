@@ -1,21 +1,61 @@
 #include "graph.h"
+#include "enumerators.cpp"
 
+// constructors & destructor
 graph::graph()
 {
     vertexNum = 0;
     edgeNum = 0;
 }
+graph::graph(QString name)
+{
+    this->name = name;
+    vertexNum = 0;
+    edgeNum = 0;
+}
+graph::~graph()
+{
+    QMutableHashIterator<QString, QList<QPair<QString, float>>> bucket(map);
+    for (; bucket.hasNext(); bucket.next())
+        bucket.value().clear();
+    map.clear();
+}
 
+// Getters
 int graph::getVertexNum()
 {
     return vertexNum;
+}
+int graph::getEdgeNum()
+{
+    return edgeNum;
+}
+int graph::getOutEdgesNumber(QString city1)
+{
+    int counter = 0;
+    QList<QPair<QString, float>> adjacents = getOutAdjacents(city1);
+    QMutableListIterator<QPair<QString, float>> listPair(adjacents);
+
+    for (;listPair.hasNext();listPair.next())
+        counter++;
+    return counter;
+}
+float graph::getEdgeWeight(QString city1, QString city2)
+{
+    QList<QPair<QString, float>> adjacents = getOutAdjacents(city1);
+    QMutableListIterator <QPair<QString, float>> listPair(adjacents);
+    for (; listPair.hasNext();listPair.next())
+    {
+        if(listPair.value().first == city2)
+            return listPair.value().second;
+    }
+    return -1;
 }
 
 QList<QPair<QString, float>> graph::getOutAdjacents(QString city)
 {
     return map[city];
 }
-
 QList<QPair<QString, float>> graph::getInAdjacents(QString city)
 {
     QList<QPair<QString, float>> adjacents;
@@ -41,8 +81,6 @@ QList<QPair<QString, float>> graph::getInAdjacents(QString city)
     }
     return adjacents;
 }
-
-//contains auto !!
 QList<QPair<QString, float>> graph::getAdjacents(QString city)
 {
     // get in IN & OUT in 2 separate lists
@@ -52,18 +90,20 @@ QList<QPair<QString, float>> graph::getAdjacents(QString city)
 
     // combine them in the inAdjacents list and don't take the duplicates
     // for each element in the INs
-    for (auto& in : inAdjacents)
+    QMutableListIterator<QPair<QString, float>> in(inAdjacents);
+    for (; in.hasNext(); in.next())
     {
         // iterate over the OUTs
-        for (auto out : outAdjacents)
+        QMutableListIterator<QPair<QString, float>> out(inAdjacents);
+        for (; out.hasNext(); out.next())
         {
             // if you find a repeated value, don't take it into the INs..
             // continue to the next OUT
-            if (in.first == out.first && in.second == out.second)
-                continue;
+            if (in.value().first == out.value().first && in.value().second == out.value().second)
+                break;
 
             // non-repeated value
-            QPair<QString, float> newPair(out.first, out.second);
+            QPair<QString, float> newPair(out.value().first, out.value().second);
             inAdjacents.push_back(newPair);
         }
     }
@@ -71,11 +111,11 @@ QList<QPair<QString, float>> graph::getAdjacents(QString city)
     return inAdjacents;
 }
 
+// Boolean Checkers
 bool graph::vertexExists(QString city)
 {
     return map.contains(city);
 }
-
 bool graph::edgeExists(QString city1, QString city2)
 {
     if (!vertexExists(city1) || !vertexExists(city2))
@@ -91,36 +131,9 @@ bool graph::edgeExists(QString city1, QString city2)
     }
     return false;
 }
-
-
-float graph:: EdgeWieght(QString city1, QString city2)
+bool graph::empty()
 {
-    QList<QPair<QString, float>> adjacents = getOutAdjacents(city1);
-    QMutableListIterator <QPair<QString, float>> listPair(adjacents);
-    for (; listPair.hasNext();listPair.next())
-    {
-        if(listPair.value().first == city2)
-            return listPair.value().second;
-    }
-    return -1;
-}
-
-bool graph::emptyGraph()
-{
-    if (map.empty())
-        return true;
-    return false;
-}
-
-int graph::outEdgesNumber(QString city1)
-{
-    int counter = 0;
-    QList<QPair<QString, float>> adjacents = getOutAdjacents(city1);
-    QMutableListIterator<QPair<QString, float>> listPair(adjacents);
-
-    for (;listPair.hasNext();listPair.next())
-        counter++;
-    return counter;
+    return (map.empty() ? true : false);
 }
 
 // Roads
@@ -155,13 +168,114 @@ int graph::addEditRoad(QString city1, QString city2, float distance)
     map[city1].push_back(newPair);
     return addedRoad;
 }
+void graph::deleteRoad(QString city1, QString city2)
+{
+    // if at least one city doesn't exist
+    if (!vertexExists(city1))
+    {
+        // cout << '\"' << city1 << "\" doesn't exist =|\n";
+        return;
+    }
+    if (!vertexExists(city2))
+    {
+        // cout << '\"' << city2 << "\" doesn't exist =|\n";
+        return;
+    }
+
+    // know the existing roads between the 2 cities
+    bool road12 = edgeExists(city1, city2);
+    bool road21 = edgeExists(city2, city1);
+
+    // no roads
+    if(!road12 && !road21)
+    {
+        // cout << "There is no road between " << city1 << " and " << city2 << " =(\n";
+        return;
+    }
+
+    // one road city1 -> city2
+    if (road12 && !road21)
+    {
+        deleteEdge(city1, city2);
+        return;
+    }
+
+    // one road city2 -> city1
+    if (!road12 && road21)
+    {
+        deleteEdge(city2, city1);
+        return;
+    }
+
+    // reaching here means there is a 2-way road
+
+    bool sameDistance = getEdgeWeight(city1, city2) == getEdgeWeight(city2, city1);
+    if (sameDistance)
+    {
+        deleteEdge(city1, city2);
+        deleteEdge(city2, city1);
+        return;
+    }
+    else
+    {
+        int choice = 0;
+        while (true)
+        {
+            /*
+            cout << "1- delete road from " << city1 << " to " << city2 << "\n"
+                 << "2- delete road from " << city2 << " to " << city1 << "\n"
+                 << "3- delete  both roads \n";
+            cin >> choice;
+            */
+
+            if (choice == 1)
+                deleteEdge(city1, city2);
+            else if (choice == 2)
+                deleteEdge(city2, city1);
+            else if (choice == 3)
+            {
+                deleteEdge(city1, city2);
+                deleteEdge(city2, city1);
+            }
+            else
+            {
+                // cout << "Invalid choice!  Try agian\n";
+                continue;
+            }
+            break;
+        }
+    }
+
+
+    // cout << "Road is deleted\n";
+    return;
+}
+void graph::deleteEdge(QString city1,QString city2)
+{
+    // the method removeOne() removes the first element in the container
+    // with the value provided
+    QPair<QString, float> myPair(city2, getEdgeWeight(city1, city2));
+    map[city1].removeOne(myPair);
+
+    /*
+    QListIterator<QPair<QString, float>> listPair(map[city1]);
+    for (; listPair.hasNext(); listPair.next())
+    {
+        if (listPair.value().first == city2)
+        {
+            map[city1].erase(listPair);
+            break;
+        }
+    }
+    */
+}
 
 //Cities
 void graph:: deleteCity(QString cityName)
 {
     if (!vertexExists(cityName))
     {
-        qDebug() << "city " << cityName << " does not exist.. I can't delete it =(\n";
+        // qDebug() << "city " << cityName << " does not exist.. I can't delete it =(\n";
         return;
     }
 
@@ -173,7 +287,7 @@ void graph:: deleteCity(QString cityName)
     {
         if(edgeExists(cityName, listPair.value().first) && edgeExists(listPair.value().first, cityName))
         {
-            if(EdgeWieght(cityName, listPair.value().first) != EdgeWieght(listPair.value().first, cityName))
+            if(getEdgeWeight(cityName, listPair.value().first) != getEdgeWeight(listPair.value().first, cityName))
             {
                 // delete city2 from the adjacency list of city1
                 // AND delete city1 from the adjacency list of city2
@@ -196,10 +310,9 @@ void graph:: deleteCity(QString cityName)
     map.remove(cityName); //=/
     vertexNum--;
 
-    qDebug() << "City is deleted\n";
+    // qDebug() << "City is deleted\n";
     return;
 }
-
 int graph::addCity(QString city)
 {
     if (vertexExists(city))
@@ -212,20 +325,21 @@ int graph::addCity(QString city)
     return success;
 }
 
+// Others
 void graph:: display()
 {
-    qDebug() << "\n\tMap Cities:";
+    //qDebug() << "\n\tMap Cities:";
     QMutableHashIterator <QString , QList<QPair<QString, float>>> bucket(map);
 
     for(;bucket.hasNext();bucket.next())
     {
-        qDebug() << "\nCity: " << bucket.key();
+        //qDebug() << "\nCity: " << bucket.key();
 
         QMutableListIterator <QPair<QString, float>> listPair(bucket.value());
         for(;listPair.hasNext();listPair.next())
         {
-            qDebug() << '\t' << listPair.value().first << " ( Distance =  " << listPair.value().second << " )\n";
+            //qDebug() << '\t' << listPair.value().first << " ( Distance =  " << listPair.value().second << " )\n";
         }
-        qDebug() << "\t\t\t=======================================================================\n";
+        //qDebug() << "\t\t\t=======================================================================\n";
     }
 }

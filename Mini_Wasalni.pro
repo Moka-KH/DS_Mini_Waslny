@@ -25,6 +25,7 @@ SOURCES += \
     defaultcities_path.cpp \
     dfs.cpp \
     displaymapdata.cpp \
+    enumerators.cpp \
     error_pathfinder.cpp \
     exitloader.cpp \
     fivecities_path.cpp \
