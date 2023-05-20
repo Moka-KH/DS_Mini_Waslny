@@ -1,6 +1,6 @@
+#pragma once
 #ifndef HOMEPAGE_H
 #define HOMEPAGE_H
-
 #include <QWidget>
 #include "exitloader.h"
 #include "addmap.h"

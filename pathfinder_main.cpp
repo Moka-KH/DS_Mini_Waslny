@@ -13,6 +13,11 @@
 #include <QPixmap>
 #include <QVector>
 
+#include"graph.h"
+#include "algorithms.h"
+#include<QPair>
+#include<QStack>
+
 dashboard* dashboard_mainfinderreturnObject;
 
 PathFinder_Main::PathFinder_Main(QWidget *parent) :
@@ -53,55 +58,38 @@ PathFinder_Main::~PathFinder_Main()
 //find the shortest path button
 void PathFinder_Main::on_addmap_add_clicked()
 {
-    // Declare a QVector of integers
-    QVector<int> myVector;
-
-    // Add elements to the vector
-
-        myVector.append(30);
-        myVector.append(30);
-        myVector.append(30);
-        myVector.append(30);
-        myVector.append(30);
-        myVector.append(30);
-        myVector.append(30);
-        myVector.append(30);
-        myVector.append(30);
-
+    graph myGraph;
+    QString city1 = ui->addmap_lineedit->text();
+    QString city2 = ui->addmap_lineedit_3->text();
+    QStack<QPair<QString, float>> path;
+    float distance = Dijkstra(myGraph,city1,city2,path);
 
     // shortest path display based on the vector size..
-    if (myVector.isEmpty())
-    {
+    if(path.empty()){
         error_pathfinder->show();
         this->hide();
     }
-    else if (myVector.size()==2)
-    {
+    else if(path.size()==2){
         twocities_path->show();
         this->hide();
     }
-    else if (myVector.size()==3)
-    {
+    else if (path.size()==3){
         threecities_path->show();
         this->hide();
     }
-    else if (myVector.size()==4)
-    {
+    else if (path.size()==4){
         fourcities_path->show();
         this->hide();
     }
-    else if (myVector.size()==5)
-    {
+    else if (path.size()==5){
         fivecities_path->show();
         this->hide();
     }
-    else if (myVector.size()==6)
-    {
+    else if (path.size()==6){
         sixcities_path->show();
         this->hide();
     }
-    else if (myVector.size()==7)
-    {
+    else if (path.size()==7){
         sevencities_path->show();
         this->hide();
     }

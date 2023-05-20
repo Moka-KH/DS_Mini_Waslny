@@ -3,7 +3,6 @@
 #include "addmap.h"
 #include "choosemap.h"
 #include <QPixmap>
-
 HomePage::HomePage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::HomePage),
@@ -26,7 +25,6 @@ HomePage::HomePage(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
-
 }
 
 HomePage::~HomePage()
@@ -36,8 +34,7 @@ HomePage::~HomePage()
 
 
 void HomePage::on_pushButton_addnewmap_clicked()
-{
-    hide();
+{hide();
     addmapObject->show();
 }
 
