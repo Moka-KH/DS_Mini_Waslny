@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>Pictures/Icon.png</file>
+        <file>Pictures/Pic_Intro.png</file>
+        <file>Pictures/Welcome.png</file>
+        <file>Pictures/home_page.png</file>
+        <file>Pictures/Title.png</file>
+        <file>Pictures/Half-Half.png</file>
+        <file>Pictures/centered.png</file>
+        <file>Pictures/Display.png</file>
+        <file>Pictures/2_cities_path.png</file>
+        <file>Pictures/3_cities_path.png</file>
+        <file>Pictures/4_cities_path.png</file>
+        <file>Pictures/5_cities_path.png</file>
+        <file>Pictures/6_cities_path.png</file>
+        <file>Pictures/7_cities_path.png</file>
+        <file>Pictures/default_cities_path.png</file>
+    </qresource>
+</RCC>
