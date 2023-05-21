@@ -20,7 +20,7 @@ void updateMap(graph& myGraph)
         cout << "2. Add / Edit a Road\n";
         cout << "3. Delete a City\n";
         cout << "4. Delete a Road\n";
-        cout << "5. Return to \"" << myGraph.name << "\" Dashboard\n";
+        cout << "5. Return to " << myGraph.name << " Dashboard\n";
 
         cin >> choice;
         system("cls"); // clear the console
@@ -32,28 +32,14 @@ void updateMap(graph& myGraph)
             addOrEditRoad(myGraph);
 
         else if (choice == 3)
-        {
-            string city;
-            cout << "Delete the City: ";
-            cin >> city;
-
-            myGraph.deleteCity(city);
-        }
+            deleteCity(myGraph);
 
         else if (choice == 4)
-        {
-            string city1, city2;
-            cout << "Deleing Road: \n";
-            cout << "\tCity 1: ";
-            cin >> city1;
-            cout << "\tCity 2: ";
-            cin >> city2;
-
-            myGraph.deleteRoad(city1, city2);
-        }
+            deleteRoad(myGraph);
 
         else if (choice == 5)
             return;
+
         else
             cout << "invalid choice :/ \n";
     }

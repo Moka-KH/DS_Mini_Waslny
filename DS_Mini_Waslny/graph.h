@@ -31,8 +31,8 @@ public:
 	int addCity(string city);
 	int addEditRoad(string city1, string city2, float distance);
 
-	void deleteCity(string cityName);
-	void deleteRoad(string city1, string city2);
+	int deleteCity(string cityName);
+	int deleteRoad(string city1, string city2);
 
 	int getVertexNum();
 	int getEdgeNum();

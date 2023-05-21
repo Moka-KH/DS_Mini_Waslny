@@ -162,12 +162,11 @@ int graph::addEditRoad(string city1, string city2, float distance)
 * @cityName: City Name to be deleted
 * @return void
 */
-void graph::deleteCity(string cityName) //note from Malk -> still working on the messages that appears to user =| 
+int graph::deleteCity(string cityName) 
 {
 	if (!vertexExists(cityName))
 	{
-		cout << "city " << cityName << " does not exist.. I can't delete it =(\n";
-		return;
+		return cityNotExists;
 	}
 
 	list<pair<string, float>> adjacents;
@@ -202,8 +201,7 @@ void graph::deleteCity(string cityName) //note from Malk -> still working on the
 	map.erase(cityName);
 	vertexNum--;
 
-	cout << "City is deleted\n";
-	return;
+	return Cdeleted;
 }
 
 /**
@@ -217,35 +215,32 @@ void graph::deleteCity(string cityName) //note from Malk -> still working on the
 * @param city2 second city
 * @return void
 */
-void graph::deleteRoad(string city1, string city2)
+int graph::deleteRoad(string city1, string city2)
 {
 	// if at least one city doesn't exist
 	if (!vertexExists(city1))
-	{
-		cout << '\"' << city1 << "\" doesn't exist =|\n";
-		return;
-	}
+		return NoCity1;
 	if (!vertexExists(city2))
-	{
-		cout << '\"' << city2 << "\" doesn't exist =|\n";
-		return;
-	}
+		return NoCity2;
 
 	// no road
 	if(!edgeExists(city1, city2))
-	{
-		cout << "There is no road between " << city1 << " and " << city2 << " =(\n";
-		return;
-	}
+		return noRoad;
 	// one way road from city1 to city2
 	else if (edgeExists(city1, city2) && !edgeExists(city2, city1))
+	{
 		// delete city2 from the adjacency list of city1
 		deleteEdge(city1, city2);
+		return Rdeleted;
+	}
 	
 	// one way road from city2 to city1
 	else if (edgeExists(city2, city1) && !edgeExists(city1, city2))
+	{
 		// delete city1 from the adjacency list of city2
 		deleteEdge(city2, city1);
+		return Rdeleted;
+	}
 	
 	// 2 way road
 	else if (edgeExists(city1, city2) && edgeExists(city2, city1))
@@ -257,6 +252,7 @@ void graph::deleteRoad(string city1, string city2)
 		    // AND delete city1 from the adjacency list of city2
 			deleteEdge(city1, city2);
 			deleteEdge(city2, city1);
+			return Rdeleted;
 		}
 		// with different distances
 		else
@@ -288,8 +284,7 @@ void graph::deleteRoad(string city1, string city2)
 		}
 	}
 	
-	cout << "Road is deleted\n";
-	return;
+	return Rdeleted;
 }
 
 void graph::deleteEdge(string city1,string city2) 

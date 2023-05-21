@@ -23,7 +23,7 @@ void addCity(graph& myGraph)
     int message = myGraph.addCity(city);
 
     if (message == cityExists)
-        cout << "City " << city << " already exists =/\n";
+        cout << "City " << city << " already exists =|\n";
     else if (message == success)
         cout <<"Added \"" << city << "\" =)\n";
 }
@@ -110,11 +110,72 @@ void addOrEditRoad(graph& myGraph)
 void addRoadFeedback(string city1, string city2, int message)
 {
     if (message == noCity1)
-        cout << "Sorry! " << city1 << " doesn't exist" << endl;
+        cout << "Sorry! " << city1 << " doesn't exist =|" << endl;
     else if (message == noCity2)
-        cout << "Sorry! " << city2 << " doesn't exist" << endl;
+        cout << "Sorry! " << city2 << " doesn't exist =|" << endl;
     else if (message == addedRoad)
         cout << "Added a road successfully =)" << endl;
     else if (message == updatedRoad)
         cout << "updated a road successfully =)" << endl;
+}
+
+/**
+* This function lets the user delete a road.. it uses the the deleteRoad function from
+* the graph class and calls deleteRoadFeedback() which handles the feedback messages that appear
+* to the user
+*
+* @param myGraph the graph to delete its roads
+* @return void
+*/
+void deleteRoad(graph& myGraph)
+{
+    string city1, city2;
+    cout << "Deleing Road: \n";
+    cout << "\tCity 1: ";
+    cin >> city1;
+    cout << "\tCity 2: ";
+    cin >> city2;
+
+    int message = myGraph.deleteRoad(city1, city2);
+    deleteRoadFeedback(city1, city2, message);
+}
+
+/**
+* this function prints a message in the console depending on the given message parameter
+*
+* @param city1 city1 name
+* @param city2 city2 name
+* @param message the return value form calling deleteRoad() function in the graph class
+* @return void
+*/
+void deleteRoadFeedback(string city1, string city2, int message)
+{
+    switch (message)
+    {
+        case 1:
+            cout << '\"' << city1 << "\" doesn't exist =|\n";
+            break;
+        case 2:
+            cout << '\"' << city2 << "\" doesn't exist =|\n";
+            break;
+        case 3:
+            cout << "There is no road between " << city1 << " and " << city2 << " =(\n";
+            break;
+        case 4:
+            cout << "Road is deleted =)\n";
+            break;
+    }
+}
+
+void deleteCity(graph& myGraph)
+{
+    string city;
+    cout << "Delete the City: ";
+    cin >> city;
+
+    int message = myGraph.deleteCity(city);
+    if (message == 1)
+        cout << "city " << city << " does not exist.. I can't delete it =(\n";
+    else 
+        cout << "City is deleted =)\n";
 }
