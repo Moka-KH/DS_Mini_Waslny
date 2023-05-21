@@ -29,6 +29,7 @@ Update_menu::Update_menu(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
+
     dashboard_updatereturnObject = nullptr;
 }
 

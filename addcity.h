@@ -2,6 +2,11 @@
 #define ADDCITY_H
 
 #include <QWidget>
+#include <addcity_error.h>
+#include <addcity_successfully.h>
+
+class AddCity_Error;
+class AddCity_Successfully;
 
 namespace Ui {
 class addcity;
@@ -22,6 +27,9 @@ private slots:
 
 private:
     Ui::addcity *ui;
+
+    AddCity_Successfully* cityaddedPointer;
+    AddCity_Error*  addcityerrorPointer;
 };
 
 #endif // ADDCITY_H
