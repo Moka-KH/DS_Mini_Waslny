@@ -26,7 +26,6 @@ SevenCities_Path::SevenCities_Path(QWidget *parent) :
     // Set the text of the label
     ui->city1_label->setText(startingVertex);
 
-
     ui->distanse_between_label_1->setText(QString::number(path.top().second));
     ui->city2_label->setText(path.top().first);
 
@@ -53,11 +52,12 @@ SevenCities_Path::SevenCities_Path(QWidget *parent) :
     path.pop();
 
     ui->distanse_between_label_6->setText(QString::number(path.top().second));
-    ui->city7_label->setText(path.top().first);
+    ui->city7_label->setText("");
 
     path.pop();
 
-    ui->shortestdistance->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + path.top().first + " is: " + QString::number(totalDistance));
+
 
     dashboard_sevencitiesreturnObject = nullptr; // Initialize the pointer
 }

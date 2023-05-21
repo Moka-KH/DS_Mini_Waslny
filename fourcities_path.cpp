@@ -41,7 +41,8 @@ FourCities_Path::FourCities_Path(QWidget *parent) :
 
     path.pop();
 
-    ui->shortestdistance->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
+
 
     dashboard_fourcitiesreturnObject = nullptr; // Initialize the pointer
 }

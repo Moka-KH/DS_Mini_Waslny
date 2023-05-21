@@ -28,11 +28,11 @@ DefaultCities_Path::DefaultCities_Path(QWidget *parent) :
     pathData=startingVertex;
     for (QPair<QString, float> pair : path)
     {
-        pathData += " -> "+ QString::number(pair.second) + " -> " + pair.first ;
+        pathData += " -> "+QString::number(pair.second)+" -> "+pair.first ;
     }
     ui->cities_pathdisplay->setText(pathData);
 
-    ui->shortestdistance_display->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+    ui->shortestdistance_display->setText("The shortest distance between "+startingVertex+" and "+targetVertex +" is: "+QString::number(totalDistance));
 
 
     dashboard_defaultcitiesreturnObject= nullptr;

@@ -36,7 +36,8 @@ ThreeCities_Path::ThreeCities_Path(QWidget *parent) :
 
     path.pop();
 
-    ui->shortestdistance->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
+
 
     dashboard_threecitiesreturnObject = nullptr; // Initialize the pointer
 }

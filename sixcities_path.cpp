@@ -26,7 +26,6 @@ SixCities_Path::SixCities_Path(QWidget *parent) :
     // Set the text of the label
     ui->city1_label->setText(startingVertex);
 
-
     ui->distanse_between_label_1->setText(QString::number(path.top().second));
     ui->city2_label->setText(path.top().first);
 
@@ -36,7 +35,6 @@ SixCities_Path::SixCities_Path(QWidget *parent) :
     ui->city3_label->setText(path.top().first);
 
     path.pop();
-
 
     ui->distanse_between_label_3->setText(QString::number(path.top().second));
     ui->city4_label->setText(path.top().first);
@@ -53,7 +51,8 @@ SixCities_Path::SixCities_Path(QWidget *parent) :
 
     path.pop();
 
-    ui->shortestdistance->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
+
 
     dashboard_sixcitiesreturnObject = nullptr; // Initialize the pointer
 }

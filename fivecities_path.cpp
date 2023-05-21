@@ -39,16 +39,14 @@ FiveCities_Path::FiveCities_Path(QWidget *parent) :
     ui->distanse_between_label_3->setText(QString::number(path.top().second));
     ui->city4_label->setText(path.top().first);
 
-
     path.pop();
-
 
     ui->distanse_between_label_4->setText(QString::number(path.top().second));
     ui->city5_label->setText(path.top().first);
 
     path.pop();
 
-    ui->shortestdistance->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
 
     dashboard_fivecitiesreturnObject = nullptr; // Initialize the pointer
 }
