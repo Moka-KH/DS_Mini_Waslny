@@ -5,6 +5,7 @@
 #include "graph.h"
 #include "homePage.h"
 #include "dashboard.h"
+#include "files.h"
 
 using namespace std;
 
@@ -41,6 +42,7 @@ void homePage(unordered_map<string, graph>& maps)
 
         else if (choice == 3)
         {
+            writeMultipleGraphs(maps, ".\\");
             cout << "Goodbye!" << endl;
             return;
         }
