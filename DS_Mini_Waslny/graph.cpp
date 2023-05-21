@@ -69,7 +69,6 @@ int graph::getEdgeNum()
 void graph::display()
 {
 	cout << "\n\tMap Cities:\n";
-
 	for (auto& bucket : map)
 	{
 		cout << "City: " << bucket.first << endl;
@@ -79,6 +78,25 @@ void graph::display()
 
 		cout << "\t\t\t=======================================================================" << endl;
 	}
+}
+
+string graph::displayS()
+{
+	string displayString;
+	for (auto& bucket : map)
+	{
+		//displayString = "\nCity: "; watch out tokaaa
+		displayString.append("\nCity: " + bucket.first + "\n");
+
+
+		for (auto& listPair : bucket.second)
+		{
+			string distance = to_string(listPair.second); //will have a problem that it shows 4 numbers after the point =|
+			displayString.append("\t" + listPair.first + " ( Distance =  " + distance + " )\n");
+		}
+		displayString.append("\t\t\t=======================================================================\n");
+	}
+	return displayString;
 }
 
 ///
@@ -201,7 +219,7 @@ int graph::addRoad(string city1, string city2, float distance)
 * @cityName: City Name to be deleted
 * @return void
 */
-void graph::deleteCity(string cityName)
+void graph::deleteCity(string cityName) //note from Malk -> still working on the messages that appears to user =| 
 {
 	if (!vertexExists(cityName))
 	{

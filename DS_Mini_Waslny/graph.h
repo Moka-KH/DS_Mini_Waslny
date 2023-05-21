@@ -38,7 +38,9 @@ public:
 	int getVertexNum();
 	int getEdgeNum();
 
+	string displayS();
 	void display();
+
 	list<pair <string, float>> getOutAdjacents(string city);
 	list<pair <string, float>> getInAdjacents(string city);
 	list<pair <string, float>> getAdjacents(string city);
