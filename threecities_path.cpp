@@ -26,15 +26,15 @@ ThreeCities_Path::ThreeCities_Path(QWidget *parent) :
     // Set the text of the label
     ui->city1_label->setText(startingVertex);
 
-    ui->distanse_between_label_1->setText(QString::number(path.top().second));
-    ui->city2_label->setText(path.top().first);
+    ui->distanse_between_label_1->setText(QString::number(path->top().second));
+    ui->city2_label->setText(path->top().first);
 
-    path.pop();
+    path->pop();
 
-    ui->distanse_between_label_2->setText(QString::number(path.top().second));
-    ui->city3_label->setText(path.top().first);
+    ui->distanse_between_label_2->setText(QString::number(path->top().second));
+    ui->city3_label->setText(path->top().first);
 
-    path.pop();
+    path->pop();
 
     ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
 

@@ -59,37 +59,54 @@ PathFinder_Main::~PathFinder_Main()
 //find the shortest path button
 void PathFinder_Main::on_addmap_add_clicked()
 {
+    currentGraph->addCity("A");
+    currentGraph->addCity("B");
+    currentGraph->addCity("C");
+    currentGraph->addCity("D");
+    currentGraph->addCity("E");
+    currentGraph->addCity("F");
+
+
+    currentGraph->addEditRoad("A", "B", 2);
+    currentGraph->addEditRoad("A", "C", 4);
+    currentGraph->addEditRoad("B", "C", 1);
+    currentGraph->addEditRoad("B", "E", 2);
+    currentGraph->addEditRoad("B", "D", 4);
+    currentGraph->addEditRoad("C", "E", 3);
+    currentGraph->addEditRoad("E", "D", 3);
+    currentGraph->addEditRoad("E", "F", 2);
+    currentGraph->addEditRoad("D", "F", 3);
 
     startingVertex = ui->addmap_lineedit->text();
     targetVertex = ui->addmap_lineedit_3->text();
-    totalDistance = Dijkstra(*currentGraph,startingVertex,targetVertex,path);
+    totalDistance = Dijkstra(*currentGraph,startingVertex,targetVertex,*path);
 
     // shortest path display based on the vector size..
-    if(path.empty()){
+    if(path->empty()){
         error_pathfinder->show();
         this->hide();
     }
-    else if(path.size()==2){
+    else if(path->size()==2){
         twocities_path->show();
         this->hide();
     }
-    else if (path.size()==3){
+    else if (path->size()==3){
         threecities_path->show();
         this->hide();
     }
-    else if (path.size()==4){
+    else if (path->size()==4){
         fourcities_path->show();
         this->hide();
     }
-    else if (path.size()==5){
+    else if (path->size()==5){
         fivecities_path->show();
         this->hide();
     }
-    else if (path.size()==6){
+    else if (path->size()==6){
         sixcities_path->show();
         this->hide();
     }
-    else if (path.size()==7){
+    else if (path->size()==7){
         sevencities_path->show();
         this->hide();
     }

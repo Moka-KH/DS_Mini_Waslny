@@ -26,37 +26,37 @@ SevenCities_Path::SevenCities_Path(QWidget *parent) :
     // Set the text of the label
     ui->city1_label->setText(startingVertex);
 
-    ui->distanse_between_label_1->setText(QString::number(path.top().second));
-    ui->city2_label->setText(path.top().first);
+    ui->distanse_between_label_1->setText(QString::number(path->top().second));
+    ui->city2_label->setText(path->top().first);
 
-    path.pop();
+    path->pop();
 
-    ui->distanse_between_label_2->setText(QString::number(path.top().second));
-    ui->city3_label->setText(path.top().first);
+    ui->distanse_between_label_2->setText(QString::number(path->top().second));
+    ui->city3_label->setText(path->top().first);
 
-    path.pop();
+    path->pop();
 
-    ui->distanse_between_label_3->setText(QString::number(path.top().second));
-    ui->city4_label->setText(path.top().first);
+    ui->distanse_between_label_3->setText(QString::number(path->top().second));
+    ui->city4_label->setText(path->top().first);
 
-    path.pop();
+    path->pop();
 
-    ui->distanse_between_label_4->setText(QString::number(path.top().second));
-    ui->city5_label->setText(path.top().first);
+    ui->distanse_between_label_4->setText(QString::number(path->top().second));
+    ui->city5_label->setText(path->top().first);
 
-    path.pop();
+    path->pop();
 
-    ui->distanse_between_label_5->setText(QString::number(path.top().second));
-    ui->city6_label->setText(path.top().first);
+    ui->distanse_between_label_5->setText(QString::number(path->top().second));
+    ui->city6_label->setText(path->top().first);
 
-    path.pop();
+    path->pop();
 
-    ui->distanse_between_label_6->setText(QString::number(path.top().second));
+    ui->distanse_between_label_6->setText(QString::number(path->top().second));
     ui->city7_label->setText("");
 
-    path.pop();
+    path->pop();
 
-    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + path.top().first + " is: " + QString::number(totalDistance));
+    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
 
 
     dashboard_sevencitiesreturnObject = nullptr; // Initialize the pointer

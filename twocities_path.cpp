@@ -25,13 +25,13 @@ TwoCities_Path::TwoCities_Path(QWidget *parent) :
 
     // Set the cities names to the data from dijkstra to labels
     ui->city1_label->setText(startingVertex);
-    path.pop();
+    path->pop();
 
-    ui->city2_label->setText(path.top().first);
-    ui->distanse_between_label->setText(QString::number(path.top().second));
-    path.pop();
+    ui->city2_label->setText(targetVertex);
+    ui->distanse_between_label->setText(QString::number(path->top().second));
+    path->pop();
 
-    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + path.top().first + " is: " + QString::number(totalDistance));
+    ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
 
 
 

@@ -1,5 +1,5 @@
+#include "files.h"
 
-#pragma once
 #include <iostream>
 #include <string>
 #include <QFile>
@@ -136,4 +136,3 @@ QMap<QString, graph> readMultipleGraphs(const QString& directory)
     fileList.close();
     return graphs;
 }
-
