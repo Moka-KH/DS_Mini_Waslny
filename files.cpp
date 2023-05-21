@@ -41,9 +41,6 @@ void writeGraphToFile(graph& g, const QString& filename) {
 }
 
 
-
-
-
 void readGraphFromFile(graph& g, const QString& filename)
 {
     QFile inFile(filename);

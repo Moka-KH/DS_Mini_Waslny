@@ -111,7 +111,7 @@ float Dijkstra(graph& myGraph,QString startingNode, QString targetVertex, QStack
     }
 }
 
-QQueue<QString> DFS(graph& myGraph, QString startVetrex)
+QQueue<QString> DFSS(graph& myGraph, QString startVetrex)
 {
     QHash<QString, bool> visited;
 
@@ -164,4 +164,59 @@ QQueue<QString> DFS(graph& myGraph, QString startVetrex)
             DFSQueue.enqueue(mapIterator.key());
     }
     return DFSQueue;
+}
+
+QQueue<QString> BFSS(QString startCity, graph& myGraph)
+{
+    QQueue<QString> traversalQueue; // Queue to store the traversal order
+
+    // Mark all vertices as not visited
+    QMap<QString, bool> visited;
+    for (const QString& cityName : myGraph.map.keys())
+        visited[cityName] = false;
+
+    // Create a queue for BFS
+    QQueue<QString> queue;
+
+    // Mark the current node as visited and enqueue it
+    visited[startCity] = true;
+    queue.enqueue(startCity);
+
+    QString currentCity;
+
+    while (!queue.isEmpty())
+    {
+        // Dequeue a vertex from the queue and add it to the traversal queue
+        currentCity = queue.front();
+        traversalQueue.enqueue(currentCity);
+
+        // Get the adjacency list of the current vertex
+        QList<QPair<QString, float>> adjacencyList;
+        adjacencyList = myGraph.getAdjacents(currentCity);
+
+        // Get all adjacent vertices of the dequeued vertex
+        // If an adjacent vertex has not been visited, mark it visited and enqueue it
+        for (const QPair<QString, float>& pair : adjacencyList)
+        {
+            const QString& adjacentCity = pair.first;
+            if (!visited[adjacentCity])
+            {
+                visited[adjacentCity] = true;
+                queue.enqueue(adjacentCity);
+            }
+        }
+
+        // Dequeue the visited vertex from the queue
+        queue.dequeue();
+    }
+
+    // Traverse isolated vertices
+    for (const QString& cityName : myGraph.map.keys())
+    {
+        if (!visited[cityName])
+            traversalQueue.enqueue(cityName);
+    }
+
+    return traversalQueue;
+
 }

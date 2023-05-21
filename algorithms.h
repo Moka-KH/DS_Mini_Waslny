@@ -5,7 +5,9 @@
 #include<QPair>
 #include<QHash>
 
-QQueue<QString> DFS(graph& myGraph, QString startVetrex);
+QQueue<QString> DFSS(graph& myGraph, QString startVetrex);
+QQueue<QString> BFSS(QString startCity, graph& myGraph);
+
 
 float Dijkstra(graph& myGraph,QString startingNode, QString targetVertex, QStack<QPair<QString, float>>& path);
 

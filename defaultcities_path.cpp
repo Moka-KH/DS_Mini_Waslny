@@ -26,7 +26,7 @@ DefaultCities_Path::DefaultCities_Path(QWidget *parent) :
 
     QString pathData;
     pathData=startingVertex;
-    for (QPair<QString, float> pair : *path)
+    for (QPair<QString, float> pair : path)
     {
         pathData += " -> "+QString::number(pair.second)+" -> "+pair.first ;
     }

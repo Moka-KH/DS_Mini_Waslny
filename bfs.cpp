@@ -1,6 +1,11 @@
 #include "bfs.h"
 #include "ui_bfs.h"
 #include "dashboard.h"
+#include"gVariables.h"
+#include"algorithms.h"
+#include <QQueue>
+#include<QString>
+
 
 dashboard* dashboard_bfsreturnObject;
 
@@ -21,6 +26,17 @@ BFS::BFS(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
+
+    //set data on labels
+    /*QQueue<QString> BFSOut=BFSS(startingVertex,*currentGraph);
+    QString bfsData;
+    QString helperstring(" ->");
+    for (QString pair : BFSOut)
+    {
+        bfsData += pair.front()+helperstring;
+    }
+    ui->bfs_display_label->setText(bfsData);*/
+
 
     dashboard_bfsreturnObject = nullptr; // Initialize the pointer
 }

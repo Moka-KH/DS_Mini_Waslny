@@ -1,6 +1,8 @@
 #include "displaymapdata.h"
 #include "ui_displaymapdata.h"
 #include "dashboard.h"
+//Malk
+#include "gVariables.h"
 
 dashboard* dashboard_returnObject;
 
@@ -23,6 +25,15 @@ DisplayMapData::DisplayMapData(QWidget *parent) :
     setWindowIcon(QIcon(iconImage));
 
     dashboard_returnObject = nullptr; // Initialize the pointer
+
+    if(currentGraph->empty())
+    {
+        ui->display_mapdata_label->setText("Your graph is empty");
+    }
+    else
+    {
+        ui->display_mapdata_label->setText(currentGraph->display());
+    }
 }
 
 DisplayMapData::~DisplayMapData()

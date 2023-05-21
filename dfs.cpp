@@ -1,8 +1,9 @@
 #include "dfs.h"
 #include "ui_dfs.h"
 #include "dashboard.h"
-
-
+#include"gVariables.h"
+#include"algorithms.h"
+#include <QQueue>
 
 dashboard* dashboard_dfsreturnObject;
 
@@ -23,6 +24,16 @@ DFS::DFS(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
+
+    //set data on labels
+    /*QQueue<QString> DFSOut=DFSS(*currentGraph,startingVertex);
+    if(DFSOut.empty())
+    {
+        ui->dfs_display_label->setText("This map is empty");
+    }
+    else{
+        ui->dfs_display_label->setText(DFSOut.join(" -> "));
+    }*/
 
     dashboard_dfsreturnObject = nullptr; // Initialize the pointer
 }

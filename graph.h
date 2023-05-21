@@ -43,7 +43,7 @@ public:
     void deleteCity(QString cityName);
 
     // Others
-    void display();
+    QString  display();
 };
 
 #endif // GRAPH_H

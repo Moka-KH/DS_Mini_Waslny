@@ -24,17 +24,20 @@ TwoCities_Path::TwoCities_Path(QWidget *parent) :
     setWindowIcon(QIcon(iconImage));
 
     // Set the cities names to the data from dijkstra to labels
+    if(path.empty())
+    {
+        ui->city1_label->setText("path is empty");
+    }
+    else{
     ui->city1_label->setText(startingVertex);
-    path->pop();
+    path.pop();
 
     ui->city2_label->setText(targetVertex);
-    ui->distanse_between_label->setText(QString::number(path->top().second));
-    path->pop();
+    ui->distanse_between_label->setText(QString::number(totalDistance));
+    path.pop();
 
     ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
-
-
-
+    }
     dashboard_twocitiesreturnObject = nullptr; // Initialize the pointer
 }
 

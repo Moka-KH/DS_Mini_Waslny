@@ -1,5 +1,6 @@
 #include "graph.h"
 #include "enumerators.cpp"
+#include <QString>
 
 // constructors & destructor
 graph::graph()
@@ -326,20 +327,22 @@ int graph::addCity(QString city)
 }
 
 // Others
-void graph:: display()
+QString  graph:: display()
 {
-    //qDebug() << "\n\tMap Cities:";
     QMutableHashIterator <QString , QList<QPair<QString, float>>> bucket(map);
+    QString displayString;
 
     for(;bucket.hasNext();bucket.next())
     {
-        //qDebug() << "\nCity: " << bucket.key();
+        displayString.append("\nCity: "+ bucket.key() + "\n");
 
         QMutableListIterator <QPair<QString, float>> listPair(bucket.value());
         for(;listPair.hasNext();listPair.next())
         {
-            //qDebug() << '\t' << listPair.value().first << " ( Distance =  " << listPair.value().second << " )\n";
+            QString distance = QString::number(listPair.value().second);
+            displayString.append("\t" + listPair.value().first + " ( Distance =  " + distance + "\n");
         }
-        //qDebug() << "\t\t\t=======================================================================\n";
+        displayString.append("\t\t\t=======================================================================\n");
     }
+    return displayString;
 }
