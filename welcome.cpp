@@ -2,6 +2,8 @@
 #include "ui_welcome.h"
 #include <QPixmap>
 #include "homepage.h"
+#include"files.h"
+#include"gVariables.h"
 
 welcome::welcome(QWidget *parent) :
     QWidget(parent),
@@ -30,7 +32,7 @@ welcome::~welcome()
 void welcome::on_pushButton_clicked()
 {
     homepage.show(); // Show the homepage window
-
+    //maps = readMultipleGraphs(".\\");
     close(); // Close the Mini_Wasalni_GUI window
 }
 

@@ -169,18 +169,18 @@ int graph::addEditRoad(QString city1, QString city2, float distance)
     map[city1].push_back(newPair);
     return addedRoad;
 }
-void graph::deleteRoad(QString city1, QString city2)
+int graph::deleteRoad(QString city1, QString city2)
 {
     // if at least one city doesn't exist
     if (!vertexExists(city1))
     {
         // cout << '\"' << city1 << "\" doesn't exist =|\n";
-        return;
+        return NoCity1;
     }
     if (!vertexExists(city2))
     {
         // cout << '\"' << city2 << "\" doesn't exist =|\n";
-        return;
+        return NoCity2;
     }
 
     // know the existing roads between the 2 cities
@@ -191,21 +191,21 @@ void graph::deleteRoad(QString city1, QString city2)
     if(!road12 && !road21)
     {
         // cout << "There is no road between " << city1 << " and " << city2 << " =(\n";
-        return;
+        return noRoad;
     }
 
     // one road city1 -> city2
     if (road12 && !road21)
     {
         deleteEdge(city1, city2);
-        return;
+        return Rdeleted;
     }
 
     // one road city2 -> city1
     if (!road12 && road21)
     {
         deleteEdge(city2, city1);
-        return;
+        return Rdeleted;
     }
 
     // reaching here means there is a 2-way road
@@ -215,7 +215,7 @@ void graph::deleteRoad(QString city1, QString city2)
     {
         deleteEdge(city1, city2);
         deleteEdge(city2, city1);
-        return;
+        return Rdeleted;
     }
     else
     {
@@ -249,7 +249,7 @@ void graph::deleteRoad(QString city1, QString city2)
 
 
     // cout << "Road is deleted\n";
-    return;
+    return Rdeleted;
 }
 void graph::deleteEdge(QString city1,QString city2)
 {
@@ -272,12 +272,12 @@ void graph::deleteEdge(QString city1,QString city2)
 }
 
 //Cities
-void graph:: deleteCity(QString cityName)
+int graph:: deleteCity(QString cityName)
 {
     if (!vertexExists(cityName))
     {
         // qDebug() << "city " << cityName << " does not exist.. I can't delete it =(\n";
-        return;
+        return cityNotExists;
     }
 
     QList<QPair<QString, float>> adjacents;
@@ -312,7 +312,7 @@ void graph:: deleteCity(QString cityName)
     vertexNum--;
 
     // qDebug() << "City is deleted\n";
-    return;
+    return Cdeleted;
 }
 int graph::addCity(QString city)
 {

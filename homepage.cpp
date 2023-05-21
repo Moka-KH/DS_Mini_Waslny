@@ -1,4 +1,6 @@
 #include "homepage.h"
+#include "files.h"
+#include "gVariables.h"
 #include "ui_homepage.h"
 #include "addmap.h"
 #include "choosemap.h"
@@ -49,6 +51,7 @@ void HomePage::on_pushButton_mapdashboard_clicked()
 void HomePage::on_pushButton_exit_clicked()
 {
     exitloader.show(); // Show the exitloader window
+    //writeMultipleGraphs(maps,".\\");
     hide(); // Close the Mini_Wasalni_GUI window
 }
 
