@@ -3,7 +3,8 @@
 #include "homepage.h"
 #include "addmap_successfully.h"
 #include "addmap_error.h"
-
+#include "graph.h"
+#include "gVariables.h"
 #include <QString>
 #include <QLineEdit>
 
@@ -56,17 +57,28 @@ void addmap::on_addmap_add_2_clicked()
 void addmap::on_addmap_add_clicked()
 {
     QString answer = ui->addmap_lineedit->text();
-
-    if (answer.toLower() == "yes")
-    {
-        this->hide();
-        mapaddedObject->show();
-    }
-    else
+    //logic of creating a new map
+    if(answer.isNull())
     {
         this->hide();
         addmaperrorObject->show();
     }
+    else
+    {
+        QMutableHashIterator<QString, graph> bucket(maps);
+        for (; bucket.hasNext(); bucket.next())
+        {
+            if (answer == bucket.key())
+            {
+                this->hide();
+                addmaperrorObject->show();
+            }
+        }
+
+        graph newMap(answer);
+        maps[answer] = newMap;
+        mapaddedObject->show();
+    }
+
+
 }
-
-
