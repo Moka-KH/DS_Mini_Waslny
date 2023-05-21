@@ -29,7 +29,6 @@ public:
 	~graph();
 
 	int addCity(string city);
-	int addCity(string newCity, string adjCity, float distance);
 	int addEditRoad(string city1, string city2, float distance);
 
 	void deleteCity(string cityName);
