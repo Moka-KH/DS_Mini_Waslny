@@ -90,7 +90,7 @@ void readGraphFromFile(graph& g, const QString& filename)
 }
 
 // Function to write multiple graphs to files
-void writeMultipleGraphs(const QMap<QString, graph>& graphs, const QString& directory) {
+void writeMultipleGraphs(const QHash<QString, graph>& graphs, const QString& directory) {
     QFile fileList(directory + "/filelist.txt");
     if (!fileList.open(QIODevice::WriteOnly)) {
         std::cout << "Unable to open filelist.txt for writing." << "\n";
@@ -98,9 +98,9 @@ void writeMultipleGraphs(const QMap<QString, graph>& graphs, const QString& dire
     }
 
     QTextStream outStream(&fileList);
-    for (const auto& graphPair : graphs.toStdMap()) {
-        const QString& graphName = graphPair.first;
-        graph g = graphPair.second;
+    for (const auto& graphPair : graphs) {
+        const QString& graphName = graphPair.name;
+        graph g = graphPair;
         const QString filename = directory + "/" + graphName + ".txt";
         writeGraphToFile(g, filename);
         outStream << graphName << ".txt" << "\n"; // Add the graph name to filelist.txt
@@ -110,9 +110,9 @@ void writeMultipleGraphs(const QMap<QString, graph>& graphs, const QString& dire
 }
 
 
-QMap<QString, graph> readMultipleGraphs(const QString& directory)
+QHash<QString, graph> readMultipleGraphs(QString& directory)
 {
-    QMap<QString, graph> graphs;
+    QHash<QString, graph> graphs;
     QFile fileList(directory + "/filelist.txt");
     if (!fileList.open(QIODevice::ReadOnly | QIODevice::Text)) {
         std::cout << "Unable to open filelist.txt for reading." << std::endl;

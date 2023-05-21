@@ -51,7 +51,7 @@ void HomePage::on_pushButton_mapdashboard_clicked()
 void HomePage::on_pushButton_exit_clicked()
 {
     exitloader.show(); // Show the exitloader window
-    //writeMultipleGraphs(maps,".\\");
+    writeMultipleGraphs(maps,".\\");
     hide(); // Close the Mini_Wasalni_GUI window
 }
 

@@ -32,7 +32,8 @@ welcome::~welcome()
 void welcome::on_pushButton_clicked()
 {
     homepage.show(); // Show the homepage window
-    //maps = readMultipleGraphs(".\\");
+    QString helperString = QString::fromLocal8Bit(".\\");
+    maps = readMultipleGraphs(helperString);
     close(); // Close the Mini_Wasalni_GUI window
 }
 
