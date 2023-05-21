@@ -2,6 +2,9 @@
 #include "ui_update_menu.h"
 #include "dashboard.h"
 #include "addcity.h"
+#include "addroad.h"
+#include "deleteroad.h"
+#include "delete_city.h"
 
 #include <QPixmap>
 #include <QPalette>
@@ -14,7 +17,11 @@ dashboard* dashboard_updatereturnObject;
 Update_menu::Update_menu(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Update_menu),
-    addcityPointer(new addcity)
+    addcityPointer(new addcity),
+    addroadPointer(new AddRoad),
+    deletecityPointer(new delete_city),
+    deleteroadPointer(new deleteRoad)
+
 {
     ui->setupUi(this);
 
@@ -60,18 +67,21 @@ void Update_menu::on_addcity_button_clicked()
 
 void Update_menu::on_add_edit_road_button_clicked()
 {
-
+    addroadPointer->show();
+    this->hide();
 }
 
 
 void Update_menu::on_deletecity_button_clicked()
 {
-
+    deletecityPointer->show();
+    this->hide();
 }
 
 
 void Update_menu::on_deleteroad_button_clicked()
 {
-
+    deleteroadPointer->show();
+    this->hide();
 }
 

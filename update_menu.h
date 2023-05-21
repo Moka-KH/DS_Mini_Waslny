@@ -2,10 +2,16 @@
 #define UPDATE_MENU_H
 
 #include "addcity.h"
+#include "addroad.h"
+#include "deleteroad.h"
+#include "delete_city.h"
 
 #include <QWidget>
 
 class addcity;
+class AddRoad;
+class deleteRoad;
+class delete_city;
 
 namespace Ui {
 class Update_menu;
@@ -34,6 +40,9 @@ private:
     Ui::Update_menu *ui;
 
     addcity* addcityPointer;
+    AddRoad* addroadPointer;
+    deleteRoad* deleteroadPointer;
+    delete_city* deletecityPointer;
 };
 
 #endif // UPDATE_MENU_H

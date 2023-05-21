@@ -15,6 +15,11 @@ public:
     explicit addroad_2nd(QWidget *parent = nullptr);
     ~addroad_2nd();
 
+private slots:
+    void on_addROAD_addButton_clicked();
+
+    void on_Returntoupdate_addROAD_clicked();
+
 private:
     Ui::addroad_2nd *ui;
 };

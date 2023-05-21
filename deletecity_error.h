@@ -15,6 +15,11 @@ public:
     explicit DeleteCity_Error(QWidget *parent = nullptr);
     ~DeleteCity_Error();
 
+private slots:
+    void on_deletecity_error_addanoter_clicked();
+
+    void on_deletecity_error_return_clicked();
+
 private:
     Ui::DeleteCity_Error *ui;
 };
