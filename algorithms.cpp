@@ -10,6 +10,7 @@
 #include <limits>
 #include <vector>
 #include <queue>
+#include <cfloat>
 
 const float INFINITE = FLT_MAX;
 
