@@ -35,12 +35,12 @@ public:
 
     // Roads
     int addEditRoad(QString city1, QString city2, float distance);
-    void deleteRoad(QString city1, QString city2);
+    int deleteRoad(QString city1, QString city2);
     void deleteEdge(QString city1,QString city2);
 
     // Cities
     int addCity(QString city);
-    void deleteCity(QString cityName);
+    int deleteCity(QString cityName);
 
     // Others
     QString  display();
