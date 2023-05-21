@@ -113,7 +113,7 @@ void mapsDashboard(unordered_map<string, graph>& maps)
             maps[mapName].display();
 
         else if (choice == 2)
-            updateMap(maps[mapName]);
+            updateMap(maps[mapName], mapName);
 
         else if (choice == 3)
             Traverse(maps[mapName]);

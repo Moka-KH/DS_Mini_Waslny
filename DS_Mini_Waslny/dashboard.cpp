@@ -10,17 +10,17 @@
  * @param myGraph a reference to the graph data structure that the user wants to update.
  * @retun void
  */
-void updateMap(graph& myGraph)
+void updateMap(graph& myGraph, string mapName)
 {
     int choice;
     while (true)
     {
-        cout << "\t\t\t\t\tUpdating " << myGraph.name << endl;
+        cout << "\t\t\t\t\tUpdating " << mapName << endl;
         cout << "1. Add a City\n";
         cout << "2. Add / Edit a Road\n";
         cout << "3. Delete a City\n";
         cout << "4. Delete a Road\n";
-        cout << "5. Return to " << myGraph.name << " Dashboard\n";
+        cout << "5. Return to " << mapName << " Dashboard\n";
 
         cin >> choice;
         system("cls"); // clear the console
