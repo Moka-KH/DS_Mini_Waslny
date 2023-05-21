@@ -68,7 +68,7 @@ void readGraphFromFile(graph& g, const string& filename) {
 		// Iterate over adjacent cities and distances
 		for (int j = 0; j < adjNum; j++) {
 			inFile >> adjCityName >> distance;
-			g.addRoad(cityName, adjCityName, distance);
+			g.addEditRoad(cityName, adjCityName, distance);
 		}
 	}
 	inFile.close();

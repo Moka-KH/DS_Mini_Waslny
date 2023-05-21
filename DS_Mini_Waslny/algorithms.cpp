@@ -26,32 +26,30 @@ const float INFINITE = FLT_MAX;
 * 
 * Return: nothing
 */
-queue<string> DFS(graph& myGraph, string stratVetrex)
+void DFS(graph& myGraph, string startVetrex)
 {
-	// visited means it was printed on the screen
 	unordered_map<string, bool> visited;
 
-	// initialize the "visited" map to be all unvisited
+	// initialize all vertices to be "unvisited" first
 	for (auto& x : myGraph.map)
 		visited[x.first] = false;
 
 	stack<string> NodesToCheckNeighbors;
-	NodesToCheckNeighbors.push(stratVetrex);
+	NodesToCheckNeighbors.push(startVetrex);
 
 	queue<string> DFSQueue;
 
 	//traverse on connected vertices 
 	while (!NodesToCheckNeighbors.empty())
 	{
-		// take the top of the stack in a variable and pop it
+		// return top vertex and pop it to mark it as "visited"
 		string currentNode = NodesToCheckNeighbors.top();
 		NodesToCheckNeighbors.pop();
 
-		// print & get the non-visited adjacents of the non-visited
 		if (!visited[currentNode])
 		{
-			DFSQueue.push(currentNode);
-			//cout << currentNode << endl;
+			// print & mark the current vertex as "visited"
+			cout << currentNode << endl;
 			visited[currentNode] = true;
 
 			// get the adjacency list of the current vertex
@@ -70,9 +68,7 @@ queue<string> DFS(graph& myGraph, string stratVetrex)
 	for (auto& mapIterator : myGraph.map)
 		if (visited[mapIterator.first] == false)
 			DFSQueue.push(mapIterator.first);
-			//cout << mapIterator.first << endl;
-	
-	return DFSQueue;
+			//cout << mapIterator.first << endl;	
 }
 
 void BFS(string startCity, graph& myGraph)

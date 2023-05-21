@@ -30,7 +30,7 @@ public:
 
 	int addCity(string city);
 	int addCity(string newCity, string adjCity, float distance);
-	int addRoad(string city1, string city2, float distance);
+	int addEditRoad(string city1, string city2, float distance);
 
 	void deleteCity(string cityName);
 	void deleteRoad(string city1, string city2);
@@ -38,7 +38,6 @@ public:
 	int getVertexNum();
 	int getEdgeNum();
 
-	string displayS();
 	void display();
 
 	list<pair <string, float>> getOutAdjacents(string city);
@@ -48,5 +47,5 @@ public:
 	bool vertexExists(string city);
 	bool edgeExists(string city1,string city2);
 	float EdgeWieght(string city1, string city2);
-	bool emptyGraph();
+	bool empty();
 };

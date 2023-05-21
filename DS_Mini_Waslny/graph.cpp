@@ -29,23 +29,23 @@ graph::graph(string name)
 	graph();
 	this->name = name;
 }
-/**
-* emptyGraph - check if graph empty or not
-* Return: boolean value -> true if empty false if not empty
-*/
-bool graph::emptyGraph()
-{
-	if (map.empty())
-		return true;
-	return false;
-}
-
 graph :: ~graph()
 {
 	for (auto& bucket : map)
 		bucket.second.clear();
 
 	map.clear();
+}
+
+/**
+* emptyGraph - check if graph empty or not
+* Return: boolean value -> true if empty false if not empty
+*/
+bool graph::empty()
+{
+	if (map.empty())
+		return true;
+	return false;
 }
 
 /**
@@ -68,6 +68,12 @@ int graph::getEdgeNum()
 */
 void graph::display()
 {
+	if (map.empty())
+	{
+		cout << "You don't have any cities in this map yet!" << endl;
+		return;
+	}
+
 	cout << "\n\tMap Cities:\n";
 	for (auto& bucket : map)
 	{
@@ -78,25 +84,6 @@ void graph::display()
 
 		cout << "\t\t\t=======================================================================" << endl;
 	}
-}
-
-string graph::displayS()
-{
-	string displayString;
-	for (auto& bucket : map)
-	{
-		//displayString = "\nCity: "; watch out tokaaa
-		displayString.append("\nCity: " + bucket.first + "\n");
-
-
-		for (auto& listPair : bucket.second)
-		{
-			string distance = to_string(listPair.second); //will have a problem that it shows 4 numbers after the point =|
-			displayString.append("\t" + listPair.first + " ( Distance =  " + distance + " )\n");
-		}
-		displayString.append("\t\t\t=======================================================================\n");
-	}
-	return displayString;
 }
 
 ///
@@ -160,7 +147,7 @@ int graph::addCity(string newCity, string adjCity, float distance)
 	map[newCity] = newList;
 
 	// link it with city2
-	addRoad(newCity, adjCity, distance);
+	addEditRoad(newCity, adjCity, distance);
 	return 0;
 }
 
@@ -175,7 +162,7 @@ int graph::addCity(string newCity, string adjCity, float distance)
 * @param distance Distance
 * @return returns a addRoad_enum according to the ending state
 */
-int graph::addRoad(string city1, string city2, float distance)
+int graph::addEditRoad(string city1, string city2, float distance)
 {
 	// if the first one doesn't exist
 	if (!vertexExists(city1))
@@ -200,11 +187,8 @@ int graph::addRoad(string city1, string city2, float distance)
 	}
 
 	// no road between them.. add it
-	else
-	{
-		map.at(city1).push_back(make_pair(city2, distance));
-		return addedRoad;
-	}
+	map.at(city1).push_back(make_pair(city2, distance));
+	return addedRoad;
 }
 
 ///

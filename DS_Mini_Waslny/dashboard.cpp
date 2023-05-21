@@ -21,7 +21,9 @@ void updateMap(graph& myGraph)
         cout << "3. Delete a City\n";
         cout << "4. Delete a Road\n";
         cout << "5. Return to \"" << myGraph.name << "\" Dashboard\n";
+
         cin >> choice;
+        system("cls"); // clear the console
 
         if (choice == 1)
             addCity(myGraph);
