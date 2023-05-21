@@ -99,7 +99,6 @@ float Dijkstra(graph& myGraph,QString startingNode, QString targetVertex, QStack
                 unKnownVertices.push(queuePair);
             }
         }
-
     }
 
     // if there is no path to the target vertex

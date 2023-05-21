@@ -15,6 +15,7 @@
 
 #include"graph.h"
 #include "algorithms.h"
+#include"gVariables.h"
 #include<QPair>
 #include<QStack>
 
@@ -58,11 +59,10 @@ PathFinder_Main::~PathFinder_Main()
 //find the shortest path button
 void PathFinder_Main::on_addmap_add_clicked()
 {
-    graph myGraph;
-    QString city1 = ui->addmap_lineedit->text();
-    QString city2 = ui->addmap_lineedit_3->text();
-    QStack<QPair<QString, float>> path;
-    float distance = Dijkstra(myGraph,city1,city2,path);
+
+    startingVertex = ui->addmap_lineedit->text();
+    targetVertex = ui->addmap_lineedit_3->text();
+    totalDistance = Dijkstra(*currentGraph,startingVertex,targetVertex,path);
 
     // shortest path display based on the vector size..
     if(path.empty()){

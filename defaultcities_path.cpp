@@ -1,6 +1,7 @@
 #include "defaultcities_path.h"
 #include "ui_defaultcities_path.h"
 #include "dashboard.h"
+#include"gVariables.h"
 
 dashboard* dashboard_defaultcitiesreturnObject;
 
@@ -23,6 +24,17 @@ DefaultCities_Path::DefaultCities_Path(QWidget *parent) :
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
 
+    QString pathData;
+    pathData=startingVertex;
+    for (QPair<QString, float> pair : path)
+    {
+        pathData += " -> "+ QString::number(pair.second) + " -> " + pair.first ;
+    }
+    ui->cities_pathdisplay->setText(pathData);
+
+    ui->shortestdistance_display->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+
+
     dashboard_defaultcitiesreturnObject= nullptr;
 }
 
@@ -41,4 +53,3 @@ void DefaultCities_Path::on_return_button_clicked()
     dashboard_defaultcitiesreturnObject->show();
     this->hide();
 }
-

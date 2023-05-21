@@ -1,6 +1,7 @@
 #include "twocities_path.h"
 #include "ui_twocities_path.h"
 #include "dashboard.h"
+#include"gVariables.h"
 
 dashboard* dashboard_twocitiesreturnObject;
 
@@ -21,6 +22,17 @@ TwoCities_Path::TwoCities_Path(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
+
+    // Set the cities names to the data from dijkstra to lables
+    ui->city1_label->setText(startingVertex);
+    path.pop();
+
+    ui->city2_label->setText(targetVertex);
+    ui->distanse_between_label->setText(QString::number(totalDistance));
+    path.pop();
+
+    ui->shortestdistance->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
+
 
     dashboard_twocitiesreturnObject = nullptr; // Initialize the pointer
 }

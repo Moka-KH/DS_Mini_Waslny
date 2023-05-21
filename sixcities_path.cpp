@@ -1,6 +1,7 @@
 #include "sixcities_path.h"
 #include "ui_sixcities_path.h"
 #include "dashboard.h"
+#include"gVariables.h"
 
 dashboard* dashboard_sixcitiesreturnObject;
 
@@ -21,6 +22,38 @@ SixCities_Path::SixCities_Path(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
+
+    // Set the text of the label
+    ui->city1_label->setText(startingVertex);
+
+
+    ui->distanse_between_label_1->setText(QString::number(path.top().second));
+    ui->city2_label->setText(path.top().first);
+
+    path.pop();
+
+    ui->distanse_between_label_2->setText(QString::number(path.top().second));
+    ui->city3_label->setText(path.top().first);
+
+    path.pop();
+
+
+    ui->distanse_between_label_3->setText(QString::number(path.top().second));
+    ui->city4_label->setText(path.top().first);
+
+    path.pop();
+
+    ui->distanse_between_label_4->setText(QString::number(path.top().second));
+    ui->city5_label->setText(path.top().first);
+
+    path.pop();
+
+    ui->distanse_between_label_5->setText(QString::number(path.top().second));
+    ui->city6_label->setText(path.top().first);
+
+    path.pop();
+
+    ui->shortestdistance->setText("The shortest distance between "+ startingVertex + " and "+ targetVertex + " is: "+QString::number(totalDistance));
 
     dashboard_sixcitiesreturnObject = nullptr; // Initialize the pointer
 }

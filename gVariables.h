@@ -6,3 +6,5 @@
 inline graph* currentGraph;
 inline QStack<QPair<QString, float>> path;
 inline float totalDistance;
+inline QString startingVertex;
+inline QString targetVertex;
