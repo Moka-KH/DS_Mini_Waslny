@@ -27,14 +27,19 @@ BFS::BFS(QWidget *parent) :
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
 
-    /*QQueue<QString> BFSOut=BFSS(startingVertex,*currentGraph);
+    QQueue<QString> BFSOut=BFSS(traverseVertex,*currentGraph);
     QString bfsData;
     QString helperstring(" ->");
-    while (!BFSOut.isEmpty()) {
+    if (BFSOut.isEmpty()) {
+        ui->bfs_display_label->setText("The queue is empty");
+    }
+    else if (!BFSOut.isEmpty()) {
+      while (!BFSOut.isEmpty()) {
         QString item = BFSOut.dequeue();
         bfsData += item+helperstring;
+      }
+      ui->bfs_display_label->setText(bfsData);
     }
-    ui->bfs_display_label->setText(bfsData);*/
 
     dashboard_bfsreturnObject = nullptr; // Initialize the pointer
 }
