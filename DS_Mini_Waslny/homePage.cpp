@@ -52,7 +52,7 @@ void homePage(unordered_map<string, graph>& maps)
         else if (choice == 3)
         {
             writeMultipleGraphs(maps, ".\\");
-            successMessage("Goodbye!\n");
+            successMessage("\t\t\t\t\t\tGOODBYE MI AMIGAS =)\n");
             return;
         }
 

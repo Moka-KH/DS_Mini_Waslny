@@ -1,11 +1,11 @@
-3
+4
 cairo
-2
+1
 alex 200
-sina 1000
+00
+0
 alex
-2
+1
 cairo 200
-sina 200
-sina
+0
 0

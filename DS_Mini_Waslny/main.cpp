@@ -12,6 +12,9 @@
 #include "dashboard.h"
 #include <queue>
 #include <windows.h>
+#include "coloredOutput.cpp"
+#include <chrono>
+#include <thread>
 using namespace std;
 
 unordered_map<string, graph> maps;
@@ -19,6 +22,9 @@ unordered_map<string, graph> maps;
 void closingFunction() 
 {
     writeMultipleGraphs(maps, ".\\");
+    successMessage("\t\t\t\t\t\t GOODBYE MI AMIGAS =)");
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+
 }
 
 int main() {
