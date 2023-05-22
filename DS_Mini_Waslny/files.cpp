@@ -8,7 +8,12 @@
 #include "coloredOutput.cpp"
 
 using namespace std;
-
+/**
+* writeGraphToFile-> write the graphs data in the files
+* @param graph to be saved of datatype graph
+* @param filename which is the file name of datatype stirng
+* Return: void
+*/
 void writeGraphToFile(graph& g, const string& filename) {
 	ofstream outFile(filename);
 	if (!outFile.is_open()) {
@@ -33,6 +38,12 @@ void writeGraphToFile(graph& g, const string& filename) {
 	outFile.close();
 }
 
+/**
+* readGraphFromFile-> read the graphs data from the files
+* @param g to be filled with data of datatype graph
+* @param filename which is the file name of datatype stirng
+* Return: void
+*/
 void readGraphFromFile(graph& g, const string& filename) {
 	ifstream inFile(filename);
 	if (!inFile.is_open()) {
@@ -75,7 +86,12 @@ void readGraphFromFile(graph& g, const string& filename) {
 	inFile.close();
 }
 
-// Function to write multiple graphs to files
+/**
+* writeMultipleGraphs-> write the maps data in the files
+* @param graphs to be saved of datatype unordered map
+* @param directory which is the file name to read data from it with datatype stirng
+* Return: void
+*/
 void writeMultipleGraphs( unordered_map<string, graph>& graphs, const string& directory) {
 	ofstream fileList(directory + "/filelist.txt");
 	for (const auto& graphPair : graphs) {
@@ -87,6 +103,11 @@ void writeMultipleGraphs( unordered_map<string, graph>& graphs, const string& di
 	}
 }
 
+/**
+* readMultipleGraphs-> read the map data from the files
+* @param directory which is the file name to read data from it with datatype stirng
+* Return: graphs of datatype unorder map which is the maps already saved in the system
+*/
 unordered_map<string, graph> readMultipleGraphs(const string& directory) {
 	unordered_map<string, graph> graphs;
 	ifstream fileList(directory + "/filelist.txt");

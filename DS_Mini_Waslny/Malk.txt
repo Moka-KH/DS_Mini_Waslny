@@ -1,7 +1,11 @@
 3
 cairo
-0
+2
+alex 200
+sina 1000
 alex
-0
+2
+cairo 200
+sina 200
 sina
 0
