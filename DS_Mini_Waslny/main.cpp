@@ -19,6 +19,10 @@ using namespace std;
 
 unordered_map<string, graph> maps;
 
+/**
+* @brief This function saves changes to the files and print message to the use before the console is closed*
+* @return void
+*/
 void closingFunction() 
 {
     writeMultipleGraphs(maps, ".\\");
@@ -28,6 +32,8 @@ void closingFunction()
 }
 
 int main() {
+    SetConsoleTitle(TEXT("Mini Waslny =)"));
+
     /*  
         TO save changes when closing the console suddenly =)
 
