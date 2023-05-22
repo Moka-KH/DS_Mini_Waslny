@@ -27,16 +27,14 @@ BFS::BFS(QWidget *parent) :
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
 
-    //set data on labels
     /*QQueue<QString> BFSOut=BFSS(startingVertex,*currentGraph);
     QString bfsData;
     QString helperstring(" ->");
-    for (QString pair : BFSOut)
-    {
-        bfsData += pair.front()+helperstring;
+    while (!BFSOut.isEmpty()) {
+        QString item = BFSOut.dequeue();
+        bfsData += item+helperstring;
     }
     ui->bfs_display_label->setText(bfsData);*/
-
 
     dashboard_bfsreturnObject = nullptr; // Initialize the pointer
 }

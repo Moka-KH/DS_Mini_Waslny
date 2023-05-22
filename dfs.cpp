@@ -27,14 +27,19 @@ DFS::DFS(QWidget *parent) :
 
     //set data on labels
     /*QQueue<QString> DFSOut=DFSS(*currentGraph,startingVertex);
-    if(DFSOut.empty())
-    {
-        ui->dfs_display_label->setText("This map is empty");
+    QString dfsData;
+    QString helperstring(" ->");
+    if (DFSOut.isEmpty()) {
+        ui->dfs_display_label->setText("The queue is empty");
     }
-    else{
-        ui->dfs_display_label->setText(DFSOut.join(" -> "));
-    }*/
-
+    else if (!DFSOut.isEmpty()) {
+        while (!DFSOut.isEmpty()) {
+            QString item = DFSOut.dequeue();
+            dfsData += item+helperstring;
+        }
+        ui->dfs_display_label->setText(dfsData);
+    }
+    */
     dashboard_dfsreturnObject = nullptr; // Initialize the pointer
 }
 

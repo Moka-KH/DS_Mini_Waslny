@@ -2,6 +2,7 @@
 #include "ui_addroad.h"
 #include "update_menu.h"
 #include "addroad_2nd.h"
+#include"gVariables.h"
 
 Update_menu* update_menu_returnPointer;
 
@@ -35,6 +36,9 @@ AddRoad::~AddRoad()
 void AddRoad::on_addROAD_addButton_clicked()
 {
     step2ofaddroad->show();
+    city1AddRoad=ui->addROAD_city1->text();
+    city2AddRoad=ui->addROAD_city2->text();
+    distanceAddRoad=ui->addROAD_distance->text().toFloat();
     this->hide();
 }
 

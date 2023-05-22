@@ -35,7 +35,6 @@ public:
 
     // Roads
     int addEditRoad(QString city1, QString city2, float distance);
-    int deleteRoad(QString city1, QString city2);
     void deleteEdge(QString city1,QString city2);
 
     // Cities

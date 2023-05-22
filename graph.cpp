@@ -140,14 +140,6 @@ bool graph::empty()
 // Roads
 int graph::addEditRoad(QString city1, QString city2, float distance)
 {
-    // if the first city doesn't exist
-    if (!vertexExists(city1))
-        return noCity1;
-
-    // if the second city doesnt exist
-    if (!vertexExists(city2))
-        return noCity2;
-
     // if the road already exists, just update the distance
     if (edgeExists(city1, city2))
     {
@@ -168,88 +160,6 @@ int graph::addEditRoad(QString city1, QString city2, float distance)
     QPair<QString, float> newPair(city2, distance);
     map[city1].push_back(newPair);
     return addedRoad;
-}
-int graph::deleteRoad(QString city1, QString city2)
-{
-    // if at least one city doesn't exist
-    if (!vertexExists(city1))
-    {
-        // cout << '\"' << city1 << "\" doesn't exist =|\n";
-        return NoCity1;
-    }
-    if (!vertexExists(city2))
-    {
-        // cout << '\"' << city2 << "\" doesn't exist =|\n";
-        return NoCity2;
-    }
-
-    // know the existing roads between the 2 cities
-    bool road12 = edgeExists(city1, city2);
-    bool road21 = edgeExists(city2, city1);
-
-    // no roads
-    if(!road12 && !road21)
-    {
-        // cout << "There is no road between " << city1 << " and " << city2 << " =(\n";
-        return noRoad;
-    }
-
-    // one road city1 -> city2
-    if (road12 && !road21)
-    {
-        deleteEdge(city1, city2);
-        return Rdeleted;
-    }
-
-    // one road city2 -> city1
-    if (!road12 && road21)
-    {
-        deleteEdge(city2, city1);
-        return Rdeleted;
-    }
-
-    // reaching here means there is a 2-way road
-
-    bool sameDistance = getEdgeWeight(city1, city2) == getEdgeWeight(city2, city1);
-    if (sameDistance)
-    {
-        deleteEdge(city1, city2);
-        deleteEdge(city2, city1);
-        return Rdeleted;
-    }
-    else
-    {
-        int choice = 0;
-        while (true)
-        {
-            /*
-            cout << "1- delete road from " << city1 << " to " << city2 << "\n"
-                 << "2- delete road from " << city2 << " to " << city1 << "\n"
-                 << "3- delete  both roads \n";
-            cin >> choice;
-            */
-
-            if (choice == 1)
-                deleteEdge(city1, city2);
-            else if (choice == 2)
-                deleteEdge(city2, city1);
-            else if (choice == 3)
-            {
-                deleteEdge(city1, city2);
-                deleteEdge(city2, city1);
-            }
-            else
-            {
-                // cout << "Invalid choice!  Try agian\n";
-                continue;
-            }
-            break;
-        }
-    }
-
-
-    // cout << "Road is deleted\n";
-    return Rdeleted;
 }
 void graph::deleteEdge(QString city1,QString city2)
 {
@@ -296,16 +206,16 @@ int graph:: deleteCity(QString cityName)
                 deleteEdge(listPair.value().first, cityName);
             }
             else
-                deleteRoad(listPair.value().first, cityName);
+                deleteEdge(listPair.value().first, cityName);
         }
         else
-            deleteRoad(listPair.value().first, cityName);
+            deleteEdge(listPair.value().first, cityName);
     }
 
     // delete connections with its in-adjacents
     adjacents=getInAdjacents(cityName);
     for (; listPair.hasNext();listPair.next())
-        deleteRoad(listPair.value().first, cityName);
+        deleteEdge(listPair.value().first, cityName);
 
     // remove city
     map.remove(cityName); //=/

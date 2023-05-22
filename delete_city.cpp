@@ -1,8 +1,10 @@
 #include "delete_city.h"
+#include "enumerators.cpp"
 #include "ui_delete_city.h"
 #include "update_menu.h"
 #include "deletecity_error.h"
 #include "deletecity_successfully.h"
+#include"gVariables.h"
 
 Update_menu* updatemenureturnPointer;
 
@@ -36,16 +38,17 @@ delete_city::~delete_city()
 
 void delete_city::on_deleteCITY_deleteButton_clicked()
 {
-    QString answer = ui->deleteCITY_lineedit->text();
+    QString cityName = ui->deleteCITY_lineedit->text();
 
-    if (answer.toLower() == "yes")
+    int message=currentGraph->deleteCity(cityName);
+    if(message==Cdeleted)
     {
-        this->hide();
+        this->hide(); // Close
         citydeletedPointer->show();
     }
-    else
+    else if (message == cityNotExists)
     {
-        this->hide();
+        this->hide(); // Close
         deletecityerrorPointer->show();
     }
 

@@ -1,4 +1,6 @@
 #include "addroad_2nd.h"
+#include "gVariables.h"
+#include"enumerators.cpp"
 #include "ui_addroad_2nd.h"
 #include "update_menu.h"
 
@@ -32,6 +34,41 @@ addroad_2nd::~addroad_2nd()
 
 void addroad_2nd::on_addROAD_addButton_clicked()
 {
+    QString selectedItem = ui->AddRoad_direction->currentText();
+    int outAdd;
+
+    // if the first city doesn't exist
+    if (!currentGraph->vertexExists(city1AddRoad))
+        ui->addROAD_messageLabel->setText(city1AddRoad+" Dosen't Exsist");
+
+    else if (!currentGraph->vertexExists(city2AddRoad))
+        ui->addROAD_messageLabel->setText(city2AddRoad+" Dosen't Exsist");
+
+    else
+    {
+       if(selectedItem==ui->AddRoad_direction->itemText(0))
+       {
+        outAdd=currentGraph->addEditRoad(city1AddRoad,city2AddRoad,distanceAddRoad);
+       }
+       else if(selectedItem==ui->AddRoad_direction->itemText(1))
+       {
+        outAdd=currentGraph->addEditRoad(city2AddRoad,city1AddRoad,distanceAddRoad);
+       }
+       else if(selectedItem==ui->AddRoad_direction->itemText(2))
+       {
+        outAdd=currentGraph->addEditRoad(city1AddRoad,city2AddRoad,distanceAddRoad);
+        outAdd=currentGraph->addEditRoad(city2AddRoad,city1AddRoad,distanceAddRoad);
+       }
+
+       if(outAdd==addedRoad)
+       {
+        ui->addROAD_messageLabel->setText("Road is added successfully ");
+       }
+       else if(outAdd==updatedRoad)
+       {
+        ui->addROAD_messageLabel->setText("Road is updated successfully ");
+       }
+    }
 
 }
 
