@@ -14,10 +14,11 @@
 #include <list>
 #include <queue>
 #include <stack>
+#include "coloredOutput.cpp"
 
 using namespace std;
 typedef pair<float, string> myPair;
-const float INFINITE = FLT_MAX;
+const float infinity = FLT_MAX;
 
 /**
 * DFS - Traverses the graph and prints the vertices values
@@ -67,8 +68,7 @@ void DFS(graph& myGraph, string startVetrex)
 	//traverse on isolated vertices
 	for (auto& mapIterator : myGraph.map)
 		if (visited[mapIterator.first] == false)
-			DFSQueue.push(mapIterator.first);
-			//cout << mapIterator.first << endl;	
+			cout << mapIterator.first << endl;	
 }
 
 void BFS(string startCity, graph& myGraph)
@@ -118,7 +118,7 @@ void BFS(string startCity, graph& myGraph)
 			cout << mapIterator.first << endl;
 	}
 
-	cout << "End of Vertices" << endl;
+	successMessage("End of Vertices\n");
 }
 
 /**
@@ -146,7 +146,7 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<p
 	// stores the shortest found path till now for all the verteces & set all costs to infinity
 	map<string,float> cost;
 	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end(); bucket++)
-		cost.insert(make_pair(bucket->first, INFINITE));
+		cost.insert(make_pair(bucket->first, infinity));
 
 	cost[startingNode] = 0;
 
@@ -188,7 +188,7 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<p
 	}
 
 	// if there is no path to the target vertex
-	if (cost[targetVertex] == INFINITE)
+	if (cost[targetVertex] == infinity)
 		return -1.0;
 	else 
 	{

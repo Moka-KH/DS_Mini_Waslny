@@ -16,7 +16,7 @@ enum deleteRoad_enum
 };
 enum deleteCity_enum
 {
-    cityNotExists = 1,
+    noCity = 1,
     Cdeleted = 2,
 };
 enum addCity_enum

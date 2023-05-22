@@ -1,4 +1,6 @@
 #include <stack>
+#include <string>
+#include "coloredOutput.cpp"
 #include "dashboard.h"
 #include "updateMap.h"
 #include "Algorithms.h"
@@ -15,7 +17,7 @@ void updateMap(graph& myGraph, string mapName)
     int choice;
     while (true)
     {
-        cout << "\t\t\t\t\tUpdating " << mapName << endl;
+        successMessage("\t\t\t\t\tUpdating " + mapName + "\n");
         cout << "1. Add a City\n";
         cout << "2. Add / Edit a Road\n";
         cout << "3. Delete a City\n";
@@ -23,7 +25,8 @@ void updateMap(graph& myGraph, string mapName)
         cout << "5. Return to " << mapName << " Dashboard\n";
 
         cin >> choice;
-        system("cls"); // clear the console
+        // clear the console
+        system("cls");
 
         if (choice == 1)
             addCity(myGraph);
@@ -41,7 +44,7 @@ void updateMap(graph& myGraph, string mapName)
             return;
 
         else
-            cout << "invalid choice :/ \n";
+            failureMessage("invalid choice =( \n");
     }
 }
 
@@ -70,7 +73,7 @@ void Traverse(graph& mygraph)
         BFS(startCity, mygraph);
 
     else
-        cout << "Invalid Choice please try again :(\n";
+        failureMessage("Invalid Choice please try again =(\n");
 }
 
 /**
@@ -87,7 +90,8 @@ void pathFinder(graph& myMap)
     float totalDistance;
     stack<pair<string, float>> path;
 
-    cout << "Path Finder:" << endl << "\tStarting city: ";
+    successMessage("Path Finder:");
+    cout << "\n\tStarting city: ";
     cin >> startingCity;
     cout << "\tDestination city: ";
     cin >> targetCity;
@@ -96,10 +100,12 @@ void pathFinder(graph& myMap)
 
     // Check if a path exists between the cities
     if (totalDistance == -1.0)
-        cout << "There is no path between " << startingCity << " and " << targetCity << "=|\n";
+        failureMessage("There is no path between " + startingCity + " and " + targetCity + "=|\n");
     else
     {
-        cout << "From " << startingCity << " to " << targetCity << " -> " << totalDistance << endl;
+        string message = "Toatal Distance: " + startingCity + " -- (" 
+            + to_string(totalDistance) + ") --> " + targetCity + "\n";
+        successMessage(message);
 
         displayPath(path, startingCity);
     }

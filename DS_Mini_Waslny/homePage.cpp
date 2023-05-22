@@ -1,9 +1,9 @@
 #pragma once
-#include <Windows.h>
 #include <iostream>
 #include <unordered_map>
 #include <string>
 #include "graph.h"
+#include "coloredOutput.cpp"
 #include "homePage.h"
 #include "dashboard.h"
 #include "files.h"
@@ -18,11 +18,15 @@ using namespace std;
 */
 void homePage(unordered_map<string, graph>& maps)
 {
+    // color the console and clear it
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 240);
-    system("cls");  // clear the console
-    cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
-    cout << "\t\t\t===================================================================" << endl;
-    cout << "\t\t\t===================================================================" << endl;
+    system("cls");
+
+    string welcomeMessage = "\t\t\t\t\tWelcome to the Mini Wasalni program!\n"
+    "\t\t\t===================================================================\n"
+    "\t\t\t===================================================================\n";
+    successMessage(welcomeMessage);
+
     while (true)
     {
         int choice;
@@ -34,7 +38,8 @@ void homePage(unordered_map<string, graph>& maps)
         cout << "-> ";
 
         cin >> choice;
-        system("cls");  // clear the console
+        // clear the console
+        system("cls");
 
         if (choice == 1)
             addMap(maps);
@@ -45,12 +50,12 @@ void homePage(unordered_map<string, graph>& maps)
         else if (choice == 3)
         {
             writeMultipleGraphs(maps, ".\\");
-            cout << "Goodbye!" << endl;
+            successMessage("Goodbye!\n");
             return;
         }
 
         else
-            cout << "Invalid choice ,Please try again \n";
+            failureMessage("Invalid choice ,Please try again \n");
     }
 }
 
@@ -73,7 +78,7 @@ void addMap(unordered_map<string, graph>& maps)
         {
             if (mapName == map.first)
             {
-                cout << "There is already a map with this name.. Please choose another name\n";
+                failureMessage("There is already a map with this name.. Please choose another name\n");
                 continue;
             }
         }
@@ -83,7 +88,7 @@ void addMap(unordered_map<string, graph>& maps)
     // create a new map
     graph newMap(mapName);
     maps[mapName] = newMap;
-    cout << "Created a graph for you =)" << endl;
+    successMessage("Created a graph for you =)\n");
 }
 
 /**
@@ -99,8 +104,8 @@ void mapsDashboard(unordered_map<string, graph>& maps)
     
     int choice;
     while (true) {
-        cout << endl << endl << endl;
-        cout << "\t\t\t\t\t\"" << mapName << "\" Dashboard" << endl;
+        cout << endl;
+        successMessage("\t\t\t\t\t\"" + mapName + "\" Dashboard\n");
         cout << "1. Display map data" << endl;
         cout << "2. Update map data" << endl;
         cout << "3. Traverse the map" << endl;
@@ -109,7 +114,8 @@ void mapsDashboard(unordered_map<string, graph>& maps)
         cout << "===================================================================" << endl;
 
         cin >> choice;
-        system("cls");   // clear the console
+        // clear the console
+        system("cls");   
 
         if (choice == 1)
             maps[mapName].display();
@@ -127,7 +133,7 @@ void mapsDashboard(unordered_map<string, graph>& maps)
             return;
 
         else
-            cout << "Invalid choice. Please try again." << endl;
+            failureMessage("Invalid choice. Please try again.\n");
     }
 }
 
@@ -141,7 +147,7 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
 {
     if (maps.size() == 0)
     {
-        cout << "Sorry =( You don't have any maps.. please create a new map" << endl;
+        failureMessage("Sorry =( You don't have any maps.. please create a new map\n");
         homePage(maps);
         return "";
     }
@@ -178,7 +184,7 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
         if (mapExist)
             return mapName;
         else
-            cout << "Sorry =( This map doesn't exist please enter another map name" << endl;
+            failureMessage("Sorry =( This map doesn't exist please enter another map name\n");
     }
 }
 
@@ -206,7 +212,7 @@ float validateFloat()
             validInput = (isdigit(input[i]) || input[i] == '.') && pointsCounter <= 1;
             if (!validInput)
             {
-                cout << "Please Enter a \"Positive Numeric Value\":\n-> ";
+                failureMessage("Please Enter a \"Positive Numeric Value\":\n-> ");
                 break;
             }
         }

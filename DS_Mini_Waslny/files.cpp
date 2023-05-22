@@ -5,13 +5,14 @@
 #include "graph.h"
 #include <fstream>
 #include <unordered_map>
+#include "coloredOutput.cpp"
 
 using namespace std;
 
 void writeGraphToFile(graph& g, const string& filename) {
 	ofstream outFile(filename);
 	if (!outFile.is_open()) {
-		cout << "Unable to open file for writing." << endl;
+		failureMessage("Unable to open file for writing\n");
 		return;
 	}
 	// write the number of vertices in the graph
@@ -35,7 +36,7 @@ void writeGraphToFile(graph& g, const string& filename) {
 void readGraphFromFile(graph& g, const string& filename) {
 	ifstream inFile(filename);
 	if (!inFile.is_open()) {
-		cout << "Unable to open file for reading." << endl;
+		failureMessage("Unable to open file for reading\n");
 		return;
 	}
 
@@ -90,7 +91,7 @@ unordered_map<string, graph> readMultipleGraphs(const string& directory) {
 	unordered_map<string, graph> graphs;
 	ifstream fileList(directory + "/filelist.txt");
 	if (!fileList.is_open()) {
-		cout << "Unable to open filelist.txt for reading." << endl;
+		failureMessage("Unable to open filelist.txt for reading\n");
 		return graphs;
 	}
 	string filename;
