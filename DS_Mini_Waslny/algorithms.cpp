@@ -148,9 +148,9 @@ void BFS(string startCity, graph& myGraph)
  * @param myMap A graphDS object representing the graph to search for the shortest path.
  * @param currentLocation The starting vertex for the shortest path search.
  * @param finalDistination The destination vertex for the shortest path search.
- * @param totalDistance The shortest distance between the two cities 
+ * @param path, that includes the cities from the starting city to the end city and distances between them.
  *
- * @return The shortest path vector from the starting vertex to the destination vertex
+ * @return The shortest distanse from the starting vertex to the destination vertex
  */
 float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<pair<string, float>>& path)
 {
