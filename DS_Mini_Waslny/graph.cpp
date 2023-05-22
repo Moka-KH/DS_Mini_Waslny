@@ -166,7 +166,7 @@ int graph::deleteCity(string cityName)
 {
 	if (!vertexExists(cityName))
 	{
-		return cityNotExists;
+		return noCity;
 	}
 
 	list<pair<string, float>> adjacents;

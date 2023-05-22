@@ -31,7 +31,7 @@ void homePage(unordered_map<string, graph>& maps)
     {
         int choice;
         cout << endl << endl << endl;
-        cout << "\t\t\t\t\tHome Page" << endl;
+        cout << "\t\t\t\t\t\t\tHome Page" << endl;
         cout << "1. Add new map" << endl;
         cout << "2. Maps Dashboards" << endl;
         cout << "3. Exit program" << endl;
@@ -72,6 +72,7 @@ void addMap(unordered_map<string, graph>& maps)
     // validate the input (map name)
     while (true)
     {
+        bool found = false;
         cout << "Map Name: ";
         cin >> mapName;
         for (auto& map : maps)
@@ -79,11 +80,16 @@ void addMap(unordered_map<string, graph>& maps)
             if (mapName == map.first)
             {
                 failureMessage("There is already a map with this name.. Please choose another name\n");
+                found = true;
                 continue;
             }
         }
-        break;
-    }    
+        if (found)
+            continue;
+        else
+            break;
+    } 
+
 
     // create a new map
     graph newMap(mapName);
