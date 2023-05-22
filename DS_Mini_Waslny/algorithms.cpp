@@ -15,6 +15,8 @@
 #include <queue>
 #include <stack>
 #include "coloredOutput.cpp"
+#include"graph.h"
+#include "enumerators.cpp"
 
 using namespace std;
 typedef pair<float, string> myPair;
@@ -29,6 +31,11 @@ const float infinity = FLT_MAX;
 */
 void DFS(graph& myGraph, string startVetrex)
 {
+	if (!myGraph.vertexExists(startVetrex))
+	{
+		failureMessage(startVetrex + " doesn't exist =|\n");
+		return;
+	}
 	unordered_map<string, bool> visited;
 
 	// initialize all vertices to be "unvisited" first
@@ -71,8 +78,20 @@ void DFS(graph& myGraph, string startVetrex)
 			cout << mapIterator.first << endl;	
 }
 
+/**
+* BFS - Traverses the graph and prints the vertices values
+* @graph: the graph object to traverse
+* @startCity: the vertex to start applying the algorithm from
+*
+* Return: nothing
+*/
 void BFS(string startCity, graph& myGraph)
 {
+	if (!myGraph.vertexExists(startCity))
+	{
+		failureMessage(startCity + " doesn't exist =|\n");
+		return;
+	}
 	// mark all vertices as not visited
 	unordered_map<string, bool> visited;
 	for (auto& x : myGraph.map)
