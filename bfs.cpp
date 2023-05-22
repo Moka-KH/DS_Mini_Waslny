@@ -5,6 +5,7 @@
 #include"algorithms.h"
 #include <QQueue>
 #include<QString>
+#include <Qdebug>
 
 
 dashboard* dashboard_bfsreturnObject;
@@ -26,7 +27,12 @@ BFS::BFS(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
-
+    if(!currentGraph->vertexExists(traverseVertex))
+    {
+        qDebug("the city you entered doesn't exist =(");
+        this->hide();
+        dashboard_bfsreturnObject->show();
+    }
     QQueue<QString> BFSOut=BFSS(traverseVertex,*currentGraph);
     QString bfsData;
     QString helperstring(" ->");
@@ -36,7 +42,7 @@ BFS::BFS(QWidget *parent) :
     else if (!BFSOut.isEmpty()) {
       while (!BFSOut.isEmpty()) {
         QString item = BFSOut.dequeue();
-        bfsData += item+helperstring;
+        bfsData.append(item+helperstring);
       }
       ui->bfs_display_label->setText(bfsData);
     }

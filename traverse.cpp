@@ -33,14 +33,15 @@ traverse::~traverse()
 
 void traverse::on_dfstraverse_button_clicked()
 {
-    dfstraverse->show();
     traverseVertex=ui->addmap_lineedit->text();
+    dfstraverse->show();
     this->hide();
 }
 
 
 void traverse::on_bfstraverse_button_clicked()
 {
+    traverseVertex=ui->addmap_lineedit->text();
     dfstraversal->show();
     this->hide();
 }

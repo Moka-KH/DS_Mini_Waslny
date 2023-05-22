@@ -79,8 +79,12 @@ void PathFinder_Main::on_addmap_add_clicked()
 
     startingVertex = ui->addmap_lineedit->text();
     targetVertex = ui->addmap_lineedit_3->text();
+    if(!currentGraph->vertexExists(startingVertex) ||!currentGraph->vertexExists(targetVertex))
+    {
+        error_pathfinder->show();
+        this->hide();
+    }
     totalDistance = Dijkstra(*currentGraph,startingVertex,targetVertex,path);
-
     // shortest path display based on the vector size..
     if(path.empty()){
         error_pathfinder->show();
