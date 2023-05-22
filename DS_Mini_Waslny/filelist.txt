@@ -1,11 +1,4 @@
-xoxo.txt
-mayar.txt
-test.txt
 Malk.txt
-hi.txt
-new.txt
-seeee.txt
-final.txt
-zz.txt
-Ahmed.txt
 Omer.txt
+z.txt
+13.txt

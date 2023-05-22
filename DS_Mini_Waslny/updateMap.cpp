@@ -24,7 +24,7 @@ void addCity(graph& myGraph)
     int message = myGraph.addCity(city);
 
     if (message == cityExists)
-        failureMessage("City " + city + " already exists =|\n");
+        failureMessage(city + " city" + " already exists =|\n");
     else if (message == success)
         successMessage("Added \"" + city + "\" =)\n");
 }
@@ -96,7 +96,7 @@ void addOrEditRoad(graph& myGraph)
         addRoadFeedback(city1, city2, message1);
 
         int message2 = myGraph.addEditRoad(city2, city1, distance);
-        addRoadFeedback(city2, city1, message2);
+        //addRoadFeedback(city2, city1, message2);
     }
     else
         failureMessage("invalid choice :/\n");
@@ -117,9 +117,9 @@ void addRoadFeedback(string city1, string city2, int message)
     else if (message == noCity2)
         failureMessage("Sorry! " + city2 + " doesn't exist =|\n");
     else if (message == addedRoad)
-        successMessage("Added a road successfully =)\n");
+        successMessage("Road between " + city1 + " and " + city2 + " is Added successfully =)\n");
     else if (message == updatedRoad)
-        successMessage("Updated a road successfully =)\n");
+        successMessage("Road between " + city1 + " and " + city2 + " is Updated successfully = )\n");
 }
 
 /**

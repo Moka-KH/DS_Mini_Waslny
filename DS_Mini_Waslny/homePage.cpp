@@ -7,6 +7,8 @@
 #include "homePage.h"
 #include "dashboard.h"
 #include "files.h"
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -154,6 +156,7 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
     if (maps.size() == 0)
     {
         failureMessage("Sorry =( You don't have any maps.. please create a new map\n");
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         homePage(maps);
         return "";
     }
@@ -163,7 +166,7 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
 
     // show the user all the maps
     for (auto& map : maps)
-        cout << map.first << "\n\t";
+        cout << "\n\t" << map.first;
     cout << endl;
 
     // make the user choose a map name (prevents null & non-existing names)

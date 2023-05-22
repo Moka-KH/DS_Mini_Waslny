@@ -7,6 +7,7 @@
 #include <fstream>
 #include "graph.h"
 #include "enumerators.cpp"
+#include "coloredOutput.cpp"
 
 using namespace std;
 
@@ -70,7 +71,7 @@ void graph::display()
 {
 	if (map.empty())
 	{
-		cout << "You don't have any cities in this map yet!" << endl;
+		failureMessage("You don't have any cities in this map yet!");
 		return;
 	}
 
