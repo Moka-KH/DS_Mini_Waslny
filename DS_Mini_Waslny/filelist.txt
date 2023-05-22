@@ -1,7 +1,4 @@
 Malk.txt
 Omer.txt
-aaa.txt
-z.txt
 13.txt
-mayar.txt
 Egypt.txt

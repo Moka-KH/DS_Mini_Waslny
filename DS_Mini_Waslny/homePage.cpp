@@ -36,7 +36,8 @@ void homePage(unordered_map<string, graph>& maps)
         cout << "\t\t\t\t\t\t\tHome Page" << endl;
         cout << "1. Add new map" << endl;
         cout << "2. Maps Dashboards" << endl;
-        cout << "3. Exit program" << endl;
+        cout << "3. Delete existing map" << endl;
+        cout << "4. Exit program" << endl;
         cout << "-> ";
 
         cin >> choice;
@@ -50,6 +51,9 @@ void homePage(unordered_map<string, graph>& maps)
             mapsDashboard(maps);
 
         else if (choice == 3)
+            deleteMap(maps);
+
+        else if (choice == 4)
         {
             writeMultipleGraphs(maps, ".\\");
             successMessage("\t\t\t\t\t\tGOODBYE MI AMIGAS =)\n");
@@ -97,6 +101,43 @@ void addMap(unordered_map<string, graph>& maps)
     graph newMap(mapName);
     maps[mapName] = newMap;
     successMessage("Created a graph for you =)\n");
+}
+
+/**
+* @brief This function delete an exsisting map
+*
+* @param maps a reference to the hash table containing all the maps in the program
+* @return void
+*/
+void deleteMap(unordered_map<string, graph>& maps)
+{
+    string mapName;
+
+    // validate the input (map name) is exist
+    while (true)
+    {
+        bool found = false;
+        cout << "Map Name: ";
+        cin >> mapName;
+        for (auto& map : maps)
+        {
+            if (mapName == map.first)
+            {
+                maps.erase(mapName);
+                successMessage("Your map is deleted successfully =)\n");
+                found = true;
+                break;
+            }
+        }
+        if (found)
+            break;
+        else 
+        {
+            failureMessage("This map dosen't exist.. Please choose an existing map name\n");
+            continue;
+        }
+    }
+
 }
 
 /**

@@ -1,8 +1,6 @@
-3
-matrah
-0
+2
 muscut
 1
 matrah 15
-salalah
+matrah
 0
