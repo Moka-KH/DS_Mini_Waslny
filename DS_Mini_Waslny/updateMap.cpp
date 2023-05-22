@@ -169,7 +169,12 @@ void deleteRoadFeedback(string city1, string city2, int message)
         break;
     }
 }
-
+/**
+* This function lets the user delete a city.. it uses the the deleteCity function from
+*and handle messages that appears to user
+* @param myGraph the graph to delete its city
+* @return void
+*/
 void deleteCity(graph& myGraph)
 {
     string city;
