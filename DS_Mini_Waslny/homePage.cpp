@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 #include <iostream>
 #include <unordered_map>
 #include <string>
@@ -17,6 +18,7 @@ using namespace std;
 */
 void homePage(unordered_map<string, graph>& maps)
 {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 240);
     system("cls");  // clear the console
     cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
     cout << "\t\t\t===================================================================" << endl;
@@ -145,11 +147,11 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
     }
     
     string mapName;
-    cout << "Which map ? \n" << "Available maps: ";
+    cout << "Which map ?\n" << "Available maps: ";
 
     // show the user all the maps
     for (auto& map : maps)
-        cout << map.first << ' ';
+        cout << map.first << "\n\t";
     cout << endl;
 
     // make the user choose a map name (prevents null & non-existing names)
@@ -186,32 +188,33 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
 * 
 * @return the inputted integer
 */
-float validateNumber()
+float validateFloat()
 {
-    /*
-    * cin.fail() -> return true if the last input process failed
-    * cin.clear() -> clears the error flag on cin (so that future I/O operations will work correctly)
-    * cin.ignore() -> ignore the string in the buffer by the value provided
-    */
-    float input;
+    string input;
+    bool validInput;
+    short pointsCounter; // counts the floating points in the input
     while (true)
     {
-        try {
-            cin >> input;
-            //if we have string instead of numerical number
-            if (cin.fail())
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw std::runtime_error("Invalid input=(  Please enter a numerical input");
-            }
-            else
-                break;
-        }
-        catch (runtime_error& exp)
+        validInput = true;
+        pointsCounter = 0;
+        cin >> input;
+        for (int i = 0; i < input.size(); i++)
         {
-            cout << exp.what() << endl;
+            if (input[i] == '.')
+                pointsCounter++;
+
+            validInput = (isdigit(input[i]) || input[i] == '.') && pointsCounter <= 1;
+            if (!validInput)
+            {
+                cout << "Please Enter a \"Positive Numeric Value\":\n-> ";
+                break;
+            }
         }
+
+        if (validInput)
+            break;
     }
-    return input;
+
+    // stof -> cast provided string to float
+    return stof(input);
 }

@@ -51,7 +51,7 @@ void addOrEditRoad(graph& myGraph)
     while (true)
     {
         // validate it's a number
-        distance = validateNumber();
+        distance = validateFloat();
 
         // validate it's positive
         if (distance <= 0)
