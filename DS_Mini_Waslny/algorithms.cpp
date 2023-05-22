@@ -162,11 +162,11 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<p
 	priority_queue<myPair, vector<myPair>, greater<myPair>> unKnownVertices;
 
 	// stores the shortest found path till now for all the verteces & set all costs to infinity
-	map<string,float> cost;
+	unordered_map<string,float> shortestPath;
 	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end(); bucket++)
-		cost.insert(make_pair(bucket->first, infinity));
+		shortestPath.insert(make_pair(bucket->first, infinity));
 
-	cost[startingNode] = 0;
+	shortestPath[startingNode] = 0;
 
 	// stores the previous vertex of each vertex (set it all to "" )
 	unordered_map<string, string> previousVerteces;
@@ -191,27 +191,27 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<p
 			string adjacentName = adjacent.first;
 			float weight = adjacent.second; // from the current vertex to this adjacent
 
-			if (cost[adjacentName] > cost[currentVertexName] + weight)
+			if (shortestPath[adjacentName] > shortestPath[currentVertexName] + weight)
 			{
 				// update the cost
-				cost[adjacentName] = cost[currentVertexName] + weight;
+				shortestPath[adjacentName] = shortestPath[currentVertexName] + weight;
 				
 				// set the preceding vertex
 				previousVerteces[adjacentName] = currentVertexName;
 
 				// put this adjacent in the unknown vertices to know it later
-				unKnownVertices.push(make_pair(cost[adjacentName], adjacentName));
+				unKnownVertices.push(make_pair(shortestPath[adjacentName], adjacentName));
 			}
 		}
 	}
 
 	// if there is no path to the target vertex
-	if (cost[targetVertex] == infinity)
+	if (shortestPath[targetVertex] == infinity)
 		return -1.0;
 	else 
 	{
 		path = backTracking(myGraph, startingNode, targetVertex, previousVerteces);
-		return cost[targetVertex];
+		return shortestPath[targetVertex];
 	}
 }
 
