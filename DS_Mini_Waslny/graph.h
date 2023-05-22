@@ -29,16 +29,16 @@ public:
 	~graph();
 
 	int addCity(string city);
-	int addCity(string newCity, string adjCity, float distance);
 	int addEditRoad(string city1, string city2, float distance);
 
-	void deleteCity(string cityName);
-	void deleteRoad(string city1, string city2);
+	int deleteCity(string cityName);
+	int deleteRoad(string city1, string city2);
 
 	int getVertexNum();
 	int getEdgeNum();
 
 	void display();
+
 	list<pair <string, float>> getOutAdjacents(string city);
 	list<pair <string, float>> getInAdjacents(string city);
 	list<pair <string, float>> getAdjacents(string city);

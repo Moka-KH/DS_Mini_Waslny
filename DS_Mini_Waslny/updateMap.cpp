@@ -2,6 +2,7 @@
 #include "updateMap.h"
 #include "homePage.h"
 #include "enumerators.cpp"
+#include "coloredOutput.cpp"
 
 // This file has functions that separate the messages from the graph class functions
 // in order to make the data loading in the beginning of the program silent
@@ -15,7 +16,7 @@
 */
 void addCity(graph& myGraph)
 {
-    cout << "\t\tAdding a City\n";
+    successMessage("\t\tAdding a City\n");
     cout << "\tName: ";
     string city;
     cin >> city;
@@ -23,9 +24,9 @@ void addCity(graph& myGraph)
     int message = myGraph.addCity(city);
 
     if (message == cityExists)
-        cout << "City " << city << " already exists =/\n";
+        failureMessage(city + " city" + " already exists =|\n");
     else if (message == success)
-        cout <<"Added \"" << city << "\" =)\n";
+        successMessage("Added \"" + city + "\" =)\n");
 }
 
 /**
@@ -40,7 +41,7 @@ void addOrEditRoad(graph& myGraph)
 {
     string city1, city2;
     float distance;
-    cout << "Adding / Updating Road:\n";
+    successMessage("Adding / Updating Road:\n");
     cout << "\tCity 1: ";
     cin >> city1;
     cout << "\tCity 2: ";
@@ -51,11 +52,11 @@ void addOrEditRoad(graph& myGraph)
     while (true)
     {
         // validate it's a number
-        distance = validateNumber();
+        distance = validateFloat();
 
         // validate it's positive
         if (distance <= 0)
-            cout << "please enter a psitive distance" << endl;
+            failureMessage("please enter a psitive distance\n");
         else
             break;
     }
@@ -63,7 +64,7 @@ void addOrEditRoad(graph& myGraph)
     // ask the user: Directed or Undirected ?
     int choice;
     cout << "One way or roundway Road ?\n"
-        << "1- One way \t 2- Roundway   -> ";
+        << "1- One way \t 2- Roundway\n-> ";
     cin >> choice;
 
     if (choice == 1)
@@ -87,7 +88,7 @@ void addOrEditRoad(graph& myGraph)
             addRoadFeedback(city2, city1, message);
         }
         else
-            cout << "invalid choice :/\n";
+            failureMessage("invalid choice :/\n");
     }
     else if (choice == 2)
     {
@@ -95,8 +96,10 @@ void addOrEditRoad(graph& myGraph)
         addRoadFeedback(city1, city2, message1);
 
         int message2 = myGraph.addEditRoad(city2, city1, distance);
-        addRoadFeedback(city2, city1, message2);
+        //addRoadFeedback(city2, city1, message2);
     }
+    else
+        failureMessage("invalid choice :/\n");
 }
 
 /**
@@ -110,11 +113,77 @@ void addOrEditRoad(graph& myGraph)
 void addRoadFeedback(string city1, string city2, int message)
 {
     if (message == noCity1)
-        cout << "Sorry! " << city1 << " doesn't exist" << endl;
+        failureMessage("Sorry! " + city1 + " doesn't exist =|\n");
     else if (message == noCity2)
-        cout << "Sorry! " << city2 << " doesn't exist" << endl;
+        failureMessage("Sorry! " + city2 + " doesn't exist =|\n");
     else if (message == addedRoad)
-        cout << "Added a road successfully =)" << endl;
+        successMessage("Road between " + city1 + " and " + city2 + " is Added successfully =)\n");
     else if (message == updatedRoad)
-        cout << "updated a road successfully =)" << endl;
+        successMessage("Road between " + city1 + " and " + city2 + " is Updated successfully = )\n");
+}
+
+/**
+* This function lets the user delete a road.. it uses the the deleteRoad function from
+* the graph class and calls deleteRoadFeedback() which handles the feedback messages that appear
+* to the user
+*
+* @param myGraph the graph to delete its roads
+* @return void
+*/
+void deleteRoad(graph& myGraph)
+{
+    string city1, city2;
+    successMessage("Deleing Road:\n");
+    cout << "\tCity 1: ";
+    cin >> city1;
+    cout << "\tCity 2: ";
+    cin >> city2;
+
+    int message = myGraph.deleteRoad(city1, city2);
+    deleteRoadFeedback(city1, city2, message);
+}
+
+/**
+* this function prints a message in the console depending on the given message parameter
+*
+* @param city1 city1 name
+* @param city2 city2 name
+* @param message the return value form calling deleteRoad() function in the graph class
+* @return void
+*/
+void deleteRoadFeedback(string city1, string city2, int message)
+{
+    switch (message)
+    {
+    case NoCity1:
+        cout << '\"' << city1 << "\" doesn't exist =|\n";
+        break;
+    case NoCity2:
+        failureMessage('\"' + city2 + "\" doesn't exist =|\n");
+        break;
+    case noRoad:
+        failureMessage("There is no road between " + city1 + " and " + city2 + " =(\n");
+        break;
+    case Rdeleted:
+        successMessage("Road is deleted =)\n");
+        break;
+    }
+}
+/**
+* This function lets the user delete a city.. it uses the the deleteCity function from
+*and handle messages that appears to user
+* @param myGraph the graph to delete its city
+* @return void
+*/
+void deleteCity(graph& myGraph)
+{
+    string city;
+    successMessage("Delete the City: ");
+    cin >> city;
+
+    int message = myGraph.deleteCity(city);
+    if (message == noCity)
+        failureMessage("city " + city + " does not exist =(\n");
+    else
+        successMessage("City is deleted =)\n");
 }

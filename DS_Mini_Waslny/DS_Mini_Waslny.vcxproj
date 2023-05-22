@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="algorithms.cpp" />
+    <ClCompile Include="coloredOutput.cpp" />
     <ClCompile Include="enumerators.cpp" />
     <ClCompile Include="homePage.cpp" />
     <ClCompile Include="files.cpp" />

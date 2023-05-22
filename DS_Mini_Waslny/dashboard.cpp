@@ -1,4 +1,6 @@
 #include <stack>
+#include <string>
+#include "coloredOutput.cpp"
 #include "dashboard.h"
 #include "updateMap.h"
 #include "Algorithms.h"
@@ -10,20 +12,21 @@
  * @param myGraph a reference to the graph data structure that the user wants to update.
  * @retun void
  */
-void updateMap(graph& myGraph)
+void updateMap(graph& myGraph, string mapName)
 {
     int choice;
     while (true)
     {
-        cout << "\t\t\t\t\tUpdating " << myGraph.name << endl;
+        successMessage("\t\t\t\t\tUpdating " + mapName + "\n");
         cout << "1. Add a City\n";
         cout << "2. Add / Edit a Road\n";
         cout << "3. Delete a City\n";
         cout << "4. Delete a Road\n";
-        cout << "5. Return to \"" << myGraph.name << "\" Dashboard\n";
+        cout << "5. Return to " << mapName << " Dashboard\n";
 
         cin >> choice;
-        system("cls"); // clear the console
+        // clear the console
+        system("cls");
 
         if (choice == 1)
             addCity(myGraph);
@@ -32,30 +35,16 @@ void updateMap(graph& myGraph)
             addOrEditRoad(myGraph);
 
         else if (choice == 3)
-        {
-            string city;
-            cout << "Delete the City: ";
-            cin >> city;
-
-            myGraph.deleteCity(city);
-        }
+            deleteCity(myGraph);
 
         else if (choice == 4)
-        {
-            string city1, city2;
-            cout << "Deleing Road: \n";
-            cout << "\tCity 1: ";
-            cin >> city1;
-            cout << "\tCity 2: ";
-            cin >> city2;
-
-            myGraph.deleteRoad(city1, city2);
-        }
+            deleteRoad(myGraph);
 
         else if (choice == 5)
             return;
+
         else
-            cout << "invalid choice :/ \n";
+            failureMessage("invalid choice =( \n");
     }
 }
 
@@ -84,7 +73,7 @@ void Traverse(graph& mygraph)
         BFS(startCity, mygraph);
 
     else
-        cout << "Invalid Choice please try again :(\n";
+        failureMessage("Invalid Choice please try again =(\n");
 }
 
 /**
@@ -101,7 +90,8 @@ void pathFinder(graph& myMap)
     float totalDistance;
     stack<pair<string, float>> path;
 
-    cout << "Path Finder:" << endl << "\tStarting city: ";
+    successMessage("Path Finder:");
+    cout << "\n\tStarting city: ";
     cin >> startingCity;
     cout << "\tDestination city: ";
     cin >> targetCity;
@@ -110,10 +100,12 @@ void pathFinder(graph& myMap)
 
     // Check if a path exists between the cities
     if (totalDistance == -1.0)
-        cout << "There is no path between " << startingCity << " and " << targetCity << "=|\n";
+        failureMessage("There is no path between " + startingCity + " and " + targetCity + "=|\n");
     else
     {
-        cout << "From " << startingCity << " to " << targetCity << " -> " << totalDistance << endl;
+        string message = "Toatal Distance: " + startingCity + " -- (" 
+            + to_string(totalDistance) + ") --> " + targetCity + "\n";
+        successMessage(message);
 
         displayPath(path, startingCity);
     }

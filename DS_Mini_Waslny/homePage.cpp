@@ -3,8 +3,12 @@
 #include <unordered_map>
 #include <string>
 #include "graph.h"
+#include "coloredOutput.cpp"
 #include "homePage.h"
 #include "dashboard.h"
+#include "files.h"
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
@@ -16,22 +20,28 @@ using namespace std;
 */
 void homePage(unordered_map<string, graph>& maps)
 {
-    system("cls");  // clear the console
-    cout << "\t\t\t\t\tWelcome to the Mini Wasalni program!" << endl;
-    cout << "\t\t\t===================================================================" << endl;
-    cout << "\t\t\t===================================================================" << endl;
+    // color the console and clear it
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 240);
+    system("cls");
+
+    string welcomeMessage = "\t\t\t\t\tWelcome to the Mini Wasalni program!\n"
+    "\t\t\t===================================================================\n"
+    "\t\t\t===================================================================\n";
+    successMessage(welcomeMessage);
+
     while (true)
     {
         int choice;
         cout << endl << endl << endl;
-        cout << "\t\t\t\t\tHome Page" << endl;
+        cout << "\t\t\t\t\t\t\tHome Page" << endl;
         cout << "1. Add new map" << endl;
         cout << "2. Maps Dashboards" << endl;
         cout << "3. Exit program" << endl;
         cout << "-> ";
 
         cin >> choice;
-        system("cls");  // clear the console
+        // clear the console
+        system("cls");
 
         if (choice == 1)
             addMap(maps);
@@ -41,12 +51,13 @@ void homePage(unordered_map<string, graph>& maps)
 
         else if (choice == 3)
         {
-            cout << "Goodbye!" << endl;
+            writeMultipleGraphs(maps, ".\\");
+            successMessage("\t\t\t\t\t\tGOODBYE MI AMIGAS =)\n");
             return;
         }
 
         else
-            cout << "Invalid choice ,Please try again \n";
+            failureMessage("Invalid choice ,Please try again \n");
     }
 }
 
@@ -63,23 +74,29 @@ void addMap(unordered_map<string, graph>& maps)
     // validate the input (map name)
     while (true)
     {
+        bool found = false;
         cout << "Map Name: ";
         cin >> mapName;
         for (auto& map : maps)
         {
             if (mapName == map.first)
             {
-                cout << "There is already a map with this name.. Please choose another name\n";
+                failureMessage("There is already a map with this name.. Please choose another name\n");
+                found = true;
                 continue;
             }
         }
-        break;
-    }    
+        if (found)
+            continue;
+        else
+            break;
+    } 
+
 
     // create a new map
     graph newMap(mapName);
     maps[mapName] = newMap;
-    cout << "Created a graph for you =)" << endl;
+    successMessage("Created a graph for you =)\n");
 }
 
 /**
@@ -95,8 +112,8 @@ void mapsDashboard(unordered_map<string, graph>& maps)
     
     int choice;
     while (true) {
-        cout << endl << endl << endl;
-        cout << "\t\t\t\t\t\"" << mapName << "\" Dashboard" << endl;
+        cout << endl;
+        successMessage("\t\t\t\t\t\"" + mapName + "\" Dashboard\n");
         cout << "1. Display map data" << endl;
         cout << "2. Update map data" << endl;
         cout << "3. Traverse the map" << endl;
@@ -105,13 +122,14 @@ void mapsDashboard(unordered_map<string, graph>& maps)
         cout << "===================================================================" << endl;
 
         cin >> choice;
-        system("cls");   // clear the console
+        // clear the console
+        system("cls");   
 
         if (choice == 1)
             maps[mapName].display();
 
         else if (choice == 2)
-            updateMap(maps[mapName]);
+            updateMap(maps[mapName], mapName);
 
         else if (choice == 3)
             Traverse(maps[mapName]);
@@ -123,7 +141,7 @@ void mapsDashboard(unordered_map<string, graph>& maps)
             return;
 
         else
-            cout << "Invalid choice. Please try again." << endl;
+            failureMessage("Invalid choice. Please try again.\n");
     }
 }
 
@@ -137,17 +155,18 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
 {
     if (maps.size() == 0)
     {
-        cout << "Sorry =( You don't have any maps.. please create a new map" << endl;
+        failureMessage("Sorry =( You don't have any maps.. please create a new map\n");
+        std::this_thread::sleep_for(std::chrono::seconds(3));
         homePage(maps);
         return "";
     }
     
     string mapName;
-    cout << "Which map ? \n" << "Available maps: ";
+    cout << "Which map ?\n" << "Available maps: ";
 
     // show the user all the maps
     for (auto& map : maps)
-        cout << map.first << ' ';
+        cout << "\n\t" << map.first;
     cout << endl;
 
     // make the user choose a map name (prevents null & non-existing names)
@@ -174,7 +193,7 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
         if (mapExist)
             return mapName;
         else
-            cout << "Sorry =( This map doesn't exist please enter another map name" << endl;
+            failureMessage("Sorry =( This map doesn't exist please enter another map name\n");
     }
 }
 
@@ -184,32 +203,33 @@ string chooseMapDashboard(unordered_map<string, graph>& maps)
 * 
 * @return the inputted integer
 */
-float validateNumber()
+float validateFloat()
 {
-    /*
-    * cin.fail() -> return true if the last input process failed
-    * cin.clear() -> clears the error flag on cin (so that future I/O operations will work correctly)
-    * cin.ignore() -> ignore the string in the buffer by the value provided
-    */
-    float input;
+    string input;
+    bool validInput;
+    short pointsCounter; // counts the floating points in the input
     while (true)
     {
-        try {
-            cin >> input;
-            //if we have string instead of numerical number
-            if (cin.fail())
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw std::runtime_error("Invalid input=(  Please enter a numerical input");
-            }
-            else
-                break;
-        }
-        catch (runtime_error& exp)
+        validInput = true;
+        pointsCounter = 0;
+        cin >> input;
+        for (int i = 0; i < input.size(); i++)
         {
-            cout << exp.what() << endl;
+            if (input[i] == '.')
+                pointsCounter++;
+
+            validInput = (isdigit(input[i]) || input[i] == '.') && pointsCounter <= 1;
+            if (!validInput)
+            {
+                failureMessage("Please Enter a \"Positive Numeric Value\":\n-> ");
+                break;
+            }
         }
+
+        if (validInput)
+            break;
     }
-    return input;
+
+    // stof -> cast provided string to float
+    return stof(input);
 }

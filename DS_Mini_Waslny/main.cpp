@@ -10,46 +10,49 @@
 #include <unordered_map>
 #include "files.h"
 #include "dashboard.h"
-
+#include <queue>
+#include <windows.h>
+#include "coloredOutput.cpp"
+#include <chrono>
+#include <thread>
 using namespace std;
+
 unordered_map<string, graph> maps;
 
+/**
+* @brief This function saves changes to the files and print message to the use before the console is closed*
+* @return void
+*/
+void closingFunction() 
+{
+    writeMultipleGraphs(maps, ".\\");
+    successMessage("\t\t\t\t\t\t GOODBYE MI AMIGAS =)");
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+
+}
+
 int main() {
-    /*graph myGraph;
+    SetConsoleTitle(TEXT("Mini Waslny =)"));
 
-    myGraph.addCity("A");
-    myGraph.addCity("B");
-    myGraph.addCity("C");
-    myGraph.addCity("D");
-    myGraph.addCity("E");
+    /*  
+        TO save changes when closing the console suddenly =)
 
-    myGraph.addRoad("B", "A", 4);
-    myGraph.addRoad("B", "C", 1);
-    myGraph.addRoad("C", "A", 10.55);
-
-    myGraph.addRoad("C", "E", 3);
-    myGraph.addRoad("E", "C", 4);
-
-    myGraph.addRoad("C", "D", 4);
-    myGraph.addRoad("D", "C", 4);
-
-    myGraph.addRoad("A", "A", 0.5);
-
-
-    //gives a message that the road is deleted then the city is deleted
-        // "messages are annoying =("
-    myGraph.deleteCity("D");
-    myGraph.display();
-
-    //ask the user which road to delete between C and E 
-        //"Doesn't make sense and needs to be removed," said the TA"
-    myGraph.deleteCity("C");
-    myGraph.display();
-
-    myGraph.deleteCity("A");
-    myGraph.display();
+        1-Create closingFunction() that save changes in files when the console is closed.
+        2-Call the SetConsoleCtrlHandler(), it takes two parameters:
+            * A pointer to a function that will be called when the (CTRL_CLOSE_EVENT) event occurs.
+            * A Boolean value that specifies whether the function should be called recursively.
+            * The expression (BOOL(__stdcall*)(DWORD)) is a function pointer declaration. 
+              It declares a pointer to a function that takes a single parameter of type DWORD and returns a value of type BOOL.
+              The __stdcall keyword specifies that the function should be called using the stdcall calling convention.
     */
 
+    SetConsoleCtrlHandler((BOOL(__stdcall*)(DWORD))closingFunction, TRUE);
+
+    maps = readMultipleGraphs(".\\");
     homePage(maps);
+
+
     return 0;
 }
+
+

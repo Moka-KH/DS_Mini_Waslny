@@ -14,10 +14,13 @@
 #include <list>
 #include <queue>
 #include <stack>
+#include "coloredOutput.cpp"
+#include"graph.h"
+#include "enumerators.cpp"
 
 using namespace std;
 typedef pair<float, string> myPair;
-const float INFINITE = FLT_MAX;
+const float infinity = FLT_MAX;
 
 /**
 * DFS - Traverses the graph and prints the vertices values
@@ -28,6 +31,11 @@ const float INFINITE = FLT_MAX;
 */
 void DFS(graph& myGraph, string startVetrex)
 {
+	if (!myGraph.vertexExists(startVetrex))
+	{
+		failureMessage(startVetrex + " doesn't exist =|\n");
+		return;
+	}
 	unordered_map<string, bool> visited;
 
 	// initialize all vertices to be "unvisited" first
@@ -36,6 +44,8 @@ void DFS(graph& myGraph, string startVetrex)
 
 	stack<string> NodesToCheckNeighbors;
 	NodesToCheckNeighbors.push(startVetrex);
+
+	queue<string> DFSQueue;
 
 	//traverse on connected vertices 
 	while (!NodesToCheckNeighbors.empty())
@@ -65,13 +75,23 @@ void DFS(graph& myGraph, string startVetrex)
 	//traverse on isolated vertices
 	for (auto& mapIterator : myGraph.map)
 		if (visited[mapIterator.first] == false)
-			cout << mapIterator.first << endl;
-
-	cout << "End of Vertices" << endl;
+			cout << mapIterator.first << endl;	
 }
 
+/**
+* BFS - Traverses the graph and prints the vertices values
+* @graph: the graph object to traverse
+* @startCity: the vertex to start applying the algorithm from
+*
+* Return: nothing
+*/
 void BFS(string startCity, graph& myGraph)
 {
+	if (!myGraph.vertexExists(startCity))
+	{
+		failureMessage(startCity + " doesn't exist =|\n");
+		return;
+	}
 	// mark all vertices as not visited
 	unordered_map<string, bool> visited;
 	for (auto& x : myGraph.map)
@@ -117,7 +137,7 @@ void BFS(string startCity, graph& myGraph)
 			cout << mapIterator.first << endl;
 	}
 
-	cout << "End of Vertices" << endl;
+	successMessage("End of Vertices\n");
 }
 
 /**
@@ -144,7 +164,7 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<p
 	// stores the shortest found path till now for all the verteces & set all costs to infinity
 	map<string,float> cost;
 	for (auto bucket = myGraph.map.begin(); bucket != myGraph.map.end(); bucket++)
-		cost.insert(make_pair(bucket->first, INFINITE));
+		cost.insert(make_pair(bucket->first, infinity));
 
 	cost[startingNode] = 0;
 
@@ -186,7 +206,7 @@ float Dijkstra(graph& myGraph, string startingNode, string targetVertex, stack<p
 	}
 
 	// if there is no path to the target vertex
-	if (cost[targetVertex] == INFINITE)
+	if (cost[targetVertex] == infinity)
 		return -1.0;
 	else 
 	{
