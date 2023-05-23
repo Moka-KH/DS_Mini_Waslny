@@ -28,7 +28,7 @@ BFS::BFS(QWidget *parent) :
     setWindowIcon(QIcon(iconImage));
 
     //set data on labels
-    /*QQueue<QString> BFSOut=BFSS(traverseVertex,*currentGraph);
+    QQueue<QString> BFSOut=BFSS(traverseVertex,*currentGraph);
     QString bfsData;
     QString helperstring(" ->");
     if (BFSOut.isEmpty()) {
@@ -40,7 +40,7 @@ BFS::BFS(QWidget *parent) :
         bfsData += item+helperstring;
       }
       ui->bfs_display_label->setText(bfsData);
-    }*/
+    }
 
     dashboard_bfsreturnObject = nullptr; // Initialize the pointer
 }

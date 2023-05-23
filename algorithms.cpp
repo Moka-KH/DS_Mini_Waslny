@@ -26,6 +26,10 @@ QStack<QPair<QString, float>> backTracking(graph& myGraph, QString startingVerte
         // get the distance from previous vertex to the current one
         QList<QPair<QString, float>> inCurrentAdjacent = myGraph.getInAdjacents(currentVertex);
         QMutableListIterator<QPair <QString, float>> listPair(inCurrentAdjacent);
+        if (listPair.hasNext())
+        {
+            listPair.next();
+        }
         for ( ;listPair.hasNext();listPair.next())
         {
             if (listPair.value().first == previousVertex)
@@ -53,6 +57,10 @@ float Dijkstra(graph& myGraph,QString startingNode, QString targetVertex, QStack
     // stores the shortest found path till now for all the verteces & set all costs to infinity
     QMap<QString,float> cost;
     QMutableHashIterator <QString, QList<QPair <QString, float>>> costbucket(myGraph.map);
+    if (costbucket.hasNext())
+    {
+        costbucket.next();
+    }
     for ( ;costbucket.hasNext();costbucket.next())
     {
         cost.insert(costbucket.key(), INFINITE);
@@ -62,6 +70,10 @@ float Dijkstra(graph& myGraph,QString startingNode, QString targetVertex, QStack
     // stores the previous vertex of each vertex (set it all to "" )
     QHash<QString, QString> previousVerteces;
     QMutableHashIterator <QString, QList<QPair <QString, float>>> bucket(myGraph.map);
+    if (bucket.hasNext())
+    {
+        bucket.next();
+    }
     for ( ;bucket.hasNext();bucket.next())
     {
         previousVerteces[bucket.key()] = "";
@@ -82,6 +94,10 @@ float Dijkstra(graph& myGraph,QString startingNode, QString targetVertex, QStack
         // if taking a path using the current node to one of its adjacents is shorter
         // update it the costs with this value
         QMutableListIterator<QPair <QString, float>> adjacent(outAdjacents);
+        if (adjacent.hasNext())
+        {
+            adjacent.next();
+        }
         for ( ;adjacent.hasNext();adjacent.next())
         {
             QString adjacentName = adjacent.value().first;
@@ -118,6 +134,10 @@ QQueue<QString> DFSS(graph& myGraph, QString startVetrex)
 
     // initialize all vertices to be "unvisited" first
     QMutableHashIterator <QString, QList<QPair <QString, float>>> bucket(myGraph.map);
+    if (bucket.hasNext())
+    {
+        bucket.next();
+    }
     for ( ;bucket.hasNext();bucket.next())
     {
         visited[bucket.key()]=false;
@@ -148,6 +168,10 @@ QQueue<QString> DFSS(graph& myGraph, QString startVetrex)
 
             // iterate over the adjacent vertices of current node
             QMutableListIterator<QPair <QString, float>> it(adjacencyList);
+            if (it.hasNext())
+            {
+                it.next();
+            }
             for ( ;it.hasNext();it.next())
             {
                 // push the non-visited adjacents into the stack
@@ -159,6 +183,10 @@ QQueue<QString> DFSS(graph& myGraph, QString startVetrex)
 
     //traverse on isolated vertices
     QMutableHashIterator <QString, QList<QPair <QString, float>>> mapIterator(myGraph.map);
+    if (mapIterator.hasNext())
+    {
+        mapIterator.next();
+    }
     for ( ;mapIterator.hasNext();mapIterator.next())
     {
         if (visited[mapIterator.key()] == false)
@@ -197,9 +225,16 @@ QQueue<QString> BFSS(QString startCity, graph& myGraph)
 
         // Get all adjacent vertices of the dequeued vertex
         // If an adjacent vertex has not been visited, mark it visited and enqueue it
-        for (const QPair<QString, float>& pair : adjacencyList)
+
+        // iterate over the adjacent vertices of current node
+        QMutableListIterator<QPair <QString, float>> pair(adjacencyList);
+        if (pair.hasNext())
         {
-            const QString& adjacentCity = pair.first;
+            pair.next();
+        }
+        for (;pair.hasNext();pair.next())
+        {
+            const QString& adjacentCity = pair.value().first;
             if (!visited[adjacentCity])
             {
                 visited[adjacentCity] = true;

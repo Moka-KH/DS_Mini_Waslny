@@ -35,7 +35,7 @@ addroad_2nd::~addroad_2nd()
 void addroad_2nd::on_addROAD_addButton_clicked()
 {
     QString selectedItem = ui->AddRoad_direction->currentText();
-    int outAdd;
+    int outAdd=-1;
 
     // if the first city doesn't exist
     if (!currentGraph->vertexExists(city1AddRoad))

@@ -47,19 +47,7 @@ PathFinder_Main::PathFinder_Main(QWidget *parent) :
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
 
-    dashboard_mainfinderreturnObject = nullptr;
-
-}
-
-PathFinder_Main::~PathFinder_Main()
-{
-    delete ui;
-}
-
-//find the shortest path button
-void PathFinder_Main::on_addmap_add_clicked()
-{
-    currentGraph->addCity("A");
+    /*currentGraph->addCity("A");
     currentGraph->addCity("B");
     currentGraph->addCity("C");
     currentGraph->addCity("D");
@@ -75,9 +63,24 @@ void PathFinder_Main::on_addmap_add_clicked()
     currentGraph->addEditRoad("C", "E", 3);
     currentGraph->addEditRoad("E", "D", 3);
     currentGraph->addEditRoad("E", "F", 2);
-    currentGraph->addEditRoad("D", "F", 3);
+    currentGraph->addEditRoad("D", "F", 3);*/
 
-    startingVertex = ui->addmap_lineedit->text();
+    dashboard_mainfinderreturnObject = nullptr;
+
+}
+
+PathFinder_Main::~PathFinder_Main()
+{
+    delete ui;
+}
+
+//find the shortest path button
+void PathFinder_Main::on_addmap_add_clicked()
+{
+
+    fivecities_path->show();
+    this->hide();
+    /*startingVertex = ui->addmap_lineedit->text();
     targetVertex = ui->addmap_lineedit_3->text();
     if(!currentGraph->vertexExists(startingVertex) ||!currentGraph->vertexExists(targetVertex))
     {
@@ -118,7 +121,7 @@ void PathFinder_Main::on_addmap_add_clicked()
     {
         defaultcities_path->show();
         this->hide();
-    }
+    }*/
 }
 
 //Return to the dashboard button

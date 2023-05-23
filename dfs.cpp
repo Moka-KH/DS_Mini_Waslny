@@ -26,7 +26,7 @@ DFS::DFS(QWidget *parent) :
     setWindowIcon(QIcon(iconImage));
 
     //set data on labels
-    /*QQueue<QString> DFSOut=DFSS(*currentGraph,traverseVertex);
+    QQueue<QString> DFSOut=DFSS(*currentGraph,traverseVertex);
     QString dfsData;
     QString helperstring(" ->");
     if (DFSOut.isEmpty()) {
@@ -38,7 +38,7 @@ DFS::DFS(QWidget *parent) :
             dfsData += item+helperstring;
         }
         ui->dfs_display_label->setText(dfsData);
-    }*/
+    }
 
     dashboard_dfsreturnObject = nullptr; // Initialize the pointer
 }

@@ -17,6 +17,10 @@ graph::graph(QString name)
 graph::~graph()
 {
     QMutableHashIterator<QString, QList<QPair<QString, float>>> bucket(map);
+    if (bucket.hasNext())
+    {
+        bucket.next();
+    }
     for (; bucket.hasNext(); bucket.next())
         bucket.value().clear();
     map.clear();
@@ -36,7 +40,10 @@ int graph::getOutEdgesNumber(QString city1)
     int counter = 0;
     QList<QPair<QString, float>> adjacents = getOutAdjacents(city1);
     QMutableListIterator<QPair<QString, float>> listPair(adjacents);
-
+    if (listPair.hasNext())
+    {
+        listPair.next();
+    }
     for (;listPair.hasNext();listPair.next())
         counter++;
     return counter;
@@ -45,6 +52,10 @@ float graph::getEdgeWeight(QString city1, QString city2)
 {
     QList<QPair<QString, float>> adjacents = getOutAdjacents(city1);
     QMutableListIterator <QPair<QString, float>> listPair(adjacents);
+    if (listPair.hasNext())
+    {
+        listPair.next();
+    }
     for (; listPair.hasNext();listPair.next())
     {
         if(listPair.value().first == city2)
@@ -60,9 +71,12 @@ QList<QPair<QString, float>> graph::getOutAdjacents(QString city)
 QList<QPair<QString, float>> graph::getInAdjacents(QString city)
 {
     QList<QPair<QString, float>> adjacents;
-    QMutableHashIterator <QString, QList<QPair <QString, float>>> bucket(map);
     float backDistance;
-
+    QMutableHashIterator <QString, QList<QPair <QString, float>>> bucket(map);
+    if (bucket.hasNext())
+    {
+        bucket.next();
+    }
     for(;bucket.hasNext();bucket.next())
     {
         // if you find a road from any city to the city we're getting its in-adjacents
@@ -70,6 +84,10 @@ QList<QPair<QString, float>> graph::getInAdjacents(QString city)
         {
             // get the distance from that city to to city we're getting its in-adjacents
             QMutableListIterator <QPair<QString, float>> listPair(bucket.value());
+            if (bucket.hasNext())
+            {
+                bucket.next();
+            }
             for(;listPair.hasNext();listPair.next())
             {
                 if (listPair.value().first == city)
@@ -92,10 +110,18 @@ QList<QPair<QString, float>> graph::getAdjacents(QString city)
     // combine them in the inAdjacents list and don't take the duplicates
     // for each element in the INs
     QMutableListIterator<QPair<QString, float>> in(inAdjacents);
+    if (in.hasNext())
+    {
+        in.next();
+    }
     for (; in.hasNext(); in.next())
     {
         // iterate over the OUTs
         QMutableListIterator<QPair<QString, float>> out(inAdjacents);
+        if (out.hasNext())
+        {
+            out.next();
+        }
         for (; out.hasNext(); out.next())
         {
             // if you find a repeated value, don't take it into the INs..
@@ -142,29 +168,30 @@ bool graph::empty()
 // Roads
 int graph::addEditRoad(QString city1, QString city2, float distance)
 {
-//    // if the road already exists, just update the distance
-//    if (edgeExists(city1, city2))
-//    {
-//        QMutableListIterator<QPair<QString, float>> listPair(map[city1]);
-//        if(listPair.hasNext())
-//            listPair.next();
-//        for (; listPair.hasNext(); listPair.next())
-//        {
-//            if (city2 == listPair.value().first)
-//            {
-//                listPair.value().second = distance;
-//                break;
-//            }
-//        }
+    // if the road already exists, just update the distance
+    if (edgeExists(city1, city2))
+    {
+        QMutableListIterator<QPair<QString, float>> listPair(map[city1]);
+        if(listPair.hasNext())
+        {
+            listPair.next();
+        }
+        for (; listPair.hasNext(); listPair.next())
+        {
+            if (city2 == listPair.value().first)
+            {
+                listPair.value().second = distance;
+                break;
+            }
+        }
 
-//        return updatedRoad;
-//    }
+        return updatedRoad;
+    }
 
-//    // no road between them.. add it
-//    QPair<QString, float> newPair(city2, distance);
-//    map[city1].push_back(newPair);
-    QPair<QString, float> newPair("alex", 20.3);
-    map["cairo"].push_back(newPair);
+    // no road between them.. add it
+    QPair<QString, float> newPair(city2, distance);
+    map[city1].push_back(newPair);
+
     return addedRoad;
 }
 void graph::deleteEdge(QString city1,QString city2)
@@ -200,6 +227,10 @@ int graph:: deleteCity(QString cityName)
     // delete connections with its out-adjacents
     adjacents = getOutAdjacents(cityName);
     QMutableListIterator <QPair<QString, float>> listPair(adjacents);
+    if (listPair.hasNext())
+    {
+        listPair.next();
+    }
     for (; listPair.hasNext();listPair.next())
     {
         if(edgeExists(cityName, listPair.value().first) && edgeExists(listPair.value().first, cityName))
@@ -220,6 +251,11 @@ int graph:: deleteCity(QString cityName)
 
     // delete connections with its in-adjacents
     adjacents=getInAdjacents(cityName);
+    QMutableListIterator <QPair<QString, float>> listPair2(adjacents);
+    if (listPair2.hasNext())
+    {
+        listPair2.next();
+    }
     for (; listPair.hasNext();listPair.next())
         deleteEdge(listPair.value().first, cityName);
 
@@ -248,17 +284,25 @@ QString  graph:: display()
     QMutableHashIterator <QString , QList<QPair<QString, float>>> bucket(map);
     QString displayString;
 
+    if (bucket.hasNext())
+    {
+        bucket.next();
+    }
     for(;bucket.hasNext();bucket.next())
     {
-        displayString.append("\nCity: "+ bucket.key() + "\n");
+        displayString.append("  City: "+ bucket.key() + "  ");
 
         QMutableListIterator <QPair<QString, float>> listPair(bucket.value());
+        if (listPair.hasNext())
+        {
+            listPair.next();
+        }
         for(;listPair.hasNext();listPair.next())
         {
             QString distance = QString::number(listPair.value().second);
-            displayString.append("\t" + listPair.value().first + " ( Distance =  " + distance + "\n");
+            displayString.append("  " + listPair.value().first + " ( Distance =  " + distance + "  ");
         }
-        displayString.append("\t\t\t=======================================================================\n");
+        displayString.append("    =====  ");
     }
     return displayString;
 }

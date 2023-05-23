@@ -63,20 +63,26 @@ void choosemap::on_choosemap_3_clicked()
     }
 
 
-//    QString selectedItem = ui->choosemap_comboBox->currentText();
+    /* selectedItem = ui->choosemap_comboBox->currentText();
 
-//    if (!selectedItem.isEmpty())
-//    {
-//        this->hide();
-//        //logic to choose tha map
-//        QMutableHashIterator<QString, graph> bucket(maps);
-//        for (; bucket.hasNext(); bucket.next())
-//            if(ui->choosemap_comboBox->currentText()== bucket.key())
-//            {
-//                currentGraph= &bucket.value();
-//                dashboardObject->show();
-//            }
-//    }
+    if (!selectedItem.isEmpty())
+    {
+       this->hide();
+       //logic to choose tha map
+       QMutableHashIterator<QString, graph> bucket(maps);
+       if (bucket.hasNext())
+       {
+           bucket.next();
+       }
+       for (; bucket.hasNext(); bucket.next())
+       {
+           if(ui->choosemap_comboBox->currentText()== bucket.key())
+            {
+                currentGraph= &bucket.value();
+                dashboardObject->show();
+            }
+       }
+    }*/
 }
 
 void choosemap::on_addmaperror_return_2_clicked()

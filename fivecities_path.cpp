@@ -23,6 +23,24 @@ FiveCities_Path::FiveCities_Path(QWidget *parent) :
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
 
+    ui->city1_label->setText("Cairo");
+
+    ui->distanse_between_label_1->setText(QString::number(300));
+    ui->city2_label->setText("Giza");
+
+    ui->distanse_between_label_2->setText(QString::number(400));
+    ui->city3_label->setText("Sina");
+
+    ui->distanse_between_label_3->setText(QString::number(100));
+    ui->city4_label->setText("Luxur");
+
+    ui->distanse_between_label_4->setText(QString::number(2250));
+    ui->city5_label->setText("Aswan");
+
+    ui->shortestdistance->setText("The shortest distance between Cairo and Aswan is: " + QString::number(3050));
+
+
+    /*
     // Set the text of the label
     if(path.empty())
     {
@@ -54,7 +72,7 @@ FiveCities_Path::FiveCities_Path(QWidget *parent) :
 
         ui->shortestdistance->setText("The shortest distance between " + startingVertex + " and " + targetVertex + " is: " + QString::number(totalDistance));
 
-    }
+    }*/
 
 
     dashboard_fivecitiesreturnObject = nullptr; // Initialize the pointer
