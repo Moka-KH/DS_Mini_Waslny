@@ -12,7 +12,7 @@
 using namespace std;
 
 /*
-	* Notes:
+	* unordered_map Notes:
 	* map.at() -> returns a pointer to the value
 	* map.insert() -> adds a new key-value
 	* map.find() -> return an iterator pointing to bucket value (the vertex in our case)
@@ -20,6 +20,7 @@ using namespace std;
 	* map.erase() -> return 1 if found key and erase it otherwise return 0
 */
 
+// Constructors & Destructor
 graph::graph()
 {
 	vertexNum = 0;
@@ -38,57 +39,125 @@ graph :: ~graph()
 	map.clear();
 }
 
+// Getters
 /**
-* emptyGraph - check if graph empty or not
-* Return: boolean value -> true if empty false if not empty
-*/
-bool graph::empty()
-{
-	if (map.empty())
-		return true;
-	return false;
-}
-
-/**
-* getVertexNum - returns #vertices
-* Return: integer value -> #vertices
+* @return integer value (#vertices number)
 */
 int graph::getVertexNum()
 {
 	return vertexNum;
 }
+/*
+* @return integer value (vertices number)
+*/
 int graph::getEdgeNum()
 {
 	return edgeNum;
 }
-
 /**
-* displays the adjacency list of all the nodes in the graph
+* get the number of out-edges of the given vertex
 *
-* @return void
+* @param city1 city name
+* @return integer value (#edges)
 */
-void graph::display()
+int graph::getOutEdgesNumber(string city1)
 {
-	if (map.empty())
-	{
-		failureMessage("You don't have any cities in this map yet!");
-		return;
-	}
+	int counter = 0;
+	list<pair<string, float>> adjacents = getOutAdjacents(city1);
 
-	cout << "\n\tMap Cities:\n";
-	for (auto& bucket : map)
-	{
-		cout << "City: " << bucket.first << endl;
+	for (auto& x : adjacents)
+		counter++;
+	return counter;
+}
+/**
+ * Gets distance From City1 To City2 (directional)
+ *
+ * @param city1 The first city.
+ * @param city2 The second city.
+ * @return distance if an edge between the two cities exists in the graph, -1 otherwise.
+ */
+float graph::getEdgeWieght(string city1, string city2)
+{
+	list<pair <string, float>> adjacents = getOutAdjacents(city1);
+	for (auto& listPair : adjacents)
+		if (listPair.first == city2)
+			return listPair.second;
 
-		for (auto& listPair : bucket.second)
-			cout << '\t' << listPair.first << " ( Distance =  " << listPair.second << " )" << endl;
-
-		cout << "\t\t\t=======================================================================" << endl;
-	}
+	return -1;
 }
 
-///
+/**
+* returns the adjacency list of the given vertex
+*
+* @city: the city to get its adjaceny list
+* @adj: a list that to point to the desired list
+* @return the adjacency list
+*/
+list<pair <string, float>> graph::getOutAdjacents(string city)
+{
+	return map.at(city);
+}
+/**
+* returns a list filled with the in-adjacents of the given vertex.
+*
+* @param city the city to get its in-adjacents
+* @return
+*/
+list<pair <string, float>> graph::getInAdjacents(string city)
+{
+	list<pair <string, float>> adjacents;
+	float backDistance;
+	for (auto& bucket : map)
+	{
+		// if you find a road from any city to the city we're getting its in-adjacents
+		if (edgeExists(bucket.first, city))
+		{
+			// get the distance from that city to to city we're getting its in-adjacents
+			for (auto& listPair : bucket.second)
+				if (listPair.first == city)
+					backDistance = listPair.second;
 
+			// add the founded city with its distance to the adjaceny list we're filling
+			adjacents.push_back(make_pair(bucket.first, backDistance));
+		}
+	}
+	return adjacents;
+}
+/**
+* returns a list of all the adjacent vertices (in & out) of the given vertex
+*
+* @param city the city to get its adjacents
+* Return: a list filled with the adjacents
+*/
+list<pair <string, float>> graph::getAdjacents(string city) // to be refactored
+{
+	list<pair <string, float>> outAdjacents, inAdjacents;
+
+	// put the out-adjacents in a list
+	outAdjacents = getOutAdjacents(city);
+
+	// put the in-adjacents in a list
+	inAdjacents = getInAdjacents(city);
+
+	// combine them into inAdjacents and don't take the duplicates
+	for (auto& x : inAdjacents)
+	{
+		for (auto y : outAdjacents)
+		{
+			// if you find a repeated value, don't take it.. continue to the next one
+			if (x.first == y.first && x.second == y.second)
+				break;
+			// non-repeated value
+			else
+				inAdjacents.push_back(make_pair(y.first, y.second));
+		}
+	}
+
+	outAdjacents.clear();
+	return inAdjacents;
+}
+
+// Cities
 /**
 * @brief Adds a new City
 * 
@@ -110,7 +179,59 @@ int graph::addCity(string city)
 
 	return success;
 }
+/**
+* @brief Deletes a City
+*
+* if the city doesn't exist, it gives an Error Message
+* else it removes the list of adjacent vertices
+* and finally removes the node itself
+*
+* @cityName: City Name to be deleted
+* @return void
+*/
+int graph::deleteCity(string cityName)
+{
+	if (!vertexExists(cityName))
+	{
+		return noCity;
+	}
 
+	list<pair<string, float>> adjacents;
+
+	// delete connections with its out-adjacents
+	adjacents = getOutAdjacents(cityName);
+	for (auto& listPair : adjacents)
+	{
+		if (edgeExists(cityName, listPair.first) && edgeExists(listPair.first, cityName))
+		{
+			if (getEdgeWieght(cityName, listPair.first) != getEdgeWieght(listPair.first, cityName))
+			{
+				// delete city2 from the adjacency list of city1 
+				// AND delete city1 from the adjacency list of city2
+				deleteEdge(cityName, listPair.first);
+				deleteEdge(listPair.first, cityName);
+			}
+			else
+				deleteRoad(listPair.first, cityName);
+		}
+		else
+			deleteRoad(listPair.first, cityName);
+
+	}
+
+	// delete connections with its in-adjacents
+	adjacents = getInAdjacents(cityName);
+	for (auto& listPair : adjacents)
+		deleteRoad(listPair.first, cityName);
+
+	// remove city
+	map.erase(cityName);
+	vertexNum--;
+
+	return Cdeleted;
+}
+
+// Roads
 /**
 * This function connects adds / updates the distancde between 2 cities
 * 
@@ -150,61 +271,6 @@ int graph::addEditRoad(string city1, string city2, float distance)
 	map.at(city1).push_back(make_pair(city2, distance));
 	return addedRoad;
 }
-
-///
-
-/**
-* @brief Deletes a City
-* 
-* if the city doesn't exist, it gives an Error Message
-* else it removes the list of adjacent vertices
-* and finally removes the node itself
-* 
-* @cityName: City Name to be deleted
-* @return void
-*/
-int graph::deleteCity(string cityName) 
-{
-	if (!vertexExists(cityName))
-	{
-		return noCity;
-	}
-
-	list<pair<string, float>> adjacents;
-	
-	// delete connections with its out-adjacents
-	adjacents=getOutAdjacents(cityName);
-	for (auto& listPair : adjacents)
-	{
-		if (edgeExists(cityName, listPair.first) && edgeExists(listPair.first, cityName))
-		{
-			if (EdgeWieght(cityName, listPair.first) != EdgeWieght(listPair.first, cityName))
-			{
-				// delete city2 from the adjacency list of city1 
-				// AND delete city1 from the adjacency list of city2
-				deleteEdge(cityName, listPair.first);
-				deleteEdge(listPair.first, cityName);
-			}
-			else
-				deleteRoad(listPair.first, cityName);
-		}
-		else
-			deleteRoad(listPair.first, cityName);
-
-	}
-
-	// delete connections with its in-adjacents
-	adjacents=getInAdjacents(cityName);
-	for (auto& listPair : adjacents)
-			deleteRoad(listPair.first, cityName);
-
-	// remove city
-	map.erase(cityName);
-	vertexNum--;
-
-	return Cdeleted;
-}
-
 /**
 * @brief This function deletes a road between 2 cities
 * 
@@ -247,7 +313,7 @@ int graph::deleteRoad(string city1, string city2)
 	else if (edgeExists(city1, city2) && edgeExists(city2, city1))
 	{
 		// with the same distance
-		if (EdgeWieght(city1, city2) == EdgeWieght(city2, city1))
+		if (getEdgeWieght(city1, city2) == getEdgeWieght(city2, city1))
 		{
 			// delete city2 from the adjacency list of city1 
 		    // AND delete city1 from the adjacency list of city2
@@ -287,7 +353,13 @@ int graph::deleteRoad(string city1, string city2)
 	
 	return Rdeleted;
 }
-
+/*
+* @brief deletes the edge going from city1 to city2
+* @description a helper function for deleteRoad()
+* it deletes the edge without any checking. Use it with caution
+* 
+* @return void
+*/
 void graph::deleteEdge(string city1,string city2) 
 {
 	for (auto listIterator = map.at(city1).begin(); listIterator != map.at(city1).end(); listIterator++)
@@ -300,97 +372,7 @@ void graph::deleteEdge(string city1,string city2)
 	}
 }
 
-///
-
-/**
-* returns the adjacency list of the given vertex
-* 
-* @city: the city to get its adjaceny list
-* @adj: a list that to point to the desired list
-* @return the adjacency list
-*/
-list<pair <string, float>> graph::getOutAdjacents(string city)
-{
-	return map.at(city);
-}
-
-/**
-* returns a list filled with the in-adjacents of the given vertex.
-* 
-* @param city the city to get its in-adjacents
-* @return 
-*/
-list<pair <string, float>> graph::getInAdjacents(string city)
-{
-	list<pair <string, float>> adjacents;
-	float backDistance;
-	for (auto& bucket : map)
-	{
-		// if you find a road from any city to the city we're getting its in-adjacents
-		if (edgeExists(bucket.first, city))
-		{
-			// get the distance from that city to to city we're getting its in-adjacents
-			for (auto& listPair : bucket.second)
-				if (listPair.first == city)
-					backDistance = listPair.second;
-
-			// add the founded city with its distance to the adjaceny list we're filling
-			adjacents.push_back(make_pair(bucket.first, backDistance));
-		}
-	}
-	return adjacents;
-}
-
-/**
-* returns a list of all the adjacent vertices (in & out) of the given vertex
-*
-* @param city the city to get its adjacents
-* Return: a list filled with the adjacents
-*/
-list<pair <string, float>> graph::getAdjacents(string city) // to be refactored
-{
-	list<pair <string, float>> outAdjacents, inAdjacents;
-
-	// put the out-adjacents in a list
-	outAdjacents = getOutAdjacents(city);
-
-	// put the in-adjacents in a list
-	inAdjacents = getInAdjacents(city);
-
-	// combine them into inAdjacents and don't take the duplicates
-	for (auto& x : inAdjacents)
-	{
-		for (auto y : outAdjacents)
-		{
-			// if you find a repeated value, don't take it.. continue to the next one
-			if (x.first == y.first && x.second == y.second)
-				break;
-			// non-repeated value
-			else 
-				inAdjacents.push_back(make_pair(y.first, y.second));
-		}
-	}
-
-	outAdjacents.clear();
-	return inAdjacents;
-}
-
-/**
-* get the number of out-edges of the given vertex
-* 
-* @param city1 city name
-* @return integer value (#edges)
-*/
-int graph::outEdgesNumber(string city1)
-{
-	int counter = 0;
-	list<pair<string, float>> adjacents = getOutAdjacents(city1);
-
-	for (auto& x : adjacents)
-		counter++;
-	return counter;
-}
-
+// Boolean Checkers
 /**
  * Checks if there is a city with the provided name or not
  * 
@@ -405,7 +387,6 @@ bool graph::vertexExists(string city)
 
 	return false;
 }
-
 /**
  * Checks if there is an edge going from city1 to city2
  *
@@ -426,20 +407,38 @@ bool graph::edgeExists(string city1, string city2)
 
 	return false;
 }
+/**
+* @brief checks if graph empty or not
+* @return true if empty false if not
+*/
+bool graph::empty()
+{
+	if (map.empty())
+		return true;
+	return false;
+}
 
 /**
- * Gets distance From City1 To City2 (directional)
- *
- * @param city1 The first city.
- * @param city2 The second city.
- * @return distance if an edge between the two cities exists in the graph, -1 otherwise.
- */
-float graph::EdgeWieght(string city1, string city2)
+* displays the adjacency list of all the nodes in the graph
+*
+* @return void
+*/
+void graph::display()
 {
-	list<pair <string, float>> adjacents = getOutAdjacents(city1);
-	for (auto& listPair : adjacents)
-		if (listPair.first == city2)
-			return listPair.second;
+	if (map.empty())
+	{
+		failureMessage("You don't have any cities in this map yet!");
+		return;
+	}
 
-	return -1;
+	cout << "\n\tMap Cities:\n";
+	for (auto& bucket : map)
+	{
+		cout << "City: " << bucket.first << endl;
+
+		for (auto& listPair : bucket.second)
+			cout << '\t' << listPair.first << " ( Distance =  " << listPair.second << " )" << endl;
+
+		cout << "\t\t\t=======================================================================" << endl;
+	}
 }
