@@ -35,10 +35,10 @@ AddRoad::~AddRoad()
 
 void AddRoad::on_addROAD_addButton_clicked()
 {
+    city1AddRoad = ui->addROAD_city1->text();
+    city2AddRoad = ui->addROAD_city2->text();
+    distanceAddRoad = ui->addROAD_distance->text().toFloat();
     step2ofaddroad->show();
-    city1AddRoad=ui->addROAD_city1->text();
-    city2AddRoad=ui->addROAD_city2->text();
-    distanceAddRoad=ui->addROAD_distance->text().toFloat();
     this->hide();
 }
 

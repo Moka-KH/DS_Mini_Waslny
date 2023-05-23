@@ -125,6 +125,8 @@ bool graph::edgeExists(QString city1, QString city2)
     QList<QPair <QString, float>> adjacents;
     adjacents = getOutAdjacents(city1);
     QMutableListIterator<QPair <QString, float>> listPair(adjacents);
+    if (listPair.hasNext())
+        listPair.next();
     for (; listPair.hasNext();listPair.next())
     {
         if(listPair.value().first == city2)
@@ -140,25 +142,29 @@ bool graph::empty()
 // Roads
 int graph::addEditRoad(QString city1, QString city2, float distance)
 {
-    // if the road already exists, just update the distance
-    if (edgeExists(city1, city2))
-    {
-        QMutableListIterator<QPair<QString, float>> listPair(map[city1]);
-        for (; listPair.hasNext(); listPair.next())
-        {
-            if (city2 == listPair.value().first)
-            {
-                listPair.value().second = distance;
-                break;
-            }
-        }
+//    // if the road already exists, just update the distance
+//    if (edgeExists(city1, city2))
+//    {
+//        QMutableListIterator<QPair<QString, float>> listPair(map[city1]);
+//        if(listPair.hasNext())
+//            listPair.next();
+//        for (; listPair.hasNext(); listPair.next())
+//        {
+//            if (city2 == listPair.value().first)
+//            {
+//                listPair.value().second = distance;
+//                break;
+//            }
+//        }
 
-        return updatedRoad;
-    }
+//        return updatedRoad;
+//    }
 
-    // no road between them.. add it
-    QPair<QString, float> newPair(city2, distance);
-    map[city1].push_back(newPair);
+//    // no road between them.. add it
+//    QPair<QString, float> newPair(city2, distance);
+//    map[city1].push_back(newPair);
+    QPair<QString, float> newPair("alex", 20.3);
+    map["cairo"].push_back(newPair);
     return addedRoad;
 }
 void graph::deleteEdge(QString city1,QString city2)
@@ -184,6 +190,12 @@ void graph::deleteEdge(QString city1,QString city2)
 //Cities
 int graph:: deleteCity(QString cityName)
 {
+    if (!vertexExists(cityName))
+    {
+        // qDebug() << "city " << cityName << " does not exist.. I can't delete it =(\n";
+        return cityNotExists;
+    }
+
     QList<QPair<QString, float>> adjacents;
     // delete connections with its out-adjacents
     adjacents = getOutAdjacents(cityName);
@@ -192,10 +204,15 @@ int graph:: deleteCity(QString cityName)
     {
         if(edgeExists(cityName, listPair.value().first) && edgeExists(listPair.value().first, cityName))
         {
-            // delete city2 from the adjacency list of city1
-            // AND delete city1 from the adjacency list of city2
-            deleteEdge(cityName, listPair.value().first);
-            deleteEdge(listPair.value().first, cityName);
+            if(getEdgeWeight(cityName, listPair.value().first) != getEdgeWeight(listPair.value().first, cityName))
+            {
+                // delete city2 from the adjacency list of city1
+                // AND delete city1 from the adjacency list of city2
+                deleteEdge(cityName, listPair.value().first);
+                deleteEdge(listPair.value().first, cityName);
+            }
+            else
+                deleteEdge(listPair.value().first, cityName);
         }
         else
             deleteEdge(listPair.value().first, cityName);
@@ -207,9 +224,10 @@ int graph:: deleteCity(QString cityName)
         deleteEdge(listPair.value().first, cityName);
 
     // remove city
-    map.remove(cityName);
+    map.remove(cityName); //=/
     vertexNum--;
 
+    // qDebug() << "City is deleted\n";
     return Cdeleted;
 }
 int graph::addCity(QString city)

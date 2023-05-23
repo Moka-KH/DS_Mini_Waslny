@@ -5,7 +5,6 @@
 #include"algorithms.h"
 #include <QQueue>
 #include<QString>
-#include <Qdebug>
 
 
 dashboard* dashboard_bfsreturnObject;
@@ -27,13 +26,9 @@ BFS::BFS(QWidget *parent) :
     QPixmap iconImage(":/resources/Pictures/Icon.png"); // Replace "path_to_icon_file.ico" with the actual path to your icon file
     // Set the icon for the window
     setWindowIcon(QIcon(iconImage));
-    if(!currentGraph->vertexExists(traverseVertex))
-    {
-        qDebug("the city you entered doesn't exist =(");
-        this->hide();
-        dashboard_bfsreturnObject->show();
-    }
-    QQueue<QString> BFSOut=BFSS(traverseVertex,*currentGraph);
+
+    //set data on labels
+    /*QQueue<QString> BFSOut=BFSS(traverseVertex,*currentGraph);
     QString bfsData;
     QString helperstring(" ->");
     if (BFSOut.isEmpty()) {
@@ -42,10 +37,10 @@ BFS::BFS(QWidget *parent) :
     else if (!BFSOut.isEmpty()) {
       while (!BFSOut.isEmpty()) {
         QString item = BFSOut.dequeue();
-        bfsData.append(item+helperstring);
+        bfsData += item+helperstring;
       }
       ui->bfs_display_label->setText(bfsData);
-    }
+    }*/
 
     dashboard_bfsreturnObject = nullptr; // Initialize the pointer
 }
@@ -63,6 +58,5 @@ void BFS::on_traverse_button_clicked()
         dashboard_bfsreturnObject->setAttribute(Qt::WA_DeleteOnClose); // Ensure proper cleanup
     }
     dashboard_bfsreturnObject->show();
-    this->hide();
+   this->hide();
 }
-

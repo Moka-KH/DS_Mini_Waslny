@@ -56,27 +56,32 @@ void addmap::on_addmap_add_2_clicked()
 //create new map
 void addmap::on_addmap_add_clicked()
 {
-    QString answer = ui->addmap_lineedit->text();
+    QString newName = ui->addmap_lineedit->text();
     //logic of creating a new map
-    if(answer.isNull())
+    if(newName.isNull())
     {
-        this->hide();
+        this->close();
         addmaperrorObject->show();
     }
     else
     {
         QMutableHashIterator<QString, graph> bucket(maps);
+        // if the map is not empty, put the iterator at its beginning
+        if (bucket.hasNext())
+        {
+            bucket.next();
+        }
         for (; bucket.hasNext(); bucket.next())
         {
-            if (answer == bucket.key())
+            if (newName == bucket.key())
             {
-                this->hide();
+                this->close();
                 addmaperrorObject->show();
             }
         }
 
-        graph newMap(answer);
-        maps[answer] = newMap;
+        graph newMap(newName);
+        maps[newName] = newMap;
         mapaddedObject->show();
     }
 

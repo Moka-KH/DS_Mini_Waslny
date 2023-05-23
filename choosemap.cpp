@@ -35,6 +35,11 @@ choosemap::choosemap(QWidget *parent) :
 
     //set items in comboBox
     QMutableHashIterator<QString, graph> bucket(maps);
+    // if the map is not empty, put the iterator at its beginning
+    if (bucket.hasNext())
+    {
+        bucket.next();
+    }
     for (; bucket.hasNext(); bucket.next())
         ui->choosemap_comboBox->addItem(bucket.key());
 

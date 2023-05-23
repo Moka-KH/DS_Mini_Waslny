@@ -45,4 +45,4 @@ public:
     QString  display();
 };
 
-#endif // GRAPH_H
+#endif // GRAPH_H

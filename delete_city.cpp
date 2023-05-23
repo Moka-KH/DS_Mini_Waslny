@@ -40,18 +40,18 @@ void delete_city::on_deleteCITY_deleteButton_clicked()
 {
     QString cityName = ui->deleteCITY_lineedit->text();
 
-    if (!cityName.isEmpty() || !currentGraph->vertexExists(cityName))
-    {
-        this->hide(); // Close
-        deletecityerrorPointer->show();
-    }
-
     int message=currentGraph->deleteCity(cityName);
     if(message==Cdeleted)
     {
         this->hide(); // Close
         citydeletedPointer->show();
     }
+    else if (message == cityNotExists)
+    {
+        this->hide(); // Close
+        deletecityerrorPointer->show();
+    }
+
 }
 
 
@@ -63,6 +63,5 @@ void delete_city::on_Returntoupdate_deleteCITY_clicked()
         updatemenureturnPointer->setAttribute(Qt::WA_DeleteOnClose); // Ensure proper cleanup
     }
     updatemenureturnPointer->show();
-    this->hide();
+   this->hide();
 }
-

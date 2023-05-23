@@ -87,7 +87,7 @@ void deleteRoad::on_addROAD_addButton_clicked()
       }
       else if(selectedItem==ui->AddRoad_direction->itemText(2))
       {
-        if(!road12 && !road21)
+        if(road12 == false && road21== false)
         {
             ui->addROAD_errorLabel->setText("There is no road between two cities");
         }

@@ -26,13 +26,7 @@ DFS::DFS(QWidget *parent) :
     setWindowIcon(QIcon(iconImage));
 
     //set data on labels
-    if(!currentGraph->vertexExists(traverseVertex))
-    {
-        qDebug("the city you entered doesn't exist =(");
-        this->hide();
-        dashboard_dfsreturnObject->show();
-    }
-    QQueue<QString> DFSOut=DFSS(*currentGraph,traverseVertex);
+    /*QQueue<QString> DFSOut=DFSS(*currentGraph,traverseVertex);
     QString dfsData;
     QString helperstring(" ->");
     if (DFSOut.isEmpty()) {
@@ -41,10 +35,10 @@ DFS::DFS(QWidget *parent) :
     else if (!DFSOut.isEmpty()) {
         while (!DFSOut.isEmpty()) {
             QString item = DFSOut.dequeue();
-            dfsData.append(item+helperstring);
+            dfsData += item+helperstring;
         }
         ui->dfs_display_label->setText(dfsData);
-    }
+    }*/
 
     dashboard_dfsreturnObject = nullptr; // Initialize the pointer
 }
@@ -62,6 +56,5 @@ void DFS::on_traverse_button_clicked()
         dashboard_dfsreturnObject->setAttribute(Qt::WA_DeleteOnClose); // Ensure proper cleanup
     }
     dashboard_dfsreturnObject->show();
-    this->hide();
+   this->hide();
 }
-
