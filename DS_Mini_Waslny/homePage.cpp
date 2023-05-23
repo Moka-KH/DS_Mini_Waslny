@@ -24,7 +24,7 @@ void homePage(unordered_map<string, graph>& maps)
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 240);
     system("cls");
 
-    string welcomeMessage = "\t\t\t\t\tWelcome to the Mini Wasalni program!\n"
+    string welcomeMessage = "\t\t\t\t\t\tWelcome to Wasalni!\n"
     "\t\t\t===================================================================\n"
     "\t\t\t===================================================================\n";
     successMessage(welcomeMessage);
@@ -33,7 +33,7 @@ void homePage(unordered_map<string, graph>& maps)
     {
         int choice;
         cout << endl << endl << endl;
-        cout << "\t\t\t\t\t\t\tHome Page" << endl;
+        successMessage("\t\t\t\t\t\t\tHome Page\n");
         cout << "1. Add new map" << endl;
         cout << "2. Maps Dashboards" << endl;
         cout << "3. Delete existing map" << endl;
@@ -41,8 +41,7 @@ void homePage(unordered_map<string, graph>& maps)
         cout << "-> ";
 
         cin >> choice;
-        // clear the console
-        system("cls");
+        cout << endl;
 
         if (choice == 1)
             addMap(maps);
@@ -66,7 +65,7 @@ void homePage(unordered_map<string, graph>& maps)
 }
 
 /**
-* @brief This function creates a new map
+* @brief This function takes a valid map name from the user creates a new map
 * 
 * @param maps a reference to the hash table containing all the maps in the program
 * @return void
@@ -75,32 +74,37 @@ void addMap(unordered_map<string, graph>& maps)
 {
     string mapName;
     
-    // validate the input (map name)
     while (true)
     {
-        bool found = false;
+        successMessage("\tAdding a map\n");
+        bool nameExists = false;
         cout << "Map Name: ";
         cin >> mapName;
+        
+        // make sure it doesn't exist
         for (auto& map : maps)
         {
             if (mapName == map.first)
             {
                 failureMessage("There is already a map with this name.. Please choose another name\n");
-                found = true;
-                continue;
+                nameExists = true;
+                break;
             }
         }
-        if (found)
+
+        if (nameExists)
             continue;
         else
             break;
     } 
 
-
     // create a new map
     graph newMap(mapName);
     maps[mapName] = newMap;
-    successMessage("Created a graph for you =)\n");
+
+    // clear the screen and show a notification
+    system("cls");
+    successMessage("Created a map \"" + mapName + "\" for you = )\n");
 }
 
 /**
