@@ -1,7 +1,7 @@
 3
-Cairo
-0
 Mahalla
+0
+Cairo
 0
 Aswan
 0

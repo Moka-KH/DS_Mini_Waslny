@@ -88,13 +88,30 @@ void pathFinder(graph& myMap)
 {   
     string startingCity, targetCity;
     float totalDistance;
+    bool startingExist = false;
+    bool targetExist = false;
     stack<pair<string, float>> path;
 
-    successMessage("Path Finder:");
-    cout << "\n\tStarting city: ";
-    cin >> startingCity;
-    cout << "\tDestination city: ";
-    cin >> targetCity;
+    while (true)
+    {
+        successMessage("Path Finder:");
+
+        cout << "\n\tStarting city: ";
+        cin >> startingCity;
+        cout << "\tDestination city: ";
+        cin >> targetCity;
+
+        startingExist = myMap.vertexExists(startingCity);
+        targetExist = myMap.vertexExists(targetCity);
+        if (startingExist == false && targetExist == false)
+            failureMessage(startingCity + " and " + targetCity + " dosen't exist in " + myMap.name + " = | \n");
+        else if (startingExist == false && targetExist == true)
+            failureMessage(startingCity + " dosen't exist in " + myMap.name + " = | \n");
+        else if (startingExist == true && targetExist == false)
+            failureMessage(targetCity + " dosen't exist in " + myMap.name + " = | \n");
+        else
+            break;
+    }
 
     totalDistance = Dijkstra(myMap, startingCity, targetCity, path);
 
