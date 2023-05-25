@@ -27,8 +27,8 @@ Data Structures used:
 
 Team members:
 * Malk Khalid Khatab : www.linkedin.com/in/malk-khatab
-* Ahmed-Aboalasaad 
-* DinaSolitah
+* Ahmed-Aboalasaad : https://www.linkedin.com/in/ahmed-aboalesaad-3a352323b/
+* DinaSolitah 
 * MahmoudHany908 : https://www.linkedin.com/in/mahmoud-hany-5863a921a/
 * Mayar128
 * saalmalabib
