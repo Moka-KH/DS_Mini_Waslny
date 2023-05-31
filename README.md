@@ -1,34 +1,35 @@
-# Mini_Waslny
+# Wassalny
 
-"Mini Waslny" is a powerful tool that helps find the shortest path between any two cities. 
-It is developed by my teammates and me as the "Data structures" course project for FCIS ASU.
+"Wassalny" is a powerful path-finder desktop application. 
 
-* C++ project
-* Works on visual studio 2022
-* Consol is finished
-* GUI is made using QT framework version 6.5.0
-* GUI is under progress 
+## Branches:
+* master (Console Version)
+   + plug and play
+* GUI (GUI version)
+  + Using QT 6.5.0
+  + still under construction
+  + You can run it and explore the design for know
 
-Branches:
-* master -> contains the files of the program logic (c++ files)
-* GUI -> contains the files for GUI using QT framework
+## Features:
+* Adding a map
+* Updating your map
+    + Add / Delete Cities
+    + Add / Delete Roads
+    + Edit Distances
+* Traverse your map using "BFS" / "DFS" algorthims
+* Find the shortest path between two cities using "Dijkstra's" algorthim
 
-Features:
-* Add/edit maps
-* Add/deleting/editing cities and roads
-* Traverse using BFS and DFS algorthim
-* Find the shortest path between two cities and display distance between them using dijkstra algorthim
-
-Data Structures used:
-* unordered map (Hash table)
+### Data Structures used:
+This project is meant to be the Data Structures course project in Faculty of Computer & Information Science, Ain Shams University, Egypt.
+* Hash Table
 * linked list
 * stack
 * priority queue
 
-Team members:
+### Contact the Development Team:
 * Malk Khalid Khatab : www.linkedin.com/in/malk-khatab
-* Ahmed-Aboalasaad : https://www.linkedin.com/in/ahmed-aboalesaad-3a352323b/
-* DinaSolitah 
-* MahmoudHany908 : https://www.linkedin.com/in/mahmoud-hany-5863a921a/
-* Mayar128
-* saalmalabib
+* Ahmed Aboalesaad : https://www.linkedin.com/in/ahmed-aboalesaad
+* Dina Solitah : 
+* Mahmoud Hany : https://www.linkedin.com/in/mahmoud-hany-5863a921a/
+* Mayar Ehab : 
+* Salma Labib : 
