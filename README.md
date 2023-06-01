@@ -8,7 +8,7 @@
 * GUI (GUI version)
   + Using QT 6.5.0
   + still under construction
-  + You can run it and explore the design for know
+  + You can run it and explore the design for now
 
 ## Features:
 * Adding a map
@@ -31,5 +31,5 @@ This project is meant to be the Data Structures course project in Faculty of Com
 * Ahmed Aboalesaad : https://www.linkedin.com/in/ahmed-aboalesaad
 * Dina Solitah : 
 * Mahmoud Hany : https://www.linkedin.com/in/mahmoud-hany-5863a921a/
-* Mayar Ehab : 
+* Mayar Ehab : https://www.linkedin.com/in/mayar-ehab-766b56239/
 * Salma Labib : www.linkedin.com/in/saalmalabib
