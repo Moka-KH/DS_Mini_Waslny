@@ -29,7 +29,7 @@ This project is meant to be the Data Structures course project in Faculty of Com
 ### Contact the Development Team:
 * Malk Khalid Khatab : www.linkedin.com/in/malk-khatab
 * Ahmed Aboalesaad : https://www.linkedin.com/in/ahmed-aboalesaad
-* Dina Solitah : 
+* Dina Solitah : https://www.linkedin.com/in/dina-solitah/
 * Mahmoud Hany : https://www.linkedin.com/in/mahmoud-hany-5863a921a/
 * Mayar Ehab : https://www.linkedin.com/in/mayar-ehab-766b56239/
 * Salma Labib : www.linkedin.com/in/saalmalabib
